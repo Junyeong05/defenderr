@@ -106,6 +106,7 @@ public class SimpleGoogleSheetsImporter : EditorWindow
         string[] headers = ParseCSVLine(lines[0]);
         Debug.Log($"[CSV Import] Headers: {string.Join(", ", headers)}");
         int importCount = 0;
+        System.Collections.Generic.List<HeroData> importedHeroes = new System.Collections.Generic.List<HeroData>();
         
         for (int i = 1; i < lines.Length; i++)
         {
@@ -115,8 +116,11 @@ public class SimpleGoogleSheetsImporter : EditorWindow
             string[] values = ParseCSVLine(lines[i]);
             Debug.Log($"[CSV Import] Line {i}: {lines[i]}");
             Debug.Log($"[CSV Import] Values: {string.Join(" | ", values)}");
-            if (CreateHeroFromCSVLine(headers, values))
+            
+            HeroData heroData = CreateHeroFromCSVLine(headers, values);
+            if (heroData != null)
             {
+                importedHeroes.Add(heroData);
                 importCount++;
             }
         }
@@ -124,13 +128,19 @@ public class SimpleGoogleSheetsImporter : EditorWindow
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         
+        // HeroCatalog 자동 업데이트
+        if (importedHeroes.Count > 0)
+        {
+            UpdateHeroCatalog(importedHeroes);
+        }
+        
         EditorUtility.DisplayDialog("Import Complete", 
-            $"Successfully imported {importCount} heroes", "OK");
+            $"Successfully imported {importCount} heroes and updated HeroCatalog", "OK");
     }
     
-    private bool CreateHeroFromCSVLine(string[] headers, string[] values)
+    private HeroData CreateHeroFromCSVLine(string[] headers, string[] values)
     {
-        if (values.Length < 3) return false; // 최소한 ID, 이름, 직업은 있어야 함
+        if (values.Length < 3) return null; // 최소한 ID, 이름, 직업은 있어야 함
         
         HeroData heroData = ScriptableObject.CreateInstance<HeroData>();
         
@@ -283,10 +293,10 @@ public class SimpleGoogleSheetsImporter : EditorWindow
                 AssetDatabase.CreateFolder("Assets/Resources", "HeroData");
             
             AssetDatabase.CreateAsset(heroData, path);
-            return true;
+            return heroData;
         }
         
-        return false;
+        return null;
     }
     
     private void MapValueToHeroData(HeroData data, string header, string value)
@@ -397,5 +407,99 @@ public class SimpleGoogleSheetsImporter : EditorWindow
         result.Add(currentField);
         
         return result.ToArray();
+    }
+    
+    /// <summary>
+    /// HeroCatalog를 자동으로 업데이트
+    /// </summary>
+    private void UpdateHeroCatalog(System.Collections.Generic.List<HeroData> importedHeroes)
+    {
+        // HeroCatalog 찾기 또는 생성
+        HeroCatalog catalog = null;
+        string catalogPath = "Assets/Resources/HeroCatalog.asset";
+        
+        // 기존 카탈로그 찾기
+        string[] guids = AssetDatabase.FindAssets("t:HeroCatalog");
+        if (guids.Length > 0)
+        {
+            catalogPath = AssetDatabase.GUIDToAssetPath(guids[0]);
+            catalog = AssetDatabase.LoadAssetAtPath<HeroCatalog>(catalogPath);
+        }
+        
+        // 카탈로그가 없으면 생성
+        if (catalog == null)
+        {
+            catalog = ScriptableObject.CreateInstance<HeroCatalog>();
+            
+            if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+                AssetDatabase.CreateFolder("Assets", "Resources");
+                
+            AssetDatabase.CreateAsset(catalog, catalogPath);
+            Debug.Log($"[CSV Import] Created new HeroCatalog at {catalogPath}");
+        }
+        
+        // 카탈로그 업데이트
+        System.Reflection.FieldInfo heroesField = typeof(HeroCatalog).GetField("heroes", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        
+        if (heroesField != null)
+        {
+            var heroList = heroesField.GetValue(catalog) as System.Collections.Generic.List<HeroCatalog.HeroEntry>;
+            if (heroList == null)
+            {
+                heroList = new System.Collections.Generic.List<HeroCatalog.HeroEntry>();
+            }
+            
+            foreach (HeroData heroData in importedHeroes)
+            {
+                // heroClass를 그대로 사용
+                string heroType = heroData.heroClass;
+                
+                // 기존 엔트리 찾기
+                HeroCatalog.HeroEntry existingEntry = heroList.Find(e => e.heroType == heroType);
+                
+                if (existingEntry == null)
+                {
+                    // 새 엔트리 생성
+                    existingEntry = new HeroCatalog.HeroEntry();
+                    existingEntry.heroType = heroType;
+                    heroList.Add(existingEntry);
+                }
+                
+                // 데이터 업데이트
+                existingEntry.data = heroData;
+                
+                // 프리팹 자동 찾기 및 연결
+                string[] prefabPaths = new string[] {
+                    $"Assets/Prefabs/Heroes/{heroType}.prefab",
+                    $"Assets/Prefabs/Heroes/{heroData.heroName}.prefab"  // heroName으로도 시도
+                };
+                
+                foreach (string prefabPath in prefabPaths)
+                {
+                    GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+                    if (prefab != null && prefab.GetComponent<BaseHero>() != null)
+                    {
+                        existingEntry.prefab = prefab;
+                        Debug.Log($"[CSV Import] Linked {heroType} to prefab at {prefabPath}");
+                        break;
+                    }
+                }
+                
+                if (existingEntry.prefab == null)
+                {
+                    Debug.LogWarning($"[CSV Import] Could not find prefab for {heroType}");
+                }
+            }
+            
+            // 리스트 다시 설정
+            heroesField.SetValue(catalog, heroList);
+            
+            // 카탈로그 저장
+            EditorUtility.SetDirty(catalog);
+            AssetDatabase.SaveAssets();
+            
+            Debug.Log($"[CSV Import] Updated HeroCatalog with {importedHeroes.Count} heroes");
+        }
     }
 }

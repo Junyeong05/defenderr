@@ -49,3 +49,7 @@ MonoBehaviour:
   attackPower: 0
   defense: 0
   isPlayerTeam: 1
+  showCrosshair: 1
+  crosshairColor: {r: 0, g: 1, b: 0, a: 1}
+  crosshairSize: 20
+  currentFrame: 0

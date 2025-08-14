@@ -33,7 +33,7 @@ public class BaseHero : MonoBehaviour
     [SerializeField] protected bool isPlayerTeam = true;  // true: 플레이어, false: 적
     
     [Header("Debug Settings")]
-    [SerializeField] protected bool showCrosshair = true;
+    [SerializeField] protected bool showCrosshair = false;
     [SerializeField] protected Color crosshairColor = Color.green;
     [SerializeField] protected float crosshairSize = 20f;
     #endregion
@@ -114,11 +114,7 @@ public class BaseHero : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        // FrameController에서 제거
-        if (FrameController.Instance != null)
-        {
-            FrameController.Remove(Execute, this);
-        }
+        // BattleController에서 관리
     }
     #endregion
 
@@ -175,11 +171,7 @@ public class BaseHero : MonoBehaviour
             state = -1; // 임시로 invalid state 설정
             SetState(STATE_WAIT);
             
-            // FrameController에 등록
-            if (FrameController.Instance != null && gameObject.activeInHierarchy)
-            {
-                FrameController.Add(Execute, this);
-            }
+            // BattleController에서 Execute() 호출하도록 변경
         }
         else
         {
@@ -215,11 +207,7 @@ public class BaseHero : MonoBehaviour
         ResetState();
         hasData = false;
         
-        // FrameController에서 제거
-        if (FrameController.Instance != null)
-        {
-            FrameController.Remove(Execute, this);
-        }
+        // BattleController에서 관리
     }
     
     protected virtual void ResetState()
@@ -317,10 +305,10 @@ public class BaseHero : MonoBehaviour
         spriteTransform = spriteRenderer.transform;
         
         // 디버그 십자선 생성 (AS3.0 스타일)
-        if (showCrosshair)
-        {
-            CreateDebugCrosshair();
-        }
+        // if (showCrosshair)
+        // {
+        //     CreateDebugCrosshair();
+        // }
     }
     
     private void CreateDebugCrosshair()
@@ -490,37 +478,18 @@ public class BaseHero : MonoBehaviour
             target = FindNearestEnemy();
         }
         
-        // 타겟 위치 설정
+        // ★★★ 핵심 수정: 타겟이 있으면 먼저 공격 범위 체크! ★★★
         if (target != null)
         {
-            BaseHero targetHero = target.GetComponent<BaseHero>();
-            if (targetHero != null)
-            {
-                // 타겟의 좌/우에 위치하도록 설정 (사거리의 90%)
-                float offset = heroData.attackRange * 0.9f;
-                if (transform.position.x <= target.position.x)
-                    targetPosition = new Vector2(target.position.x - offset, target.position.y);
-                else
-                    targetPosition = new Vector2(target.position.x + offset, target.position.y);
-            }
-        }
-        else
-        {
-            // 타겟이 없으면 기본 목적지로
-            targetPosition = defaultTargetPosition;
-        }
-        
-        // 목적지 도착 체크
-        float distanceToTargetPosition = Vector2.Distance(transform.position, targetPosition);
-        
-        if (target != null)
-        {
-            // 실제 타겟까지의 거리 체크 (targetPosition이 아닌 target.position)
-            float distanceToActualTarget = Vector2.Distance(transform.position, target.position);
+            float distanceToTarget = Vector2.Distance(transform.position, target.position);
             
-            // 공격 범위 내에 있으면
-            if (distanceToActualTarget <= heroData.attackRange)
+            // 공격 범위 내에 있으면 이동하지 않고 공격만!
+            if (distanceToTarget <= heroData.attackRange)
             {
+                // 타겟 방향으로 회전만 하고
+                UpdateFacing(target.position.x - transform.position.x);
+                
+                // 공격 쿨다운 확인 후 공격
                 if (framesSinceLastAttack >= attackIntervalFrames)
                 {
                     BaseHero targetHero = target.GetComponent<BaseHero>();
@@ -529,36 +498,49 @@ public class BaseHero : MonoBehaviour
                         GotoAttackState(targetHero);
                     }
                 }
-                else
-                {
-                    GotoWaitState();
-                }
+                // ★ 공격 범위 내에 있으면 여기서 즉시 리턴! 이동 코드 실행 안함!
                 return;
             }
+            
+            // ★ 공격 범위 밖에 있을 때만 목표 위치 계산
+            Vector2 directionToTarget = (target.position - transform.position).normalized;
+            float optimalDistance = heroData.attackRange * 0.85f; // 공격 범위의 85% 거리
+            targetPosition = (Vector2)target.position - directionToTarget * optimalDistance;
         }
         else
         {
-            // 목적지 도착
-            if (distanceToTargetPosition < heroData.moveSpeed )
+            // 타겟이 없으면 기본 목적지로
+            targetPosition = defaultTargetPosition;
+        }
+        
+        // 목적지까지의 거리 체크
+        float distanceToTargetPosition = Vector2.Distance(transform.position, targetPosition);
+        
+        // 목적지 도착 체크
+        if (distanceToTargetPosition < 1.0f)
+        {
+            // 타겟이 없을 때만 대기 상태로
+            if (target == null)
             {
                 transform.position = targetPosition;
                 GotoWaitState();
-                return;
             }
+            // 타겟이 있으면 그냥 멈춤 (대기 상태로 전환하지 않음)
+            return;
         }
         
-        // 이동
-        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
-        transform.position += (Vector3)(direction * heroData.moveSpeed);
+        // ★ 이동 실행 (공격 범위 밖에 있을 때만 실행됨)
+        Vector2 moveDirection = (targetPosition - (Vector2)transform.position).normalized;
+        transform.position += (Vector3)(moveDirection * heroData.moveSpeed);
         
-        // 방향 업데이트 - 타겟이 있으면 타겟 방향, 없으면 이동 방향
+        // 방향 업데이트
         if (target != null)
         {
             UpdateFacing(target.position.x - transform.position.x);
         }
         else
         {
-            UpdateFacing(direction.x);
+            UpdateFacing(moveDirection.x);
         }
     }
     
@@ -1290,6 +1272,18 @@ public class BaseHero : MonoBehaviour
     public int State => state;
     public HeroData Data => heroData;
     public int Level => level;
+    
+    /// <summary>
+    /// 정렬된 순서에 따라 렌더링 순서 설정
+    /// </summary>
+    /// <param name="order">렌더링 순서 (낮을수록 뒤에, 높을수록 앞에)</param>
+    public void SetSortingOrder(int order)
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingOrder = order;
+        }
+    }
     
     public void SetDefaultTargetPosition(Vector2 position)
     {

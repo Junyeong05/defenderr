@@ -28,7 +28,7 @@ MonoBehaviour:
   startDie: 76
   endDie: 110
   maxHealth: 200
-  attackPower: 10
+  attackPower: 13
   defense: 3
   moveSpeed: 3.1
   attackSpeed: 1

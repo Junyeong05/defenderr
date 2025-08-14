@@ -176,5 +176,81 @@ public class HeroCatalog : ScriptableObject
         
         Debug.Log($"[HeroCatalog] Validation complete. Valid: {validCount}, Invalid: {invalidCount}");
     }
+    
+    /// <summary>
+    /// HeroData 자동 업데이트 및 프리팹 매칭
+    /// </summary>
+    [ContextMenu("Auto Update From HeroData")]
+    public void AutoUpdateFromHeroData()
+    {
+        // Resources/HeroData 폴더의 모든 HeroData 찾기
+        string[] dataGuids = AssetDatabase.FindAssets("t:HeroData", new[] { "Assets/Resources/HeroData" });
+        
+        foreach (string guid in dataGuids)
+        {
+            string dataPath = AssetDatabase.GUIDToAssetPath(guid);
+            HeroData heroData = AssetDatabase.LoadAssetAtPath<HeroData>(dataPath);
+            
+            if (heroData != null)
+            {
+                // heroClass를 그대로 heroType으로 사용
+                string heroType = heroData.heroClass;
+                
+                // 기존 엔트리 찾기 또는 생성
+                HeroEntry entry = heroes.Find(e => e.heroType == heroType);
+                if (entry == null)
+                {
+                    entry = new HeroEntry();
+                    entry.heroType = heroType;
+                    heroes.Add(entry);
+                }
+                
+                // 데이터 업데이트
+                entry.data = heroData;
+                
+                // 프리팹 자동 매칭
+                if (entry.prefab == null)
+                {
+                    // 여러 가능한 프리팹 경로 시도
+                    string[] possiblePaths = new string[]
+                    {
+                        $"Assets/Prefabs/Heroes/{heroType}.prefab",
+                        $"Assets/Prefabs/Heroes/{heroData.heroName}.prefab"  // heroName으로도 시도
+                    };
+                    
+                    foreach (string prefabPath in possiblePaths)
+                    {
+                        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+                        if (prefab != null && prefab.GetComponent<BaseHero>() != null)
+                        {
+                            entry.prefab = prefab;
+                            Debug.Log($"[HeroCatalog] Matched {heroType} with prefab: {prefabPath}");
+                            break;
+                        }
+                    }
+                    
+                    if (entry.prefab == null)
+                    {
+                        Debug.LogWarning($"[HeroCatalog] Could not find prefab for {heroType}");
+                    }
+                }
+            }
+        }
+        
+        EditorUtility.SetDirty(this);
+        AssetDatabase.SaveAssets();
+        
+        Debug.Log($"[HeroCatalog] Auto-updated {heroes.Count} entries from HeroData");
+    }
+    
+    /// <summary>
+    /// 모든 데이터 리프레시 (Google Sheets 임포트 후 사용)
+    /// </summary>
+    [ContextMenu("Refresh All (Data + Prefabs)")]
+    public void RefreshAll()
+    {
+        AutoUpdateFromHeroData();
+        ValidateEntries();
+    }
 #endif
 }
