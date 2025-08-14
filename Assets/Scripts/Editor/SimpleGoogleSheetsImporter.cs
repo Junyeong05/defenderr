@@ -103,14 +103,18 @@ public class SimpleGoogleSheetsImporter : EditorWindow
             return;
         }
         
-        string[] headers = lines[0].Split(',');
+        string[] headers = ParseCSVLine(lines[0]);
+        Debug.Log($"[CSV Import] Headers: {string.Join(", ", headers)}");
         int importCount = 0;
         
         for (int i = 1; i < lines.Length; i++)
         {
             if (string.IsNullOrWhiteSpace(lines[i])) continue;
             
-            string[] values = lines[i].Split(',');
+            // CSV 파싱 개선 - 따옴표 처리
+            string[] values = ParseCSVLine(lines[i]);
+            Debug.Log($"[CSV Import] Line {i}: {lines[i]}");
+            Debug.Log($"[CSV Import] Values: {string.Join(" | ", values)}");
             if (CreateHeroFromCSVLine(headers, values))
             {
                 importCount++;
@@ -130,10 +134,14 @@ public class SimpleGoogleSheetsImporter : EditorWindow
         
         HeroData heroData = ScriptableObject.CreateInstance<HeroData>();
         
+        // 임시 이름 (디버깅용)
+        string tempName = values.Length > 1 ? values[1] : "Unknown";
+        
         // 임시 프레임 저장용 변수
         int waitFrame = -1;
         int moveFrame = -1;
         int attackFrame = -1;
+        int skillFrame = -1;
         int dieFrame = -1;
         int dieEnd = -1;
         string attackTriggerFrames = "";
@@ -144,23 +152,35 @@ public class SimpleGoogleSheetsImporter : EditorWindow
             string header = headers[i].Trim();
             string value = values[i].Trim();
             
+            // 디버그: 현재 처리중인 헤더와 값
+            Debug.Log($"[CSV Import] Processing header '{header}' (index {i}) with value '{value}'");
+            
             // 프레임 데이터 처리
             switch (header.ToLower())
             {
                 case "waitframe":
-                    int.TryParse(value, out waitFrame);
+                    if (int.TryParse(value, out waitFrame))
+                        Debug.Log($"[CSV Import] {tempName} - waitFrame parsed: {waitFrame} from '{value}'");
                     break;
                 case "moveframe":
-                    int.TryParse(value, out moveFrame);
+                    if (int.TryParse(value, out moveFrame))
+                        Debug.Log($"[CSV Import] {tempName} - moveFrame parsed: {moveFrame} from '{value}'");
                     break;
                 case "attackframe":
-                    int.TryParse(value, out attackFrame);
+                    if (int.TryParse(value, out attackFrame))
+                        Debug.Log($"[CSV Import] {tempName} - attackFrame parsed: {attackFrame} from '{value}'");
+                    break;
+                case "skillframe":
+                    if (int.TryParse(value, out skillFrame))
+                        Debug.Log($"[CSV Import] {tempName} - skillFrame parsed: {skillFrame} from '{value}'");
                     break;
                 case "dieframe":
-                    int.TryParse(value, out dieFrame);
+                    if (int.TryParse(value, out dieFrame))
+                        Debug.Log($"[CSV Import] {tempName} - dieFrame parsed: {dieFrame} from '{value}'");
                     break;
                 case "dieend":
-                    int.TryParse(value, out dieEnd);
+                    if (int.TryParse(value, out dieEnd))
+                        Debug.Log($"[CSV Import] {tempName} - dieEnd parsed: {dieEnd} from '{value}'");
                     break;
                 case "attacktriggerframes":
                 case "attackframes":
@@ -176,29 +196,51 @@ public class SimpleGoogleSheetsImporter : EditorWindow
         // 프레임 설정
         if (waitFrame >= 0 && moveFrame > 0 && attackFrame > 0 && dieFrame > 0 && dieEnd > 0)
         {
-            // 구글 시트에서 받은 값으로 설정
+            // 구글 시트의 값은 각 애니메이션의 시작 프레임을 나타냄
+            // 각 애니메이션의 끝은 다음 애니메이션 시작 -1
             heroData.startWait = waitFrame;
             heroData.endWait = moveFrame - 1;
+            
             heroData.startMove = moveFrame;
             heroData.endMove = attackFrame - 1;
+            
             heroData.startAttack = attackFrame;
-            heroData.endAttack = dieFrame - 1;
-            heroData.startSkill = attackFrame;    // 스킬은 공격과 동일
-            heroData.endSkill = dieFrame - 1;     // 스킬은 공격과 동일
+            
+            // 스킬 프레임 처리
+            if (skillFrame > 0 && skillFrame < 999)  // 999는 스킬 없음을 의미
+            {
+                heroData.endAttack = skillFrame - 1;
+                heroData.startSkill = skillFrame;
+                heroData.endSkill = dieFrame - 1;
+            }
+            else
+            {
+                // 스킬이 없으면 공격이 죽음 프레임 전까지
+                heroData.endAttack = dieFrame - 1;
+                // 스킬은 공격과 동일하게 설정
+                heroData.startSkill = heroData.startAttack;
+                heroData.endSkill = heroData.endAttack;
+            }
+            
             heroData.startDie = dieFrame;
             heroData.endDie = dieEnd;
+            
+            Debug.Log($"[CSV Import] {heroData.heroName} frames set - Wait: {heroData.startWait}-{heroData.endWait}, Move: {heroData.startMove}-{heroData.endMove}, Attack: {heroData.startAttack}-{heroData.endAttack}, Skill: {heroData.startSkill}-{heroData.endSkill}, Die: {heroData.startDie}-{heroData.endDie}");
         }
         else
         {
+            Debug.LogWarning($"[CSV Import] {heroData.heroName} using default frames - waitFrame:{waitFrame}, moveFrame:{moveFrame}, attackFrame:{attackFrame}, skillFrame:{skillFrame}, dieFrame:{dieFrame}, dieEnd:{dieEnd}");
             // 기본값 설정
             SetDefaults(heroData);
         }
         
-        // 공격 트리거 프레임 파싱 (예: "32,38" 또는 "32 38")
+        // 공격 트리거 프레임 파싱 (예: "32,38" 또는 "32 38" 또는 단일 프레임 "62")
         if (!string.IsNullOrEmpty(attackTriggerFrames))
         {
-            string[] frames = attackTriggerFrames.Replace(" ", ",").Split(',');
             System.Collections.Generic.List<int> frameList = new System.Collections.Generic.List<int>();
+            
+            // 쉼표나 공백으로 구분된 프레임들 파싱
+            string[] frames = attackTriggerFrames.Replace(" ", ",").Split(new char[] {','}, System.StringSplitOptions.RemoveEmptyEntries);
             
             foreach (string frame in frames)
             {
@@ -211,31 +253,34 @@ public class SimpleGoogleSheetsImporter : EditorWindow
             if (frameList.Count > 0)
             {
                 heroData.attackTriggerFrames = frameList.ToArray();
+                Debug.Log($"[CSV Import] {heroData.heroName} attack frames: [{string.Join(", ", frameList)}]");
             }
             else
             {
-                // 기본값: 공격 애니메이션의 중간 지점 2개
+                // 기본값: 공격 애니메이션의 중간 지점
                 int midPoint = (heroData.startAttack + heroData.endAttack) / 2;
-                heroData.attackTriggerFrames = new int[] { midPoint - 2, midPoint + 2 };
+                heroData.attackTriggerFrames = new int[] { midPoint };
+                Debug.Log($"[CSV Import] {heroData.heroName} using default attack frame: {midPoint}");
             }
         }
         else
         {
             // 기본값 설정
             int midPoint = (heroData.startAttack + heroData.endAttack) / 2;
-            heroData.attackTriggerFrames = new int[] { midPoint - 2, midPoint + 2 };
+            heroData.attackTriggerFrames = new int[] { midPoint };
+            Debug.Log($"[CSV Import] {heroData.heroName} no attack frames specified, using default: {midPoint}");
         }
         
         // 저장
         if (!string.IsNullOrEmpty(heroData.heroClass) && !string.IsNullOrEmpty(heroData.heroName))
         {
             // heroClass를 사용하여 파일명 생성 (Archer, Warrior, Mage 등)
-            string path = $"Assets/Data/Heroes/{heroData.heroClass}Data.asset";
+            string path = $"Assets/Resources/HeroData/{heroData.heroClass}.asset";
             
-            if (!AssetDatabase.IsValidFolder("Assets/Data"))
-                AssetDatabase.CreateFolder("Assets", "Data");
-            if (!AssetDatabase.IsValidFolder("Assets/Data/Heroes"))
-                AssetDatabase.CreateFolder("Assets/Data", "Heroes");
+            if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+                AssetDatabase.CreateFolder("Assets", "Resources");
+            if (!AssetDatabase.IsValidFolder("Assets/Resources/HeroData"))
+                AssetDatabase.CreateFolder("Assets/Resources", "HeroData");
             
             AssetDatabase.CreateAsset(heroData, path);
             return true;
@@ -318,5 +363,39 @@ public class SimpleGoogleSheetsImporter : EditorWindow
         data.healthPerLevel = data.maxHealth * 0.1f;
         data.attackPerLevel = data.attackPower * 0.1f;
         data.defensePerLevel = data.defense * 0.1f;
+    }
+    
+    /// <summary>
+    /// CSV 라인을 파싱 (따옴표 안의 쉼표 처리)
+    /// </summary>
+    private string[] ParseCSVLine(string csvLine)
+    {
+        System.Collections.Generic.List<string> result = new System.Collections.Generic.List<string>();
+        bool inQuotes = false;
+        string currentField = "";
+        
+        for (int i = 0; i < csvLine.Length; i++)
+        {
+            char c = csvLine[i];
+            
+            if (c == '"')
+            {
+                inQuotes = !inQuotes;
+            }
+            else if (c == ',' && !inQuotes)
+            {
+                result.Add(currentField);
+                currentField = "";
+            }
+            else
+            {
+                currentField += c;
+            }
+        }
+        
+        // 마지막 필드 추가
+        result.Add(currentField);
+        
+        return result.ToArray();
     }
 }

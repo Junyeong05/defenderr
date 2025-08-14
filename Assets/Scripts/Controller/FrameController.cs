@@ -2,38 +2,39 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// AS3/PixiJS Ticker와 유사한 프레임 기반 업데이트 시스템
+// Main Camera에 자동으로 추가됨
 public class FrameController : MonoBehaviour
 {
     private static FrameController _instance;
+    
     public static FrameController Instance
     {
         get
         {
             if (_instance == null)
-                CreateController();
+            {
+                _instance = Camera.main?.GetComponent<FrameController>();
+                
+                if (_instance == null && Camera.main != null)
+                {
+                    _instance = Camera.main.gameObject.AddComponent<FrameController>();
+                }
+            }
             return _instance;
         }
-        private set => _instance = value;
-    }
-
-    private static void CreateController()
-    {
-        var go = new GameObject("FrameController");
-        Instance = go.AddComponent<FrameController>();
-        DontDestroyOnLoad(go);
     }
 
     void Awake()
     {
-        // 중복 인스턴스 방지
         if (_instance != null && _instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this);
             return;
         }
+        
         _instance = this;
-        this.Play();
-        DontDestroyOnLoad(gameObject);
+        this.PlayInternal();
     }
 
     private class Handler
@@ -72,7 +73,8 @@ public class FrameController : MonoBehaviour
         }
     }
 
-    public void Add(Action callback, UnityEngine.Object context)
+    // === 내부 메서드 ===
+    private void AddHandler(Action callback, UnityEngine.Object context)
     {
         if (handlers.Exists(h => h.callback == callback && h.context == context))
             return;
@@ -83,7 +85,7 @@ public class FrameController : MonoBehaviour
         handlers.Add(h);
     }
 
-    public bool Remove(Action callback, UnityEngine.Object context)
+    private bool RemoveHandler(Action callback, UnityEngine.Object context)
     {
         int idx = handlers.FindIndex(h => h.callback == callback && h.context == context);
         if (idx == -1) return false;
@@ -97,13 +99,56 @@ public class FrameController : MonoBehaviour
         return true;
     }
 
-    public void SetSpeed(float newSpeed)
+    private void SetSpeedInternal(float newSpeed)
     {
         speed = Mathf.Max(0f, newSpeed);
         accumulatedTime = 0f;
     }
 
-    public float GetSpeed() => speed;
-    public void Play() => isRunning = true;
-    public void Stop() => isRunning = false;
+    private float GetSpeedInternal() => speed;
+    private void PlayInternal() => isRunning = true;
+    private void StopInternal() => isRunning = false;
+    
+    // === 공개 API (정적 메서드) ===
+    public static void Add(Action callback, UnityEngine.Object context)
+    {
+        Instance?.AddHandler(callback, context);
+    }
+    
+    public static bool Remove(Action callback, UnityEngine.Object context)
+    {
+        return Instance?.RemoveHandler(callback, context) ?? false;
+    }
+    
+    public static void SetSpeed(float newSpeed)
+    {
+        Instance?.SetSpeedInternal(newSpeed);
+    }
+    
+    public static float GetSpeed()
+    {
+        return Instance?.GetSpeedInternal() ?? 1f;
+    }
+    
+    public static void Play()
+    {
+        Instance?.PlayInternal();
+    }
+    
+    public static void Stop()
+    {
+        Instance?.StopInternal();
+    }
+    
+    void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            _instance = null;
+        }
+        
+        handlers.Clear();
+        handlerPool.Clear();
+    }
+    
 }
