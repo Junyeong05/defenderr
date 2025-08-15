@@ -2,10 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-/// <summary>
-/// 전투를 관리하는 컨트롤러
-/// 아군/적군 생성, 전투 시작/중지, 프레임별 업데이트 관리
-/// </summary>
+// 전투를 관리하는 컨트롤러
+// 아군/적군 생성, 전투 시작/중지, 프레임별 업데이트 관리
 public class BattleController : MonoBehaviour
 {
     #region Singleton
@@ -94,9 +92,7 @@ public class BattleController : MonoBehaviour
     #endregion
     
     #region Frame Update
-    /// <summary>
-    /// 매 프레임마다 호출되는 메서드 - 모든 유닛의 Execute() 호출
-    /// </summary>
+    // 매 프레임마다 호출되는 메서드 - 모든 유닛의 Execute() 호출
     private void OnFrame()
     {
         if (!isBattleActive || isPaused) return;
@@ -133,9 +129,7 @@ public class BattleController : MonoBehaviour
         UpdateAllUnitsDepth();
     }
     
-    /// <summary>
-    /// 모든 유닛을 Y 좌표로 정렬하여 깊이 일괄 업데이트
-    /// </summary>
+    // 모든 유닛을 Y 좌표로 정렬하여 깊이 일괄 업데이트
     private void UpdateAllUnitsDepth()
     {
         // 살아있는 모든 유닛을 Y 좌표로 정렬 (Y가 큰 것부터 = 위쪽부터)
@@ -155,9 +149,7 @@ public class BattleController : MonoBehaviour
     #endregion
 
     #region Public Methods
-    /// <summary>
-    /// 전투 초기화 및 유닛 생성
-    /// </summary>
+    // 전투 초기화 및 유닛 생성
     public void InitializeBattle(HeroCatalog catalog = null)
     {
         if (catalog != null)
@@ -180,9 +172,7 @@ public class BattleController : MonoBehaviour
         Debug.Log($"[BattleController] Battle initialized with {playerUnits.Count} player units and {enemyUnits.Count} enemy units");
     }
 
-    /// <summary>
-    /// 아군 유닛 생성
-    /// </summary>
+    // 아군 유닛 생성
     public void GeneratePlayerUnits()
     {
         // 기존 유닛들을 먼저 정리
@@ -223,9 +213,7 @@ public class BattleController : MonoBehaviour
         Debug.Log($"[BattleController] Generated {playerUnits.Count} player units");
     }
 
-    /// <summary>
-    /// 적군 유닛 생성
-    /// </summary>
+    // 적군 유닛 생성
     public void GenerateEnemyUnits()
     {
         // 기존 유닛들을 먼저 정리
@@ -265,9 +253,7 @@ public class BattleController : MonoBehaviour
         Debug.Log($"[BattleController] Generated {enemyUnits.Count} enemy units");
     }
 
-    /// <summary>
-    /// 전투 시작
-    /// </summary>
+    // 전투 시작
     public void StartBattle()
     {
         if (playerUnits.Count == 0 || enemyUnits.Count == 0)
@@ -291,9 +277,7 @@ public class BattleController : MonoBehaviour
         Debug.Log("[BattleController] Battle started!");
     }
 
-    /// <summary>
-    /// 전투 일시정지
-    /// </summary>
+    // 전투 일시정지
     public void PauseBattle()
     {
         isPaused = true;
@@ -301,9 +285,7 @@ public class BattleController : MonoBehaviour
         Debug.Log("[BattleController] Battle paused");
     }
 
-    /// <summary>
-    /// 전투 재개
-    /// </summary>
+    // 전투 재개
     public void ResumeBattle()
     {
         if (isBattleActive)
@@ -314,9 +296,7 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 전투 중지
-    /// </summary>
+    // 전투 중지
     public void StopBattle()
     {
         isBattleActive = false;
@@ -329,9 +309,7 @@ public class BattleController : MonoBehaviour
         Debug.Log("[BattleController] Battle stopped");
     }
 
-    /// <summary>
-    /// 전투 결과 확인
-    /// </summary>
+    // 전투 결과 확인
     public BattleResult CheckBattleResult()
     {
         // 모든 적군이 제거됐는지 확인
@@ -349,9 +327,7 @@ public class BattleController : MonoBehaviour
         return BattleResult.InProgress;
     }
 
-    /// <summary>
-    /// 전투 속도 설정
-    /// </summary>
+    // 전투 속도 설정
     public void SetBattleSpeed(float speed)
     {
         FrameController.SetSpeed(speed);
@@ -359,9 +335,7 @@ public class BattleController : MonoBehaviour
     #endregion
 
     #region Private Methods
-    /// <summary>
-    /// 전투 초기화
-    /// </summary>
+    // 전투 초기화
     private void ResetBattle()
     {
         // 먼저 모든 유닛 정리 (FrameController에서 제거)
@@ -380,9 +354,7 @@ public class BattleController : MonoBehaviour
         Debug.Log("[BattleController] Battle reset - all units and events cleared");
     }
 
-    /// <summary>
-    /// 전투 리스트 설정
-    /// </summary>
+    // 전투 리스트 설정
     private void SetupBattleLists()
     {
         BaseHero[] playerArray = playerUnits.ToArray();
@@ -392,9 +364,7 @@ public class BattleController : MonoBehaviour
         BaseHero.SetBattleLists(playerArray, enemyArray);
     }
 
-    /// <summary>
-    /// 유닛 정리
-    /// </summary>
+    // 유닛 정리
     private void CleanupUnits()
     {
         // FrameController에서 제거
@@ -418,9 +388,7 @@ public class BattleController : MonoBehaviour
         allUnits.Clear();
     }
 
-    /// <summary>
-    /// 죽은 유닛 제거
-    /// </summary>
+    // 죽은 유닛 제거
     public void RemoveDeadUnit(BaseHero unit)
     {
         if (unit == null) return;
@@ -446,9 +414,7 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 전투 종료 처리
-    /// </summary>
+    // 전투 종료 처리
     private void OnBattleEnd(BattleResult result)
     {
         StopBattle();

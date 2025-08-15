@@ -88,6 +88,16 @@ public class BaseHero : MonoBehaviour
 
     protected float orgSzie = 1.3f;
     
+    // Hit reaction variables
+    protected bool isHitReacting = true;
+    protected int hitReactionFrame = 0;  // 현재 반응 프레임
+    protected int hitReactionDurationFrames = 5; // 12프레임 동안 반응 (60fps 기준 0.2초)
+    protected float hitReactionAngle = 23f; // 3도 회전
+    protected Quaternion originalRotation;
+    
+    // Knockback variables
+    protected float knockbackDistance = 0f; // 2픽셀 넉백
+    
     private HeroFactory factory;
     protected string className;
     protected string sheetName = "atlases/Battle";
@@ -725,9 +735,40 @@ public class BaseHero : MonoBehaviour
             framesSinceLastAttack++;
         }
         
+        // 타격 반응 업데이트
+        if (isHitReacting)
+        {
+            UpdateHitReaction();
+        }
+        
         // TODO: DOT 데미지 처리
         // TODO: DOT 힐 처리
         // TODO: CC 처리
+    }
+    
+    // 타격 반응 애니메이션 업데이트
+    protected virtual void UpdateHitReaction()
+    {
+        hitReactionFrame++; // 프레임 증가
+        
+        if (hitReactionFrame >= hitReactionDurationFrames)
+        {
+            // 반응 종료 - 원래 회전으로 복귀
+            spriteTransform.localRotation = originalRotation;
+            isHitReacting = false;
+        }
+        else
+        {
+            // 회전 애니메이션 (sin 커브로 부드럽게)
+            float progress = (float)hitReactionFrame / (float)hitReactionDurationFrames;
+            float curve = Mathf.Sin(progress * Mathf.PI); // 0 -> 1 -> 0 커브
+            
+            // 타격 방향에 따라 회전 (flipX 상태에 따라)
+            float rotationDirection = spriteRenderer.flipX ? -1f : 1f;
+            float currentAngle = hitReactionAngle * curve * rotationDirection;
+            
+            spriteTransform.localRotation = originalRotation * Quaternion.Euler(0, 0, currentAngle);
+        }
     }
 
     protected virtual void UpdateFrame()
@@ -998,12 +1039,29 @@ public class BaseHero : MonoBehaviour
             
             targetHero.TakeDamage(damage);
             
+            // 넉백 적용 (타겟이 살아있을 때만)
+            if (targetHero.IsAlive)
+            {
+                ApplyKnockback(targetHero);
+            }
             // 적을 죽였는지 확인
-            if (!targetHero.IsAlive)
+            else
             {
                 OnKillEnemy(targetHero);
             }
         }
+    }
+    
+    // 넉백 적용
+    protected virtual void ApplyKnockback(BaseHero targetHero)
+    {
+        if (targetHero == null) return;
+        
+        // 공격자에서 타겟으로의 방향 계산
+        Vector2 knockbackDirection = (targetHero.transform.position - transform.position).normalized;
+        
+        // 타겟을 뒤로 밀기
+        targetHero.transform.position += (Vector3)(knockbackDirection * knockbackDistance);
     }
     
     protected virtual void DoRangeAttack()
@@ -1088,11 +1146,25 @@ public class BaseHero : MonoBehaviour
         float actualDamage = Mathf.Max(0, damage - defense);
         currentHealth -= actualDamage;
         
+        // 타격 반응 시작 (죽지 않았을 때만)
+        if (currentHealth > 0 && !isHitReacting)
+        {
+            StartHitReaction();
+        }
+        
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             GotoDieState();
         }
+    }
+    
+    // 타격 반응 시작
+    protected virtual void StartHitReaction()
+    {
+        isHitReacting = true;
+        hitReactionFrame = 0;
+        originalRotation = spriteTransform.localRotation;
     }
 
     protected virtual void CheckHealth()
