@@ -1068,11 +1068,22 @@ public class BaseHero : MonoBehaviour
     {
         if (target == null) return;
         
-        // 기본 원거리 공격은 즉시 데미지 (투사체 시스템은 서브클래스에서 구현)
         BaseHero targetHero = target.GetComponent<BaseHero>();
         if (targetHero != null)
         {
-            // 크리티컬 판정
+            // 무기 발사 (heroData에 weaponClass가 있다면 사용)
+            if (!string.IsNullOrEmpty(heroData.weaponClass) && WeaponFactory.Instance != null)
+            {
+                // WeaponFactory를 통해 무기 생성 및 발사
+                BaseWeapon weapon = WeaponFactory.Instance.GetWeapon(heroData.weaponClass, this, targetHero, 1f);
+                if (weapon != null)
+                {
+                    // 무기가 자체적으로 데미지 처리
+                    return;
+                }
+            }
+            
+            // 무기가 없으면 즉시 데미지 (폴백)
             bool isCritical = UnityEngine.Random.Range(0f, 100f) < heroData.criticalChance;
             float damage = attackPower;
             
@@ -1369,6 +1380,10 @@ public class BaseHero : MonoBehaviour
     }
     
     public bool IsPlayerTeam => isPlayerTeam;
+    
+    // 적군/아군 리스트 접근자 (무기 등에서 참조용)
+    public BaseHero[] GetEnemyList() => enemyList;
+    public BaseHero[] GetFriendList() => friendList;
     #endregion
     
     #region Static Battle Management (AS3.0 Style)

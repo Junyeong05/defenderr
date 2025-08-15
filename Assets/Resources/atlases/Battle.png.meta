@@ -307,8 +307,8 @@ TextureImporter:
       name: ElfArcher10001
       rect:
         serializedVersion: 2
-        x: 116
-        y: 37
+        x: 153
+        y: 1
         width: 40
         height: 48
       alignment: 9
@@ -329,8 +329,8 @@ TextureImporter:
       name: ElfArcher10002
       rect:
         serializedVersion: 2
-        x: 116
-        y: 37
+        x: 153
+        y: 1
         width: 40
         height: 48
       alignment: 9
@@ -351,8 +351,8 @@ TextureImporter:
       name: ElfArcher10003
       rect:
         serializedVersion: 2
-        x: 116
-        y: 37
+        x: 153
+        y: 1
         width: 40
         height: 48
       alignment: 9
@@ -373,8 +373,8 @@ TextureImporter:
       name: ElfArcher10004
       rect:
         serializedVersion: 2
-        x: 116
-        y: 37
+        x: 153
+        y: 1
         width: 40
         height: 48
       alignment: 9
@@ -395,8 +395,8 @@ TextureImporter:
       name: ElfArcher10005
       rect:
         serializedVersion: 2
-        x: 306
-        y: 128
+        x: 157
+        y: 119
         width: 37
         height: 41
       alignment: 9
@@ -417,8 +417,8 @@ TextureImporter:
       name: ElfArcher10006
       rect:
         serializedVersion: 2
-        x: 306
-        y: 128
+        x: 157
+        y: 119
         width: 37
         height: 41
       alignment: 9
@@ -439,8 +439,8 @@ TextureImporter:
       name: ElfArcher10007
       rect:
         serializedVersion: 2
-        x: 306
-        y: 128
+        x: 157
+        y: 119
         width: 37
         height: 41
       alignment: 9
@@ -461,8 +461,8 @@ TextureImporter:
       name: ElfArcher10008
       rect:
         serializedVersion: 2
-        x: 306
-        y: 128
+        x: 157
+        y: 119
         width: 37
         height: 41
       alignment: 9
@@ -483,8 +483,8 @@ TextureImporter:
       name: ElfArcher10009
       rect:
         serializedVersion: 2
-        x: 85
-        y: 159
+        x: 144
+        y: 397
         width: 44
         height: 49
       alignment: 9
@@ -505,8 +505,8 @@ TextureImporter:
       name: ElfArcher10010
       rect:
         serializedVersion: 2
-        x: 85
-        y: 159
+        x: 144
+        y: 397
         width: 44
         height: 49
       alignment: 9
@@ -527,8 +527,8 @@ TextureImporter:
       name: ElfArcher10011
       rect:
         serializedVersion: 2
-        x: 85
-        y: 159
+        x: 144
+        y: 397
         width: 44
         height: 49
       alignment: 9
@@ -549,8 +549,8 @@ TextureImporter:
       name: ElfArcher10012
       rect:
         serializedVersion: 2
-        x: 85
-        y: 159
+        x: 144
+        y: 397
         width: 44
         height: 49
       alignment: 9
@@ -571,8 +571,8 @@ TextureImporter:
       name: ElfArcher10013
       rect:
         serializedVersion: 2
-        x: 204
-        y: 8
+        x: 1
+        y: 109
         width: 41
         height: 44
       alignment: 9
@@ -593,8 +593,8 @@ TextureImporter:
       name: ElfArcher10014
       rect:
         serializedVersion: 2
-        x: 204
-        y: 8
+        x: 1
+        y: 109
         width: 41
         height: 44
       alignment: 9
@@ -615,8 +615,8 @@ TextureImporter:
       name: ElfArcher10015
       rect:
         serializedVersion: 2
-        x: 204
-        y: 8
+        x: 1
+        y: 109
         width: 41
         height: 44
       alignment: 9
@@ -637,8 +637,8 @@ TextureImporter:
       name: ElfArcher10016
       rect:
         serializedVersion: 2
-        x: 204
-        y: 8
+        x: 1
+        y: 109
         width: 41
         height: 44
       alignment: 9
@@ -659,8 +659,8 @@ TextureImporter:
       name: ElfArcher10017
       rect:
         serializedVersion: 2
-        x: 398
-        y: 168
+        x: 242
+        y: 1
         width: 36
         height: 41
       alignment: 9
@@ -681,8 +681,8 @@ TextureImporter:
       name: ElfArcher10018
       rect:
         serializedVersion: 2
-        x: 398
-        y: 168
+        x: 242
+        y: 1
         width: 36
         height: 41
       alignment: 9
@@ -703,8 +703,8 @@ TextureImporter:
       name: ElfArcher10019
       rect:
         serializedVersion: 2
-        x: 398
-        y: 168
+        x: 242
+        y: 1
         width: 36
         height: 41
       alignment: 9
@@ -725,8 +725,8 @@ TextureImporter:
       name: ElfArcher10020
       rect:
         serializedVersion: 2
-        x: 171
-        y: 76
+        x: 2
+        y: 198
         width: 40
         height: 47
       alignment: 9
@@ -747,8 +747,8 @@ TextureImporter:
       name: ElfArcher10021
       rect:
         serializedVersion: 2
-        x: 171
-        y: 76
+        x: 2
+        y: 198
         width: 40
         height: 47
       alignment: 9
@@ -769,8 +769,8 @@ TextureImporter:
       name: ElfArcher10022
       rect:
         serializedVersion: 2
-        x: 171
-        y: 76
+        x: 2
+        y: 198
         width: 40
         height: 47
       alignment: 9
@@ -791,8 +791,8 @@ TextureImporter:
       name: ElfArcher10023
       rect:
         serializedVersion: 2
-        x: 353
-        y: 209
+        x: 92
+        y: 193
         width: 38
         height: 46
       alignment: 9
@@ -813,8 +813,8 @@ TextureImporter:
       name: ElfArcher10024
       rect:
         serializedVersion: 2
-        x: 353
-        y: 209
+        x: 92
+        y: 193
         width: 38
         height: 46
       alignment: 9
@@ -835,8 +835,8 @@ TextureImporter:
       name: ElfArcher10025
       rect:
         serializedVersion: 2
-        x: 353
-        y: 209
+        x: 92
+        y: 193
         width: 38
         height: 46
       alignment: 9
@@ -857,8 +857,8 @@ TextureImporter:
       name: ElfArcher10026
       rect:
         serializedVersion: 2
-        x: 353
-        y: 209
+        x: 92
+        y: 193
         width: 38
         height: 46
       alignment: 9
@@ -879,8 +879,8 @@ TextureImporter:
       name: ElfArcher10027
       rect:
         serializedVersion: 2
-        x: 79
-        y: 24
+        x: 114
+        y: 1
         width: 41
         height: 47
       alignment: 9
@@ -901,8 +901,8 @@ TextureImporter:
       name: ElfArcher10028
       rect:
         serializedVersion: 2
-        x: 79
-        y: 24
+        x: 114
+        y: 1
         width: 41
         height: 47
       alignment: 9
@@ -923,8 +923,8 @@ TextureImporter:
       name: ElfArcher10029
       rect:
         serializedVersion: 2
-        x: 79
-        y: 24
+        x: 114
+        y: 1
         width: 41
         height: 47
       alignment: 9
@@ -945,8 +945,8 @@ TextureImporter:
       name: ElfArcher10030
       rect:
         serializedVersion: 2
-        x: 79
-        y: 24
+        x: 114
+        y: 1
         width: 41
         height: 47
       alignment: 9
@@ -967,8 +967,8 @@ TextureImporter:
       name: ElfArcher10031
       rect:
         serializedVersion: 2
-        x: 476
-        y: 211
+        x: 121
+        y: 119
         width: 34
         height: 44
       alignment: 9
@@ -989,8 +989,8 @@ TextureImporter:
       name: ElfArcher10032
       rect:
         serializedVersion: 2
-        x: 476
-        y: 211
+        x: 121
+        y: 119
         width: 34
         height: 44
       alignment: 9
@@ -1011,8 +1011,8 @@ TextureImporter:
       name: ElfArcher10033
       rect:
         serializedVersion: 2
-        x: 476
-        y: 211
+        x: 121
+        y: 119
         width: 34
         height: 44
       alignment: 9
@@ -1033,8 +1033,8 @@ TextureImporter:
       name: ElfArcher10034
       rect:
         serializedVersion: 2
-        x: 476
-        y: 211
+        x: 121
+        y: 119
         width: 34
         height: 44
       alignment: 9
@@ -1055,8 +1055,8 @@ TextureImporter:
       name: ElfArcher10035
       rect:
         serializedVersion: 2
-        x: 393
-        y: 211
+        x: 35
+        y: 69
         width: 39
         height: 44
       alignment: 9
@@ -1077,8 +1077,8 @@ TextureImporter:
       name: ElfArcher10036
       rect:
         serializedVersion: 2
-        x: 393
-        y: 211
+        x: 35
+        y: 69
         width: 39
         height: 44
       alignment: 9
@@ -1099,8 +1099,8 @@ TextureImporter:
       name: ElfArcher10037
       rect:
         serializedVersion: 2
-        x: 393
-        y: 211
+        x: 35
+        y: 69
         width: 39
         height: 44
       alignment: 9
@@ -1121,8 +1121,8 @@ TextureImporter:
       name: ElfArcher10038
       rect:
         serializedVersion: 2
-        x: 393
-        y: 211
+        x: 35
+        y: 69
         width: 39
         height: 44
       alignment: 9
@@ -1143,8 +1143,8 @@ TextureImporter:
       name: ElfArcher10039
       rect:
         serializedVersion: 2
-        x: 453
-        y: 122
+        x: 476
+        y: 47
         width: 35
         height: 41
       alignment: 9
@@ -1165,8 +1165,8 @@ TextureImporter:
       name: ElfArcher10040
       rect:
         serializedVersion: 2
-        x: 453
-        y: 122
+        x: 476
+        y: 47
         width: 35
         height: 41
       alignment: 9
@@ -1187,8 +1187,8 @@ TextureImporter:
       name: ElfArcher10041
       rect:
         serializedVersion: 2
-        x: 453
-        y: 122
+        x: 476
+        y: 47
         width: 35
         height: 41
       alignment: 9
@@ -1209,8 +1209,8 @@ TextureImporter:
       name: ElfArcher10042
       rect:
         serializedVersion: 2
-        x: 453
-        y: 122
+        x: 476
+        y: 47
         width: 35
         height: 41
       alignment: 9
@@ -1231,8 +1231,8 @@ TextureImporter:
       name: ElfArcher10043
       rect:
         serializedVersion: 2
-        x: 43
-        y: 2
+        x: 1
+        y: 36
         width: 40
         height: 48
       alignment: 9
@@ -1253,8 +1253,8 @@ TextureImporter:
       name: ElfArcher10044
       rect:
         serializedVersion: 2
-        x: 43
-        y: 2
+        x: 1
+        y: 36
         width: 40
         height: 48
       alignment: 9
@@ -1275,8 +1275,8 @@ TextureImporter:
       name: ElfArcher10045
       rect:
         serializedVersion: 2
-        x: 43
-        y: 2
+        x: 1
+        y: 36
         width: 40
         height: 48
       alignment: 9
@@ -1297,8 +1297,8 @@ TextureImporter:
       name: ElfArcher10046
       rect:
         serializedVersion: 2
-        x: 43
-        y: 2
+        x: 1
+        y: 36
         width: 40
         height: 48
       alignment: 9
@@ -1319,8 +1319,8 @@ TextureImporter:
       name: ElfArcher10047
       rect:
         serializedVersion: 2
-        x: 1
-        y: 13
+        x: 126
+        y: 354
         width: 44
         height: 49
       alignment: 9
@@ -1341,8 +1341,8 @@ TextureImporter:
       name: ElfArcher10048
       rect:
         serializedVersion: 2
-        x: 1
-        y: 13
+        x: 126
+        y: 354
         width: 44
         height: 49
       alignment: 9
@@ -1363,8 +1363,8 @@ TextureImporter:
       name: ElfArcher10049
       rect:
         serializedVersion: 2
-        x: 1
-        y: 13
+        x: 126
+        y: 354
         width: 44
         height: 49
       alignment: 9
@@ -1385,8 +1385,8 @@ TextureImporter:
       name: ElfArcher10050
       rect:
         serializedVersion: 2
-        x: 1
-        y: 13
+        x: 126
+        y: 354
         width: 44
         height: 49
       alignment: 9
@@ -1407,8 +1407,8 @@ TextureImporter:
       name: ElfArcher10051
       rect:
         serializedVersion: 2
-        x: 170
-        y: 125
+        x: 195
+        y: 1
         width: 45
         height: 42
       alignment: 9
@@ -1429,8 +1429,8 @@ TextureImporter:
       name: ElfArcher10052
       rect:
         serializedVersion: 2
-        x: 170
-        y: 125
+        x: 195
+        y: 1
         width: 45
         height: 42
       alignment: 9
@@ -1451,8 +1451,8 @@ TextureImporter:
       name: ElfArcher10053
       rect:
         serializedVersion: 2
-        x: 170
-        y: 125
+        x: 195
+        y: 1
         width: 45
         height: 42
       alignment: 9
@@ -1473,8 +1473,8 @@ TextureImporter:
       name: ElfArcher10054
       rect:
         serializedVersion: 2
-        x: 170
-        y: 125
+        x: 195
+        y: 1
         width: 45
         height: 42
       alignment: 9
@@ -1495,8 +1495,8 @@ TextureImporter:
       name: ElfArcher10055
       rect:
         serializedVersion: 2
-        x: 308
-        y: 214
+        x: 47
+        y: 185
         width: 43
         height: 41
       alignment: 9
@@ -1517,8 +1517,8 @@ TextureImporter:
       name: ElfArcher10056
       rect:
         serializedVersion: 2
-        x: 308
-        y: 214
+        x: 47
+        y: 185
         width: 43
         height: 41
       alignment: 9
@@ -1539,8 +1539,8 @@ TextureImporter:
       name: ElfArcher10057
       rect:
         serializedVersion: 2
-        x: 308
-        y: 214
+        x: 47
+        y: 185
         width: 43
         height: 41
       alignment: 9
@@ -1561,8 +1561,8 @@ TextureImporter:
       name: ElfArcher10058
       rect:
         serializedVersion: 2
-        x: 308
-        y: 214
+        x: 47
+        y: 185
         width: 43
         height: 41
       alignment: 9
@@ -1583,8 +1583,8 @@ TextureImporter:
       name: ElfArcher10059
       rect:
         serializedVersion: 2
-        x: 88
-        y: 207
+        x: 93
+        y: 269
         width: 45
         height: 48
       alignment: 9
@@ -1605,8 +1605,8 @@ TextureImporter:
       name: ElfArcher10060
       rect:
         serializedVersion: 2
-        x: 88
-        y: 207
+        x: 93
+        y: 269
         width: 45
         height: 48
       alignment: 9
@@ -1627,8 +1627,8 @@ TextureImporter:
       name: ElfArcher10061
       rect:
         serializedVersion: 2
-        x: 88
-        y: 207
+        x: 93
+        y: 269
         width: 45
         height: 48
       alignment: 9
@@ -1649,8 +1649,8 @@ TextureImporter:
       name: ElfArcher10062
       rect:
         serializedVersion: 2
-        x: 88
-        y: 207
+        x: 93
+        y: 269
         width: 45
         height: 48
       alignment: 9
@@ -1671,8 +1671,8 @@ TextureImporter:
       name: ElfArcher10063
       rect:
         serializedVersion: 2
-        x: 306
-        y: 171
+        x: 81
+        y: 97
         width: 38
         height: 41
       alignment: 9
@@ -1693,8 +1693,8 @@ TextureImporter:
       name: ElfArcher10064
       rect:
         serializedVersion: 2
-        x: 306
-        y: 171
+        x: 81
+        y: 97
         width: 38
         height: 41
       alignment: 9
@@ -1715,8 +1715,8 @@ TextureImporter:
       name: ElfArcher10065
       rect:
         serializedVersion: 2
-        x: 306
-        y: 171
+        x: 81
+        y: 97
         width: 38
         height: 41
       alignment: 9
@@ -1737,8 +1737,8 @@ TextureImporter:
       name: ElfArcher10066
       rect:
         serializedVersion: 2
-        x: 306
-        y: 171
+        x: 81
+        y: 97
         width: 38
         height: 41
       alignment: 9
@@ -1759,8 +1759,8 @@ TextureImporter:
       name: ElfArcher10067
       rect:
         serializedVersion: 2
-        x: 417
-        y: 124
+        x: 443
+        y: 1
         width: 34
         height: 42
       alignment: 9
@@ -1781,8 +1781,8 @@ TextureImporter:
       name: ElfArcher10068
       rect:
         serializedVersion: 2
-        x: 417
-        y: 124
+        x: 443
+        y: 1
         width: 34
         height: 42
       alignment: 9
@@ -1803,8 +1803,8 @@ TextureImporter:
       name: ElfArcher10069
       rect:
         serializedVersion: 2
-        x: 417
-        y: 124
+        x: 443
+        y: 1
         width: 34
         height: 42
       alignment: 9
@@ -1825,8 +1825,8 @@ TextureImporter:
       name: ElfArcher10070
       rect:
         serializedVersion: 2
-        x: 381
-        y: 124
+        x: 222
+        y: 45
         width: 34
         height: 42
       alignment: 9
@@ -1847,8 +1847,8 @@ TextureImporter:
       name: ElfArcher10071
       rect:
         serializedVersion: 2
-        x: 381
-        y: 124
+        x: 222
+        y: 45
         width: 34
         height: 42
       alignment: 9
@@ -1869,8 +1869,8 @@ TextureImporter:
       name: ElfArcher10072
       rect:
         serializedVersion: 2
-        x: 381
-        y: 124
+        x: 222
+        y: 45
         width: 34
         height: 42
       alignment: 9
@@ -1891,8 +1891,8 @@ TextureImporter:
       name: ElfArcher10073
       rect:
         serializedVersion: 2
-        x: 116
-        y: 37
+        x: 153
+        y: 1
         width: 40
         height: 48
       alignment: 9
@@ -1913,8 +1913,8 @@ TextureImporter:
       name: ElfArcher10074
       rect:
         serializedVersion: 2
-        x: 116
-        y: 37
+        x: 153
+        y: 1
         width: 40
         height: 48
       alignment: 9
@@ -1935,8 +1935,8 @@ TextureImporter:
       name: ElfArcher10075
       rect:
         serializedVersion: 2
-        x: 116
-        y: 37
+        x: 153
+        y: 1
         width: 40
         height: 48
       alignment: 9
@@ -1957,8 +1957,8 @@ TextureImporter:
       name: ElfArcher10076
       rect:
         serializedVersion: 2
-        x: 116
-        y: 37
+        x: 153
+        y: 1
         width: 40
         height: 48
       alignment: 9
@@ -1979,8 +1979,8 @@ TextureImporter:
       name: ElfArcher10077
       rect:
         serializedVersion: 2
-        x: 36
-        y: 151
+        x: 44
+        y: 273
         width: 47
         height: 52
       alignment: 9
@@ -2001,8 +2001,8 @@ TextureImporter:
       name: ElfArcher10078
       rect:
         serializedVersion: 2
-        x: 36
-        y: 151
+        x: 44
+        y: 273
         width: 47
         height: 52
       alignment: 9
@@ -2023,8 +2023,8 @@ TextureImporter:
       name: ElfArcher10079
       rect:
         serializedVersion: 2
-        x: 36
-        y: 151
+        x: 44
+        y: 273
         width: 47
         height: 52
       alignment: 9
@@ -2045,8 +2045,8 @@ TextureImporter:
       name: ElfArcher10080
       rect:
         serializedVersion: 2
-        x: 36
-        y: 151
+        x: 44
+        y: 273
         width: 47
         height: 52
       alignment: 9
@@ -2067,8 +2067,8 @@ TextureImporter:
       name: ElfArcher10081
       rect:
         serializedVersion: 2
-        x: 114
-        y: 87
+        x: 60
+        y: 1
         width: 55
         height: 34
       alignment: 9
@@ -2089,8 +2089,8 @@ TextureImporter:
       name: ElfArcher10082
       rect:
         serializedVersion: 2
-        x: 114
-        y: 87
+        x: 60
+        y: 1
         width: 55
         height: 34
       alignment: 9
@@ -2111,8 +2111,8 @@ TextureImporter:
       name: ElfArcher10083
       rect:
         serializedVersion: 2
-        x: 114
-        y: 87
+        x: 60
+        y: 1
         width: 55
         height: 34
       alignment: 9
@@ -2133,8 +2133,8 @@ TextureImporter:
       name: ElfArcher10084
       rect:
         serializedVersion: 2
-        x: 114
-        y: 87
+        x: 60
+        y: 1
         width: 55
         height: 34
       alignment: 9
@@ -2155,8 +2155,8 @@ TextureImporter:
       name: ElfArcher10085
       rect:
         serializedVersion: 2
-        x: 167
-        y: 169
+        x: 1
+        y: 1
         width: 57
         height: 32
       alignment: 9
@@ -2177,8 +2177,8 @@ TextureImporter:
       name: ElfArcher10086
       rect:
         serializedVersion: 2
-        x: 167
-        y: 169
+        x: 1
+        y: 1
         width: 57
         height: 32
       alignment: 9
@@ -2199,8 +2199,8 @@ TextureImporter:
       name: ElfArcher10087
       rect:
         serializedVersion: 2
-        x: 167
-        y: 169
+        x: 1
+        y: 1
         width: 57
         height: 32
       alignment: 9
@@ -2221,8 +2221,8 @@ TextureImporter:
       name: ElfArcher10088
       rect:
         serializedVersion: 2
-        x: 167
-        y: 169
+        x: 1
+        y: 1
         width: 57
         height: 32
       alignment: 9
@@ -2243,8 +2243,8 @@ TextureImporter:
       name: ElfArcher10089
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2265,8 +2265,8 @@ TextureImporter:
       name: ElfArcher10090
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2287,8 +2287,8 @@ TextureImporter:
       name: ElfArcher10091
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2309,8 +2309,8 @@ TextureImporter:
       name: ElfArcher10092
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2331,8 +2331,8 @@ TextureImporter:
       name: ElfArcher10093
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2353,8 +2353,8 @@ TextureImporter:
       name: ElfArcher10094
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2375,8 +2375,8 @@ TextureImporter:
       name: ElfArcher10095
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2397,8 +2397,8 @@ TextureImporter:
       name: ElfArcher10096
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2419,8 +2419,8 @@ TextureImporter:
       name: ElfArcher10097
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2441,8 +2441,8 @@ TextureImporter:
       name: ElfArcher10098
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2463,8 +2463,8 @@ TextureImporter:
       name: ElfArcher10099
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2485,8 +2485,8 @@ TextureImporter:
       name: ElfArcher10100
       rect:
         serializedVersion: 2
-        x: 250
-        y: 227
+        x: 84
+        y: 241
         width: 56
         height: 28
       alignment: 9
@@ -2507,8 +2507,8 @@ TextureImporter:
       name: ElfArcher10101
       rect:
         serializedVersion: 2
-        x: 158
-        y: 48
+        x: 43
+        y: 38
         width: 58
         height: 28
       alignment: 9
@@ -2529,8 +2529,8 @@ TextureImporter:
       name: ElfArcher10102
       rect:
         serializedVersion: 2
-        x: 158
-        y: 48
+        x: 43
+        y: 38
         width: 58
         height: 28
       alignment: 9
@@ -2551,8 +2551,8 @@ TextureImporter:
       name: ElfArcher10103
       rect:
         serializedVersion: 2
-        x: 158
-        y: 48
+        x: 43
+        y: 38
         width: 58
         height: 28
       alignment: 9
@@ -2573,8 +2573,8 @@ TextureImporter:
       name: ElfArcher10104
       rect:
         serializedVersion: 2
-        x: 213
-        y: 76
+        x: 132
+        y: 187
         width: 56
         height: 25
       alignment: 9
@@ -2595,8 +2595,8 @@ TextureImporter:
       name: ElfArcher10105
       rect:
         serializedVersion: 2
-        x: 213
-        y: 76
+        x: 132
+        y: 187
         width: 56
         height: 25
       alignment: 9
@@ -2617,8 +2617,8 @@ TextureImporter:
       name: ElfArcher10106
       rect:
         serializedVersion: 2
-        x: 213
-        y: 76
+        x: 132
+        y: 187
         width: 56
         height: 25
       alignment: 9
@@ -2639,8 +2639,8 @@ TextureImporter:
       name: ElfArcher10107
       rect:
         serializedVersion: 2
-        x: 88
-        y: 254
+        x: 213
+        y: 336
         width: 1
         height: 1
       alignment: 9
@@ -2661,8 +2661,8 @@ TextureImporter:
       name: FootMan10001
       rect:
         serializedVersion: 2
-        x: 211
-        y: 203
+        x: 214
+        y: 323
         width: 38
         height: 52
       alignment: 9
@@ -2683,8 +2683,8 @@ TextureImporter:
       name: FootMan10002
       rect:
         serializedVersion: 2
-        x: 211
-        y: 203
+        x: 214
+        y: 323
         width: 38
         height: 52
       alignment: 9
@@ -2705,8 +2705,8 @@ TextureImporter:
       name: FootMan10003
       rect:
         serializedVersion: 2
-        x: 211
-        y: 203
+        x: 214
+        y: 323
         width: 38
         height: 52
       alignment: 9
@@ -2727,8 +2727,8 @@ TextureImporter:
       name: FootMan10004
       rect:
         serializedVersion: 2
-        x: 211
-        y: 203
+        x: 214
+        y: 323
         width: 38
         height: 52
       alignment: 9
@@ -2749,8 +2749,8 @@ TextureImporter:
       name: FootMan10005
       rect:
         serializedVersion: 2
-        x: 472
-        y: 165
+        x: 479
+        y: 1
         width: 32
         height: 44
       alignment: 9
@@ -2771,8 +2771,8 @@ TextureImporter:
       name: FootMan10006
       rect:
         serializedVersion: 2
-        x: 472
-        y: 165
+        x: 479
+        y: 1
         width: 32
         height: 44
       alignment: 9
@@ -2793,8 +2793,8 @@ TextureImporter:
       name: FootMan10007
       rect:
         serializedVersion: 2
-        x: 472
-        y: 165
+        x: 479
+        y: 1
         width: 32
         height: 44
       alignment: 9
@@ -2815,8 +2815,8 @@ TextureImporter:
       name: FootMan10008
       rect:
         serializedVersion: 2
-        x: 472
-        y: 165
+        x: 479
+        y: 1
         width: 32
         height: 44
       alignment: 9
@@ -2837,8 +2837,8 @@ TextureImporter:
       name: FootMan10009
       rect:
         serializedVersion: 2
-        x: 129
-        y: 148
+        x: 1
+        y: 243
         width: 38
         height: 51
       alignment: 9
@@ -2859,8 +2859,8 @@ TextureImporter:
       name: FootMan10010
       rect:
         serializedVersion: 2
-        x: 129
-        y: 148
+        x: 1
+        y: 243
         width: 38
         height: 51
       alignment: 9
@@ -2881,8 +2881,8 @@ TextureImporter:
       name: FootMan10011
       rect:
         serializedVersion: 2
-        x: 129
-        y: 148
+        x: 1
+        y: 243
         width: 38
         height: 51
       alignment: 9
@@ -2903,8 +2903,8 @@ TextureImporter:
       name: FootMan10012
       rect:
         serializedVersion: 2
-        x: 129
-        y: 148
+        x: 1
+        y: 243
         width: 38
         height: 51
       alignment: 9
@@ -2925,8 +2925,8 @@ TextureImporter:
       name: FootMan10013
       rect:
         serializedVersion: 2
-        x: 381
-        y: 79
+        x: 443
+        y: 468
         width: 32
         height: 43
       alignment: 9
@@ -2947,8 +2947,8 @@ TextureImporter:
       name: FootMan10014
       rect:
         serializedVersion: 2
-        x: 381
-        y: 79
+        x: 443
+        y: 468
         width: 32
         height: 43
       alignment: 9
@@ -2969,8 +2969,8 @@ TextureImporter:
       name: FootMan10015
       rect:
         serializedVersion: 2
-        x: 381
-        y: 79
+        x: 443
+        y: 468
         width: 32
         height: 43
       alignment: 9
@@ -2991,8 +2991,8 @@ TextureImporter:
       name: FootMan10016
       rect:
         serializedVersion: 2
-        x: 381
-        y: 79
+        x: 443
+        y: 468
         width: 32
         height: 43
       alignment: 9
@@ -3013,8 +3013,8 @@ TextureImporter:
       name: FootMan10017
       rect:
         serializedVersion: 2
-        x: 347
-        y: 88
+        x: 479
+        y: 424
         width: 32
         height: 43
       alignment: 9
@@ -3035,8 +3035,8 @@ TextureImporter:
       name: FootMan10018
       rect:
         serializedVersion: 2
-        x: 347
-        y: 88
+        x: 479
+        y: 424
         width: 32
         height: 43
       alignment: 9
@@ -3057,8 +3057,8 @@ TextureImporter:
       name: FootMan10019
       rect:
         serializedVersion: 2
-        x: 347
-        y: 88
+        x: 479
+        y: 424
         width: 32
         height: 43
       alignment: 9
@@ -3079,8 +3079,8 @@ TextureImporter:
       name: FootMan10020
       rect:
         serializedVersion: 2
-        x: 347
-        y: 88
+        x: 479
+        y: 424
         width: 32
         height: 43
       alignment: 9
@@ -3101,8 +3101,8 @@ TextureImporter:
       name: FootMan10021
       rect:
         serializedVersion: 2
-        x: 75
-        y: 69
+        x: 214
+        y: 275
         width: 38
         height: 51
       alignment: 9
@@ -3123,8 +3123,8 @@ TextureImporter:
       name: FootMan10022
       rect:
         serializedVersion: 2
-        x: 75
-        y: 69
+        x: 214
+        y: 275
         width: 38
         height: 51
       alignment: 9
@@ -3145,8 +3145,8 @@ TextureImporter:
       name: FootMan10023
       rect:
         serializedVersion: 2
-        x: 75
-        y: 69
+        x: 214
+        y: 275
         width: 38
         height: 51
       alignment: 9
@@ -3167,8 +3167,8 @@ TextureImporter:
       name: FootMan10024
       rect:
         serializedVersion: 2
-        x: 36
-        y: 48
+        x: 177
+        y: 285
         width: 38
         height: 52
       alignment: 9
@@ -3189,8 +3189,8 @@ TextureImporter:
       name: FootMan10025
       rect:
         serializedVersion: 2
-        x: 36
-        y: 48
+        x: 177
+        y: 285
         width: 38
         height: 52
       alignment: 9
@@ -3211,8 +3211,8 @@ TextureImporter:
       name: FootMan10026
       rect:
         serializedVersion: 2
-        x: 36
-        y: 48
+        x: 177
+        y: 285
         width: 38
         height: 52
       alignment: 9
@@ -3233,8 +3233,8 @@ TextureImporter:
       name: FootMan10027
       rect:
         serializedVersion: 2
-        x: 346
-        y: 133
+        x: 196
+        y: 99
         width: 33
         height: 44
       alignment: 9
@@ -3255,8 +3255,8 @@ TextureImporter:
       name: FootMan10028
       rect:
         serializedVersion: 2
-        x: 346
-        y: 133
+        x: 196
+        y: 99
         width: 33
         height: 44
       alignment: 9
@@ -3277,8 +3277,8 @@ TextureImporter:
       name: FootMan10029
       rect:
         serializedVersion: 2
-        x: 346
-        y: 133
+        x: 196
+        y: 99
         width: 33
         height: 44
       alignment: 9
@@ -3299,8 +3299,8 @@ TextureImporter:
       name: FootMan10030
       rect:
         serializedVersion: 2
-        x: 346
-        y: 133
+        x: 196
+        y: 99
         width: 33
         height: 44
       alignment: 9
@@ -3321,8 +3321,8 @@ TextureImporter:
       name: FootMan10031
       rect:
         serializedVersion: 2
-        x: 1
-        y: 64
+        x: 88
+        y: 356
         width: 39
         height: 57
       alignment: 9
@@ -3343,8 +3343,8 @@ TextureImporter:
       name: FootMan10032
       rect:
         serializedVersion: 2
-        x: 1
-        y: 64
+        x: 88
+        y: 356
         width: 39
         height: 57
       alignment: 9
@@ -3365,8 +3365,8 @@ TextureImporter:
       name: FootMan10033
       rect:
         serializedVersion: 2
-        x: 1
-        y: 64
+        x: 88
+        y: 356
         width: 39
         height: 57
       alignment: 9
@@ -3387,8 +3387,8 @@ TextureImporter:
       name: FootMan10034
       rect:
         serializedVersion: 2
-        x: 1
-        y: 64
+        x: 88
+        y: 356
         width: 39
         height: 57
       alignment: 9
@@ -3410,7 +3410,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 120
+        y: 291
         width: 41
         height: 62
       alignment: 9
@@ -3432,7 +3432,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 120
+        y: 291
         width: 41
         height: 62
       alignment: 9
@@ -3454,7 +3454,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 120
+        y: 291
         width: 41
         height: 62
       alignment: 9
@@ -3476,7 +3476,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 120
+        y: 291
         width: 41
         height: 62
       alignment: 9
@@ -3497,8 +3497,8 @@ TextureImporter:
       name: FootMan10039
       rect:
         serializedVersion: 2
-        x: 213
-        y: 103
+        x: 44
+        y: 228
         width: 38
         height: 46
       alignment: 9
@@ -3519,8 +3519,8 @@ TextureImporter:
       name: FootMan10040
       rect:
         serializedVersion: 2
-        x: 213
-        y: 103
+        x: 44
+        y: 228
         width: 38
         height: 46
       alignment: 9
@@ -3541,8 +3541,8 @@ TextureImporter:
       name: FootMan10041
       rect:
         serializedVersion: 2
-        x: 213
-        y: 103
+        x: 44
+        y: 228
         width: 38
         height: 46
       alignment: 9
@@ -3563,8 +3563,8 @@ TextureImporter:
       name: FootMan10042
       rect:
         serializedVersion: 2
-        x: 213
-        y: 103
+        x: 44
+        y: 228
         width: 38
         height: 46
       alignment: 9
@@ -3585,8 +3585,8 @@ TextureImporter:
       name: FootMan10043
       rect:
         serializedVersion: 2
-        x: 436
-        y: 169
+        x: 477
+        y: 469
         width: 34
         height: 42
       alignment: 9
@@ -3607,8 +3607,8 @@ TextureImporter:
       name: FootMan10044
       rect:
         serializedVersion: 2
-        x: 436
-        y: 169
+        x: 477
+        y: 469
         width: 34
         height: 42
       alignment: 9
@@ -3629,8 +3629,8 @@ TextureImporter:
       name: FootMan10045
       rect:
         serializedVersion: 2
-        x: 436
-        y: 169
+        x: 477
+        y: 469
         width: 34
         height: 42
       alignment: 9
@@ -3651,8 +3651,8 @@ TextureImporter:
       name: FootMan10046
       rect:
         serializedVersion: 2
-        x: 436
-        y: 169
+        x: 477
+        y: 469
         width: 34
         height: 42
       alignment: 9
@@ -3673,8 +3673,8 @@ TextureImporter:
       name: FootMan10047
       rect:
         serializedVersion: 2
-        x: 171
-        y: 203
+        x: 176
+        y: 339
         width: 38
         height: 52
       alignment: 9
@@ -3695,8 +3695,8 @@ TextureImporter:
       name: FootMan10048
       rect:
         serializedVersion: 2
-        x: 171
-        y: 203
+        x: 176
+        y: 339
         width: 38
         height: 52
       alignment: 9
@@ -3717,8 +3717,8 @@ TextureImporter:
       name: FootMan10049
       rect:
         serializedVersion: 2
-        x: 171
-        y: 203
+        x: 176
+        y: 339
         width: 38
         height: 52
       alignment: 9
@@ -3739,8 +3739,8 @@ TextureImporter:
       name: FootMan10050
       rect:
         serializedVersion: 2
-        x: 171
-        y: 203
+        x: 176
+        y: 339
         width: 38
         height: 52
       alignment: 9
@@ -3761,8 +3761,8 @@ TextureImporter:
       name: FootMan10051
       rect:
         serializedVersion: 2
-        x: 285
-        y: 29
+        x: 479
+        y: 90
         width: 32
         height: 43
       alignment: 9
@@ -3783,8 +3783,8 @@ TextureImporter:
       name: FootMan10052
       rect:
         serializedVersion: 2
-        x: 285
-        y: 29
+        x: 479
+        y: 90
         width: 32
         height: 43
       alignment: 9
@@ -3805,8 +3805,8 @@ TextureImporter:
       name: FootMan10053
       rect:
         serializedVersion: 2
-        x: 285
-        y: 29
+        x: 479
+        y: 90
         width: 32
         height: 43
       alignment: 9
@@ -3827,8 +3827,8 @@ TextureImporter:
       name: FootMan10054
       rect:
         serializedVersion: 2
-        x: 285
-        y: 29
+        x: 479
+        y: 90
         width: 32
         height: 43
       alignment: 9
@@ -3849,8 +3849,8 @@ TextureImporter:
       name: FootMan10055
       rect:
         serializedVersion: 2
-        x: 247
-        y: 28
+        x: 189
+        y: 174
         width: 36
         height: 43
       alignment: 9
@@ -3871,8 +3871,8 @@ TextureImporter:
       name: FootMan10056
       rect:
         serializedVersion: 2
-        x: 247
-        y: 28
+        x: 189
+        y: 174
         width: 36
         height: 43
       alignment: 9
@@ -3893,8 +3893,8 @@ TextureImporter:
       name: FootMan10057
       rect:
         serializedVersion: 2
-        x: 247
-        y: 28
+        x: 189
+        y: 174
         width: 36
         height: 43
       alignment: 9
@@ -3915,8 +3915,8 @@ TextureImporter:
       name: FootMan10058
       rect:
         serializedVersion: 2
-        x: 158
-        y: 5
+        x: 1
+        y: 155
         width: 44
         height: 41
       alignment: 9
@@ -3937,8 +3937,8 @@ TextureImporter:
       name: FootMan10059
       rect:
         serializedVersion: 2
-        x: 158
-        y: 5
+        x: 1
+        y: 155
         width: 44
         height: 41
       alignment: 9
@@ -3959,8 +3959,8 @@ TextureImporter:
       name: FootMan10060
       rect:
         serializedVersion: 2
-        x: 261
-        y: 135
+        x: 176
+        y: 219
         width: 43
         height: 36
       alignment: 9
@@ -3981,8 +3981,8 @@ TextureImporter:
       name: FootMan10061
       rect:
         serializedVersion: 2
-        x: 415
-        y: 59
+        x: 405
+        y: 1
         width: 36
         height: 36
       alignment: 9
@@ -4003,8 +4003,8 @@ TextureImporter:
       name: FootMan10062
       rect:
         serializedVersion: 2
-        x: 217
-        y: 152
+        x: 132
+        y: 214
         width: 42
         height: 41
       alignment: 9
@@ -4025,8 +4025,8 @@ TextureImporter:
       name: FootMan10063
       rect:
         serializedVersion: 2
-        x: 217
-        y: 152
+        x: 132
+        y: 214
         width: 42
         height: 41
       alignment: 9
@@ -4047,8 +4047,8 @@ TextureImporter:
       name: FootMan10064
       rect:
         serializedVersion: 2
-        x: 217
-        y: 152
+        x: 132
+        y: 214
         width: 42
         height: 41
       alignment: 9
@@ -4069,8 +4069,8 @@ TextureImporter:
       name: FootMan10065
       rect:
         serializedVersion: 2
-        x: 217
-        y: 152
+        x: 132
+        y: 214
         width: 42
         height: 41
       alignment: 9
@@ -4091,8 +4091,8 @@ TextureImporter:
       name: FootMan10066
       rect:
         serializedVersion: 2
-        x: 434
-        y: 213
+        x: 44
+        y: 141
         width: 40
         height: 42
       alignment: 9
@@ -4113,8 +4113,8 @@ TextureImporter:
       name: FootMan10067
       rect:
         serializedVersion: 2
-        x: 434
-        y: 213
+        x: 44
+        y: 141
         width: 40
         height: 42
       alignment: 9
@@ -4135,8 +4135,8 @@ TextureImporter:
       name: FootMan10068
       rect:
         serializedVersion: 2
-        x: 434
-        y: 213
+        x: 44
+        y: 141
         width: 40
         height: 42
       alignment: 9
@@ -4157,8 +4157,8 @@ TextureImporter:
       name: FootMan10069
       rect:
         serializedVersion: 2
-        x: 434
-        y: 213
+        x: 44
+        y: 141
         width: 40
         height: 42
       alignment: 9
@@ -4179,8 +4179,8 @@ TextureImporter:
       name: FootMan10070
       rect:
         serializedVersion: 2
-        x: 133
-        y: 201
+        x: 190
+        y: 393
         width: 37
         height: 54
       alignment: 9
@@ -4201,8 +4201,8 @@ TextureImporter:
       name: FootMan10071
       rect:
         serializedVersion: 2
-        x: 133
-        y: 201
+        x: 190
+        y: 393
         width: 37
         height: 54
       alignment: 9
@@ -4223,8 +4223,8 @@ TextureImporter:
       name: FootMan10072
       rect:
         serializedVersion: 2
-        x: 133
-        y: 201
+        x: 190
+        y: 393
         width: 37
         height: 54
       alignment: 9
@@ -4245,8 +4245,8 @@ TextureImporter:
       name: FootMan10073
       rect:
         serializedVersion: 2
-        x: 133
-        y: 201
+        x: 190
+        y: 393
         width: 37
         height: 54
       alignment: 9
@@ -4267,8 +4267,8 @@ TextureImporter:
       name: FootMan10074
       rect:
         serializedVersion: 2
-        x: 261
-        y: 181
+        x: 184
+        y: 45
         width: 36
         height: 44
       alignment: 9
@@ -4289,8 +4289,8 @@ TextureImporter:
       name: FootMan10075
       rect:
         serializedVersion: 2
-        x: 261
-        y: 181
+        x: 184
+        y: 45
         width: 36
         height: 44
       alignment: 9
@@ -4311,8 +4311,8 @@ TextureImporter:
       name: FootMan10076
       rect:
         serializedVersion: 2
-        x: 261
-        y: 181
+        x: 184
+        y: 45
         width: 36
         height: 44
       alignment: 9
@@ -4333,8 +4333,8 @@ TextureImporter:
       name: FootMan10077
       rect:
         serializedVersion: 2
-        x: 42
-        y: 100
+        x: 140
+        y: 299
         width: 38
         height: 52
       alignment: 9
@@ -4355,8 +4355,8 @@ TextureImporter:
       name: FootMan10078
       rect:
         serializedVersion: 2
-        x: 42
-        y: 100
+        x: 140
+        y: 299
         width: 38
         height: 52
       alignment: 9
@@ -4377,8 +4377,8 @@ TextureImporter:
       name: FootMan10079
       rect:
         serializedVersion: 2
-        x: 42
-        y: 100
+        x: 140
+        y: 299
         width: 38
         height: 52
       alignment: 9
@@ -4399,8 +4399,8 @@ TextureImporter:
       name: FootMan10080
       rect:
         serializedVersion: 2
-        x: 42
-        y: 100
+        x: 140
+        y: 299
         width: 38
         height: 52
       alignment: 9
@@ -4422,7 +4422,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 184
+        y: 355
         width: 33
         height: 71
       alignment: 9
@@ -4444,7 +4444,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 184
+        y: 355
         width: 33
         height: 71
       alignment: 9
@@ -4466,7 +4466,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 184
+        y: 355
         width: 33
         height: 71
       alignment: 9
@@ -4488,7 +4488,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 184
+        y: 355
         width: 33
         height: 71
       alignment: 9
@@ -4509,8 +4509,8 @@ TextureImporter:
       name: FootMan10085
       rect:
         serializedVersion: 2
-        x: 81
-        y: 122
+        x: 140
+        y: 257
         width: 49
         height: 40
       alignment: 9
@@ -4531,8 +4531,8 @@ TextureImporter:
       name: FootMan10086
       rect:
         serializedVersion: 2
-        x: 81
-        y: 122
+        x: 140
+        y: 257
         width: 49
         height: 40
       alignment: 9
@@ -4553,8 +4553,8 @@ TextureImporter:
       name: FootMan10087
       rect:
         serializedVersion: 2
-        x: 81
-        y: 122
+        x: 140
+        y: 257
         width: 49
         height: 40
       alignment: 9
@@ -4575,8 +4575,8 @@ TextureImporter:
       name: FootMan10088
       rect:
         serializedVersion: 2
-        x: 81
-        y: 122
+        x: 140
+        y: 257
         width: 49
         height: 40
       alignment: 9
@@ -4597,8 +4597,8 @@ TextureImporter:
       name: FootMan10089
       rect:
         serializedVersion: 2
-        x: 346
-        y: 179
+        x: 121
+        y: 89
         width: 50
         height: 28
       alignment: 9
@@ -4619,8 +4619,8 @@ TextureImporter:
       name: FootMan10090
       rect:
         serializedVersion: 2
-        x: 346
-        y: 179
+        x: 121
+        y: 89
         width: 50
         height: 28
       alignment: 9
@@ -4641,8 +4641,8 @@ TextureImporter:
       name: FootMan10091
       rect:
         serializedVersion: 2
-        x: 346
-        y: 179
+        x: 121
+        y: 89
         width: 50
         height: 28
       alignment: 9
@@ -4663,8 +4663,8 @@ TextureImporter:
       name: FootMan10092
       rect:
         serializedVersion: 2
-        x: 346
-        y: 179
+        x: 121
+        y: 89
         width: 50
         height: 28
       alignment: 9
@@ -4685,8 +4685,8 @@ TextureImporter:
       name: FootMan10093
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4707,8 +4707,8 @@ TextureImporter:
       name: FootMan10094
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4729,8 +4729,8 @@ TextureImporter:
       name: FootMan10095
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4751,8 +4751,8 @@ TextureImporter:
       name: FootMan10096
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4773,8 +4773,8 @@ TextureImporter:
       name: FootMan10097
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4795,8 +4795,8 @@ TextureImporter:
       name: FootMan10098
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4817,8 +4817,8 @@ TextureImporter:
       name: FootMan10099
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4839,8 +4839,8 @@ TextureImporter:
       name: FootMan10100
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4861,8 +4861,8 @@ TextureImporter:
       name: FootMan10101
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4883,8 +4883,8 @@ TextureImporter:
       name: FootMan10102
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4905,8 +4905,8 @@ TextureImporter:
       name: FootMan10103
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4927,8 +4927,8 @@ TextureImporter:
       name: FootMan10104
       rect:
         serializedVersion: 2
-        x: 415
-        y: 97
+        x: 392
+        y: 488
         width: 49
         height: 23
       alignment: 9
@@ -4949,8 +4949,8 @@ TextureImporter:
       name: FootMan10105
       rect:
         serializedVersion: 2
-        x: 271
-        y: 73
+        x: 76
+        y: 65
         width: 50
         height: 30
       alignment: 9
@@ -4971,8 +4971,8 @@ TextureImporter:
       name: FootMan10106
       rect:
         serializedVersion: 2
-        x: 271
-        y: 73
+        x: 76
+        y: 65
         width: 50
         height: 30
       alignment: 9
@@ -4993,8 +4993,8 @@ TextureImporter:
       name: FootMan10107
       rect:
         serializedVersion: 2
-        x: 271
-        y: 73
+        x: 76
+        y: 65
         width: 50
         height: 30
       alignment: 9
@@ -5015,8 +5015,8 @@ TextureImporter:
       name: FootMan10108
       rect:
         serializedVersion: 2
-        x: 253
-        y: 103
+        x: 92
+        y: 162
         width: 50
         height: 30
       alignment: 9
@@ -5037,8 +5037,8 @@ TextureImporter:
       name: FootMan10109
       rect:
         serializedVersion: 2
-        x: 253
-        y: 103
+        x: 92
+        y: 162
         width: 50
         height: 30
       alignment: 9
@@ -5059,8 +5059,8 @@ TextureImporter:
       name: FootMan10110
       rect:
         serializedVersion: 2
-        x: 253
-        y: 103
+        x: 92
+        y: 162
         width: 50
         height: 30
       alignment: 9
@@ -5081,8 +5081,8 @@ TextureImporter:
       name: FootMan10111
       rect:
         serializedVersion: 2
-        x: 88
-        y: 254
+        x: 213
+        y: 336
         width: 1
         height: 1
       alignment: 9
@@ -5104,7 +5104,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 36
-        y: 205
+        y: 347
         width: 50
         height: 50
       alignment: 1
@@ -5117,6 +5117,468 @@ TextureImporter:
       bones: []
       spriteID: 7fb5ba395d49748fb8fba10820b64dff
       internalID: 1363260907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlArrow1
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 344
+        width: 37
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5405405, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9bb8eae5fdf147878f7a25ddfaa7381
+      internalID: 103316647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlArrowSkill1
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 145
+        width: 50
+        height: 27
+      alignment: 9
+      pivot: {x: 0.46, y: 0.5185185}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0075653e62dfd411992fdc319b308cf0
+      internalID: 259152178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10001
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 432
+        width: 80
+        height: 79
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49367088}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9591a99e78ea14d0baf0958e71ded7b3
+      internalID: 6741482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10002
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 432
+        width: 80
+        height: 79
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49367088}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5e04f6ebe3524a5484dfa11d9eb5179
+      internalID: 293490420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10003
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 432
+        width: 80
+        height: 79
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49367088}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a7c6e6e90eca433a91f7deb5702b087
+      internalID: -632205730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10004
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 432
+        width: 80
+        height: 79
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49367088}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c5a4dc47a900416dae994fdbccaeea8
+      internalID: 480358608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10005
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 448
+        width: 76
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3809524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c140a198806794363b470b012bbeedd5
+      internalID: 1273863497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10006
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 448
+        width: 76
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3809524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 865f6ca393a0945b186eebcd18e31f8c
+      internalID: -358412787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10007
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 448
+        width: 76
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3809524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6db5334f826be4e7bb6a53c7e8b2de23
+      internalID: -1532666097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10008
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 448
+        width: 76
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3809524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 984cb48656e8e4821a6cbd1ebc70b23f
+      internalID: 1404340470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10009
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 435
+        width: 79
+        height: 76
+      alignment: 9
+      pivot: {x: 0.49367088, y: 0.4868421}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47a59c57133cd4deb89f5ddee41f2425
+      internalID: -755708324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10010
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 435
+        width: 79
+        height: 76
+      alignment: 9
+      pivot: {x: 0.49367088, y: 0.4868421}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e349e16d05e91444cbd512264ed6835e
+      internalID: 1808235198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10011
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 435
+        width: 79
+        height: 76
+      alignment: 9
+      pivot: {x: 0.49367088, y: 0.4868421}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f5039ad13e2f4667b326ff57b4dcae0
+      internalID: -1179473523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10012
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 435
+        width: 79
+        height: 76
+      alignment: 9
+      pivot: {x: 0.49367088, y: 0.4868421}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f4ff1f0f8f7649c0820e48f8cb31113
+      internalID: 448227141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10013
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 401
+        width: 66
+        height: 56
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.39285713}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f58712beabe2349e8ad78043f4cd577a
+      internalID: -762826986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10014
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 401
+        width: 66
+        height: 56
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.39285713}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a73ad7e734ef4a0090373c6a48788e5
+      internalID: 1024911976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10015
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 401
+        width: 66
+        height: 56
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.39285713}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c64ff6c8081884574b8eb06aaeb170f3
+      internalID: -1304657422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10016
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 401
+        width: 66
+        height: 56
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.39285713}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14a6b1d3bcb6f4686aa2adce0ac02fc3
+      internalID: -2110295192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10017
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 318
+        width: 64
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4722222}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89ae7ad2bf0814f4db6012f739632294
+      internalID: 346119937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10018
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 318
+        width: 64
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4722222}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b91534d124c04c34922679d6b5728fb
+      internalID: -1633299436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IcebowSlExplode10019
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 318
+        width: 64
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4722222}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e85ea3416cd4045349a28129e8224ba2
+      internalID: 1439487706
       vertices: []
       indices: 
       edges: []
@@ -5353,6 +5815,27 @@ TextureImporter:
       FootMan10109: -85576077
       FootMan10110: 1315832278
       FootMan10111: 1918887457
+      IcebowSlArrow1: 103316647
+      IcebowSlArrowSkill1: 259152178
+      IcebowSlExplode10001: 6741482
+      IcebowSlExplode10002: 293490420
+      IcebowSlExplode10003: -632205730
+      IcebowSlExplode10004: 480358608
+      IcebowSlExplode10005: 1273863497
+      IcebowSlExplode10006: -358412787
+      IcebowSlExplode10007: -1532666097
+      IcebowSlExplode10008: 1404340470
+      IcebowSlExplode10009: -755708324
+      IcebowSlExplode10010: 1808235198
+      IcebowSlExplode10011: -1179473523
+      IcebowSlExplode10012: 448227141
+      IcebowSlExplode10013: -762826986
+      IcebowSlExplode10014: 1024911976
+      IcebowSlExplode10015: -1304657422
+      IcebowSlExplode10016: -2110295192
+      IcebowSlExplode10017: 346119937
+      IcebowSlExplode10018: -1633299436
+      IcebowSlExplode10019: 1439487706
       Wall: 1363260907
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

@@ -41,4 +41,5 @@ MonoBehaviour:
   criticalMultiplier: 2
   dodgeChance: 0
   isRanged: 0
+  weaponClass: 
   attackTriggerFrames: 3c00000040000000

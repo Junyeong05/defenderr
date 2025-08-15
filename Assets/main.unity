@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 216114334}
   - component: {fileID: 216114335}
   m_Layer: 0
-  m_Name: HeroSpawner
+  m_Name: GameMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -394,12 +394,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d884a8e5f3c6d49abb6bfb10ebff586b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleController: {fileID: 0}
   heroCatalog: {fileID: 11400000, guid: 4e9b4c57c457a43c7877301c92981240, type: 2}
   showDebugLine: 1
   lineColor: {r: 1, g: 0, b: 0, a: 1}
   lineWidth: 1
-  elfArcherCount: 5
-  footManCount: 5
+  playerUnitCount: 5
+  enemyUnitCount: 5
+  battleSpeed: 0.7
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

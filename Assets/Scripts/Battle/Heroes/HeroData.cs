@@ -71,6 +71,9 @@ public class HeroData : ScriptableObject
     [Tooltip("근거리/원거리 구분")]
     public bool isRanged = false;
     
+    [Tooltip("무기 클래스 (원거리 공격시 사용할 무기)")]
+    public string weaponClass = "";  // Arrow, Bullet, Lightning 등
+    
     [Header("Attack Frame Triggers")]
     [Tooltip("공격이 발생하는 프레임 번호들 (AS3.0 스타일)")]
     public int[] attackTriggerFrames = new int[] { 32, 38 };

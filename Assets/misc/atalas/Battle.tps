@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>unity-texture2d</string>
         <key>textureFileName</key>
-        <filename>../../../../MergeHeroes/Assets/Resources/atlases/Battle.png</filename>
+        <filename>../../Resources/atlases/Battle.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrQualityLevel</key>
@@ -80,9 +80,9 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>1024</int>
+            <int>512</int>
             <key>height</key>
-            <int>1024</int>
+            <int>512</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
@@ -124,7 +124,7 @@
             <key>datafile</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../../MergeHeroes/Assets/Resources/Atlases/Battle.tpsheet</filename>
+                <filename>../../Resources/Atlases/Battle.tpsheet</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -434,6 +434,69 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../battle/effect/IcebowSlExplode10001.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10002.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10003.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10004.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10005.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10006.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10007.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10008.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10009.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10010.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10011.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10012.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10013.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10014.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10015.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10016.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10017.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10018.png</key>
+            <key type="filename">../battle/effect/IcebowSlExplode10019.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5125</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,20,40,40</rect>
+                <key>scale9Paddings</key>
+                <rect>20,20,40,40</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/weapon/IcebowSlArrow1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.540541,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,2,19,4</rect>
+                <key>scale9Paddings</key>
+                <rect>9,2,19,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/weapon/IcebowSlArrowSkill1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.46,0.481481</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,7,25,13</rect>
+                <key>scale9Paddings</key>
+                <rect>13,7,25,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -444,6 +507,8 @@
                     <filename>../../../../../Projects/defenders/misc/textures/battle/footman</filename>
                     <filename>../../../../../Projects/defenders/misc/textures/battle/Wall.png</filename>
                     <filename>../../../../../Projects/defenders/misc/textures/battle/elfArcher</filename>
+                    <filename>../battle/weapon</filename>
+                    <filename>../battle/effect</filename>
                 </array>
             </struct>
         </map>
