@@ -16,8 +16,6 @@ public class Scene1 : MonoBehaviour
     [SerializeField] private float lineWidth = 0.1f;
     
     [Header("Battle Configuration")]
-    [SerializeField] private int playerUnitCount = 5;
-    [SerializeField] private int enemyUnitCount = 5;
     [SerializeField] private float battleSpeed = 0.7f;
     
     // 디버그 라인용 GameObject

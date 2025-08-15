@@ -20,14 +20,14 @@ public class WeaponCatalog : ScriptableObject
         // 검증
         public bool IsValid()
         {
+            // BaseWeapon 컴포넌트는 선택사항으로 변경
             return !string.IsNullOrEmpty(weaponClass) && 
-                   prefab != null && 
-                   prefab.GetComponent<BaseWeapon>() != null;
+                   prefab != null;
         }
     }
     
     [Header("Weapon Entries")]
-    [SerializeField] private List<WeaponEntry> weapons = new List<WeaponEntry>();
+    [SerializeField] public List<WeaponEntry> weapons = new List<WeaponEntry>();
     
     // 빠른 검색을 위한 딕셔너리 (런타임에서만 사용)
     private Dictionary<string, WeaponEntry> weaponMap;
@@ -124,8 +124,67 @@ public class WeaponCatalog : ScriptableObject
         return classes;
     }
     
+    // 모든 무기 엔트리 가져오기 (디버그용)
+    public List<WeaponEntry> GetAllEntries()
+    {
+        return weapons;
+    }
+    
+    // 무기 엔트리 수 가져오기
+    public int GetEntryCount()
+    {
+        return weapons != null ? weapons.Count : 0;
+    }
+    
     
     #if UNITY_EDITOR
+    // Public method to add/update weapon entries (for importer)
+    public void AddOrUpdateWeaponEntry(WeaponData weaponData, GameObject prefab = null, GameObject hitEffectPrefab = null)
+    {
+        if (weaponData == null) return;
+        
+        // 리스트가 null인 경우 초기화
+        if (weapons == null)
+        {
+            weapons = new List<WeaponEntry>();
+            UnityEngine.Debug.Log("[WeaponCatalog] Initialized weapons list");
+        }
+        
+        UnityEngine.Debug.Log($"[WeaponCatalog] Adding/Updating entry for {weaponData.weaponClass}. Current count: {weapons.Count}");
+        
+        // Find or create entry
+        WeaponEntry entry = weapons.Find(e => e.weaponClass == weaponData.weaponClass);
+        if (entry == null)
+        {
+            entry = new WeaponEntry();
+            entry.weaponClass = weaponData.weaponClass;
+            weapons.Add(entry);
+            UnityEngine.Debug.Log($"[WeaponCatalog] Created new entry for {weaponData.weaponClass}");
+        }
+        else
+        {
+            UnityEngine.Debug.Log($"[WeaponCatalog] Updating existing entry for {weaponData.weaponClass}");
+        }
+        
+        // Update data
+        entry.data = weaponData;
+        
+        // Update prefab if provided
+        if (prefab != null)
+        {
+            entry.prefab = prefab;
+            UnityEngine.Debug.Log($"[WeaponCatalog] Set prefab for {weaponData.weaponClass}");
+        }
+        
+        // Update hit effect if provided
+        if (hitEffectPrefab != null)
+        {
+            entry.hitEffectPrefab = hitEffectPrefab;
+        }
+        
+        UnityEngine.Debug.Log($"[WeaponCatalog] After update, list has {weapons.Count} entries");
+    }
+    
     // WeaponData 자동 업데이트 및 프리팹 매칭 (엑셀 임포트 후 사용)
     [ContextMenu("Auto Update From WeaponData")]
     public void AutoUpdateFromWeaponData()

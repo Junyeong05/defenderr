@@ -114,7 +114,7 @@ public class BaseWeapon : MonoBehaviour
         }
         
         // 상태 초기화
-        Reset();
+        ResetWeapon();
         
         // 위치 설정
         if (owner != null)
@@ -139,14 +139,25 @@ public class BaseWeapon : MonoBehaviour
         isActive = true;
     }
     
-    protected virtual void Reset()
+    protected virtual void ResetWeapon()
     {
         currentFrame = 0;
         frameCounter = 0f;
         hasHit = false;
         lifetimeFrames = 0;
-        delayFrames = weaponData.delayFrames;
-        remainingPenetration = weaponData.penetration;
+        
+        // weaponData null 체크 추가 (Unity Editor에서 Reset 호출 시 null일 수 있음)
+        if (weaponData != null)
+        {
+            delayFrames = weaponData.delayFrames;
+            remainingPenetration = weaponData.penetration;
+        }
+        else
+        {
+            delayFrames = 0;
+            remainingPenetration = 0;
+        }
+        
         velocity = Vector2.zero;
         targetOffset = Vector2.zero;
     }
@@ -371,7 +382,7 @@ public class BaseWeapon : MonoBehaviour
     public virtual void ReturnToPool()
     {
         // 상태 초기화
-        Reset();
+        ResetWeapon();
         owner = null;
         target = null;
         damage = 0;

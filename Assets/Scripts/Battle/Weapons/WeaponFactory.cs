@@ -12,7 +12,7 @@ public class WeaponFactory : MonoBehaviour
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<WeaponFactory>();
+                instance = FindFirstObjectByType<WeaponFactory>();
                 if (instance == null)
                 {
                     GameObject go = new GameObject("WeaponFactory");

@@ -14,7 +14,7 @@ public class BattleController : MonoBehaviour
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<BattleController>();
+                instance = FindFirstObjectByType<BattleController>();
                 if (instance == null)
                 {
                     GameObject go = new GameObject("BattleController");
@@ -40,10 +40,6 @@ public class BattleController : MonoBehaviour
     private List<BaseHero> playerUnits = new List<BaseHero>();
     private List<BaseHero> enemyUnits = new List<BaseHero>();
     private List<BaseHero> allUnits = new List<BaseHero>();
-    
-    // 유닛 ID 관리
-    private int playerUnitID = 10000;
-    private int enemyUnitID = 20000;
     
     // 전투 결과
     public enum BattleResult
@@ -185,7 +181,6 @@ public class BattleController : MonoBehaviour
         }
         
         playerUnits.Clear();
-        playerUnitID = 10000;
 
         HeroData footManData = heroCatalog.GetData("FootMan1");
         
@@ -226,7 +221,6 @@ public class BattleController : MonoBehaviour
         }
         
         enemyUnits.Clear();
-        enemyUnitID = 20000;
 
         HeroData elfArcherData = heroCatalog.GetData("FootMan1");  // 임시로 같은 데이터 사용
         
@@ -347,9 +341,6 @@ public class BattleController : MonoBehaviour
         playerUnits.Clear();
         enemyUnits.Clear();
         allUnits.Clear();
-        
-        playerUnitID = 10000;
-        enemyUnitID = 20000;
         
         Debug.Log("[BattleController] Battle reset - all units and events cleared");
     }

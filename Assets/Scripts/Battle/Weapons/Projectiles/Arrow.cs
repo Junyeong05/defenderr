@@ -4,8 +4,8 @@ using UnityEngine;
 public class Arrow : BaseWeapon
 {
     [Header("Arrow Specific")]
-    [SerializeField] private float gravityScale = 0.1f;  // 중력 영향
-    [SerializeField] private bool rotateInFlight = true;  // 비행 중 회전
+    protected float gravityScale = 0.1f;  // 중력 영향 (SerializeField 제거)
+    protected bool rotateInFlight = true;  // 비행 중 회전 (SerializeField 제거)
     
     protected override void InitProjectile()
     {
