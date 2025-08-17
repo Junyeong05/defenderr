@@ -45,14 +45,23 @@ public class ElfArcher1 : BaseHero
     /// </summary>
     protected override void DoWait()
     {
-        // 타겟이 없으면 찾기
-        if (target == null)
+        // 타겟이 없거나 죽었으면 즉시 새 타겟 찾기
+        if (target == null || target.GetComponent<BaseHero>()?.IsAlive != true)
         {
             target = FindNearestEnemy();
         }
         
         if (target != null)
         {
+            BaseHero targetHero = target.GetComponent<BaseHero>();
+            
+            // 타겟이 죽었으면 null로 설정하고 다시 찾기
+            if (targetHero == null || !targetHero.IsAlive)
+            {
+                target = null;
+                return;
+            }
+            
             // 대기 상태에서는 타겟을 바라봄
             UpdateFacing(target.position.x - transform.position.x);
             
@@ -73,12 +82,8 @@ public class ElfArcher1 : BaseHero
             else if (framesSinceLastAttack >= attackIntervalFrames && !isAiming)
             {
                 // 최적 거리에서 공격 상태로 전환
-                BaseHero targetHero = target.GetComponent<BaseHero>();
-                if (targetHero != null && targetHero.IsAlive)
-                {
-                    GotoAttackState(targetHero);
-                    StartAiming();
-                }
+                GotoAttackState(targetHero);
+                StartAiming();
             }
         }
     }
@@ -88,8 +93,10 @@ public class ElfArcher1 : BaseHero
     /// </summary>
     protected override void DoMove()
     {
-        if (target == null)
+        // 타겟이 없거나 죽었으면 대기 상태로
+        if (target == null || target.GetComponent<BaseHero>()?.IsAlive != true)
         {
+            target = null;
             SetState(STATE_WAIT);
             return;
         }
@@ -180,15 +187,22 @@ public class ElfArcher1 : BaseHero
     /// </summary>
     protected override void DoRangeAttack()
     {
-        if (target == null) return;
-        
-        // 화살 발사
-        ShootArrow();
+        // BaseHero의 DoRangeAttack 호출 (WeaponFactory 사용)
+        base.DoRangeAttack();
         
         // 더블샷 판정
         if (Random.Range(0f, 100f) < doubleShootChance)
         {
-            Invoke("ShootSecondArrow", 0.1f);
+            // 0.1초 후 다시 공격
+            Invoke("DoSecondShot", 0.1f);
+        }
+    }
+    
+    private void DoSecondShot()
+    {
+        if (target != null)
+        {
+            base.DoRangeAttack();
         }
     }
     
@@ -199,7 +213,7 @@ public class ElfArcher1 : BaseHero
         // 명중률 판정
         if (Random.Range(0f, 1f) > accuracyBonus)
         {
-            Debug.Log($"[ElfArcher1] Miss!");
+            // Miss!
             return;
         }
         
@@ -210,7 +224,6 @@ public class ElfArcher1 : BaseHero
         if (isCritical)
         {
             damage *= heroData.criticalMultiplier;
-            Debug.Log($"[ElfArcher1] Critical Hit! Damage: {damage}");
         }
         
         // 화살 생성
@@ -250,7 +263,6 @@ public class ElfArcher1 : BaseHero
     
     private void ShootSecondArrow()
     {
-        Debug.Log($"[ElfArcher1] Double Shot!");
         ShootArrow();
     }
     
@@ -262,7 +274,6 @@ public class ElfArcher1 : BaseHero
         animationSpeed = 1.5f;
         heroData.dodgeChance += 30f;
         aimingTime = 0.2f;  // 빠른 조준
-        Debug.Log($"[ElfArcher1] Elven Focus activated! Speed and dodge increased!");
     }
     
     protected override void OnKillEnemy(BaseHero enemy)
@@ -272,7 +283,6 @@ public class ElfArcher1 : BaseHero
         // ElfArcher 특수 능력: 다음 공격 자동 크리티컬
         heroData.criticalChance = 100f;
         Invoke("ResetCriticalChance", 3f); // 3초 후 원래대로
-        Debug.Log($"[ElfArcher1] Hunter's Mark! Next shot will be critical!");
     }
     
     private void ResetCriticalChance()
@@ -286,7 +296,6 @@ public class ElfArcher1 : BaseHero
         
         // ElfArcher 특수 능력: 복수의 화살
         doubleShootChance += 20f;
-        Debug.Log($"[ElfArcher1] Vengeance! Double shot chance increased!");
     }
     
     public override void TakeDamage(float damage)
@@ -294,8 +303,6 @@ public class ElfArcher1 : BaseHero
         // 회피 판정
         if (Random.Range(0f, 100f) < heroData.dodgeChance)
         {
-            Debug.Log($"[ElfArcher1] Dodged!");
-            
             // 회피 이펙트가 있다면 표시
             // TODO: 회피 이펙트 표시
             return;

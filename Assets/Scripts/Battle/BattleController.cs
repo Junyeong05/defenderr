@@ -73,6 +73,18 @@ public class BattleController : MonoBehaviour
             HeroFactory.Instance.SetCatalog(heroCatalog);
         }
         
+        // WeaponFactory에 카탈로그 설정
+        WeaponCatalog weaponCatalog = Resources.Load<WeaponCatalog>("WeaponData/WeaponCatalog");
+        if (weaponCatalog != null)
+        {
+            WeaponFactory.Instance.SetCatalog(weaponCatalog);
+            Debug.Log("[BattleController] WeaponCatalog loaded and set to WeaponFactory");
+        }
+        else
+        {
+            Debug.LogError("[BattleController] Failed to load WeaponCatalog from Resources/WeaponData/WeaponCatalog");
+        }
+        
         // BattleController를 FrameController에 한 번만 등록
         FrameController.Add(OnFrame, this);
     }
@@ -159,6 +171,14 @@ public class BattleController : MonoBehaviour
             Debug.LogError("[BattleController] HeroCatalog not assigned!");
             return;
         }
+        
+        // WeaponFactory 초기화 확인
+        WeaponCatalog weaponCatalog = Resources.Load<WeaponCatalog>("WeaponData/WeaponCatalog");
+        if (weaponCatalog != null)
+        {
+            WeaponFactory.Instance.SetCatalog(weaponCatalog);
+            Debug.Log("[BattleController] WeaponCatalog set to WeaponFactory in InitializeBattle");
+        }
 
         ResetBattle();
         GeneratePlayerUnits();
@@ -182,11 +202,17 @@ public class BattleController : MonoBehaviour
         
         playerUnits.Clear();
 
-        HeroData footManData = heroCatalog.GetData("FootMan1");
+        HeroData elfArcherData = heroCatalog.GetData("ElfArcher1");
+        
+        // 디버그 로그 추가
+        if (elfArcherData != null)
+        {
+            Debug.Log($"[BattleController] ElfArcher1 data - isRanged: {elfArcherData.isRanged}, weaponClass: {elfArcherData.weaponClass}, range: {elfArcherData.attackRange}");
+        }
         
         for (int i = 0; i < playerUnitCount; i++)
         {
-            BaseHero unit = HeroFactory.Instance.GetHero("FootMan1", footManData, 1);
+            BaseHero unit = HeroFactory.Instance.GetHero("ElfArcher1", elfArcherData, 1);
             if (unit != null)
             {
                 // 위치 설정 (하단 배치)
@@ -222,11 +248,17 @@ public class BattleController : MonoBehaviour
         
         enemyUnits.Clear();
 
-        HeroData elfArcherData = heroCatalog.GetData("FootMan1");  // 임시로 같은 데이터 사용
+        HeroData footManData = heroCatalog.GetData("FootMan1");
+        
+        // 디버그 로그 추가
+        if (footManData != null)
+        {
+            Debug.Log($"[BattleController] FootMan1 data - isRanged: {footManData.isRanged}, weaponClass: {footManData.weaponClass}, range: {footManData.attackRange}");
+        }
         
         for (int i = 0; i < enemyUnitCount; i++)
         {
-            BaseHero unit = HeroFactory.Instance.GetHero("FootMan1", elfArcherData, 1);
+            BaseHero unit = HeroFactory.Instance.GetHero("FootMan1", footManData, 1);
             if (unit != null)
             {
                 // 위치 설정 (상단 배치)

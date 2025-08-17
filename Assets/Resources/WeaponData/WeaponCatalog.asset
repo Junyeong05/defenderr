@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapons:
   - weaponClass: IcebowSlArrow1
-    prefab: {fileID: 7900747602596843204, guid: 4e5a245e125074c9db40c918965fa2f5, type: 3}
+    prefab: {fileID: 3077203609741508166, guid: bcc53414371ff47a4b294138ca9b5084, type: 3}
     data: {fileID: 11400000, guid: 2835538de779647d69ead11f7cff6a35, type: 2}
     hitEffectPrefab: {fileID: 0}

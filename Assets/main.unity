@@ -399,8 +399,6 @@ MonoBehaviour:
   showDebugLine: 1
   lineColor: {r: 1, g: 0, b: 0, a: 1}
   lineWidth: 1
-  playerUnitCount: 5
-  enemyUnitCount: 5
   battleSpeed: 0.7
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

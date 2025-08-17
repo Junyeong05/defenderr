@@ -18,7 +18,9 @@ public class WeaponData : ScriptableObject
     
     [Header("Movement")]
     public float initialSpeed = 5f;  // 초기 속도
-    public float acceleration = 0f;  // 가속도
+    public float acceleration = 0f;  // 가속도 (구글시트 호환용 보관)
+    public float baseGravity = 0.5f;  // 기본 중력값 (0=직선, >0=포물선)
+    public float minFlightTime = 10f;  // 최소 비행 시간 (프레임)
     public float rotationSpeed = 0f;  // 회전 속도
     public bool rotateToDirection = true;  // 이동 방향으로 회전
     public float lifetime = 5f;  // 생존 시간 (초)

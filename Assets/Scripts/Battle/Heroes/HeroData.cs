@@ -78,6 +78,13 @@ public class HeroData : ScriptableObject
     [Tooltip("공격이 발생하는 프레임 번호들 (AS3.0 스타일)")]
     public int[] attackTriggerFrames = new int[] { 32, 38 };
     
+    [Header("Target Hit Box")]
+    [Tooltip("영웅의 실제 타격 영역 높이 (발끝부터 측정)")]
+    public float targetHeight = 100f;  // 영웅 몸체의 실제 높이
+    
+    [Tooltip("영웅의 실제 타격 영역 너비")]
+    public float targetWidth = 50f;    // 영웅 몸체의 실제 너비
+    
     
     /// <summary>
     /// 레벨에 따른 스탯 계산

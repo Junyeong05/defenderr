@@ -347,10 +347,31 @@ public class SimpleGoogleSheetsImporter : EditorWindow
             case "원거리":
                 data.isRanged = value.ToLower() == "true" || value == "1" || value == "원거리";
                 break;
+            case "weaponclass":
+            case "weapon":
+            case "무기클래스":
+            case "무기":
+                data.weaponClass = value;
+                Debug.Log($"[CSV Import] Setting weaponClass: {value} for {data.heroName}");
+                break;
             case "attackinterval":
             case "공격간격":
                 if (int.TryParse(value, out int interval))
                     data.attackInterval = interval;
+                break;
+            case "targetheight":
+            case "height":
+            case "타격높이":
+            case "높이":
+                if (float.TryParse(value, out float targetHeight))
+                    data.targetHeight = targetHeight;
+                break;
+            case "targetwidth":
+            case "width":
+            case "타격너비":
+            case "너비":
+                if (float.TryParse(value, out float targetWidth))
+                    data.targetWidth = targetWidth;
                 break;
         }
     }
@@ -373,6 +394,12 @@ public class SimpleGoogleSheetsImporter : EditorWindow
         data.healthPerLevel = data.maxHealth * 0.1f;
         data.attackPerLevel = data.attackPower * 0.1f;
         data.defensePerLevel = data.defense * 0.1f;
+        
+        // 타격 영역 기본값
+        if (data.targetHeight == 0)
+            data.targetHeight = 100f;  // 기본 영웅 높이
+        if (data.targetWidth == 0)
+            data.targetWidth = 50f;    // 기본 영웅 너비
     }
     
     /// <summary>

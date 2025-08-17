@@ -43,3 +43,5 @@ MonoBehaviour:
   isRanged: 0
   weaponClass: 
   attackTriggerFrames: 3c00000040000000
+  targetHeight: 41
+  targetWidth: 27

@@ -185,7 +185,7 @@ public class BaseHero : MonoBehaviour
         }
         else
         {
-            Debug.LogError("SetData called with null HeroData!");
+            // SetData called with null HeroData!
         }
     }
     
@@ -207,7 +207,6 @@ public class BaseHero : MonoBehaviour
         else
         {
             // 팩토리가 없으면 그냥 비활성화
-            Debug.LogWarning($"[BaseHero] No factory set for {className}, just deactivating");
             gameObject.SetActive(false);
         }
     }
@@ -429,16 +428,12 @@ public class BaseHero : MonoBehaviour
     #region State Methods (AS3.0 Style)
     protected virtual void DoWait()
     {
-        // 공격 간격 체크
-        if (framesSinceLastAttack >= attackIntervalFrames)
+        // 타겟이 없거나 죽었으면 즉시 새 타겟 찾기
+        if (target == null || target.GetComponent<BaseHero>()?.IsAlive != true)
         {
-            // 타겟이 없으면 찾기
-            if (target == null)
-            {
-                target = FindNearestEnemy();
-            }
+            target = FindNearestEnemy();
             
-            // 타겟이 있으면
+            // 새 타겟을 찾았으면
             if (target != null)
             {
                 BaseHero targetHero = target.GetComponent<BaseHero>();
@@ -446,6 +441,33 @@ public class BaseHero : MonoBehaviour
                 {
                     float distance = Vector2.Distance(transform.position, target.position);
                     
+                    // 사거리 내에 있고 공격 가능하면 공격
+                    if (distance <= heroData.attackRange && framesSinceLastAttack >= attackIntervalFrames)
+                    {
+                        GotoAttackState(targetHero);
+                        return;
+                    }
+                    // 사거리 밖이면 이동
+                    else if (distance > heroData.attackRange)
+                    {
+                        GotoMoveState();
+                        return;
+                    }
+                    // 사거리 내에 있지만 공격 쿨다운 중이면 대기
+                }
+            }
+        }
+        // 타겟이 있고 살아있으면
+        else if (target != null)
+        {
+            BaseHero targetHero = target.GetComponent<BaseHero>();
+            if (targetHero != null && targetHero.IsAlive)
+            {
+                float distance = Vector2.Distance(transform.position, target.position);
+                
+                // 공격 쿨다운이 끝났으면
+                if (framesSinceLastAttack >= attackIntervalFrames)
+                {
                     // 사거리 내에 있으면 공격
                     if (distance <= heroData.attackRange)
                     {
@@ -459,11 +481,11 @@ public class BaseHero : MonoBehaviour
                         return;
                     }
                 }
-                else
-                {
-                    // 타겟이 죽었으면 null로
-                    target = null;
-                }
+            }
+            else
+            {
+                // 타겟이 죽었으면 null로
+                target = null;
             }
         }
     }
@@ -604,7 +626,7 @@ public class BaseHero : MonoBehaviour
         
         if (spriteList == null || spriteList.Length == 0)
         {
-            Debug.LogError($"[BaseHero] Failed to load sprites for {spriteName} from sheet {sheetName}");
+            // Failed to load sprites
             return;
         }
         
@@ -925,7 +947,7 @@ public class BaseHero : MonoBehaviour
                 }
                 break;
             default:
-                Debug.LogWarning($"[BaseHero] Unknown state: {state}");
+                // Unknown state
                 return;
         }
         
@@ -963,7 +985,6 @@ public class BaseHero : MonoBehaviour
         
         isAlive = false;
         isDying = true;
-        Debug.Log($"[BaseHero] {heroData.heroName} died");
         
         // 아군들에게 죽음 알림 (AS3.0 style)
         if (friendList != null)
@@ -984,19 +1005,16 @@ public class BaseHero : MonoBehaviour
 
     protected virtual void OnHealth20()
     {
-        Debug.Log($"[BaseHero] {heroData.heroName} health below 20%");
         // 서브클래스에서 특수 스킬 발동 등 구현
     }
 
     protected virtual void OnFriendDie(BaseHero friend)
     {
-        Debug.Log($"[BaseHero] {heroData.heroName} friend {friend.HeroName} died");
         // 서브클래스에서 버프 등 구현
     }
 
     protected virtual void OnKillEnemy(BaseHero enemy)
     {
-        Debug.Log($"[BaseHero] {heroData.heroName} killed {enemy.HeroName}");
         // 서브클래스에서 경험치 획득 등 구현
     }
 
@@ -1018,6 +1036,10 @@ public class BaseHero : MonoBehaviour
                 DoMeleeAttack();
             }
         }
+        else
+        {
+            // Target out of range
+        }
     }
     
     protected virtual void DoMeleeAttack()
@@ -1034,7 +1056,6 @@ public class BaseHero : MonoBehaviour
             if (isCritical)
             {
                 damage *= heroData.criticalMultiplier;
-                Debug.Log($"[{HeroName}] Critical melee hit!");
             }
             
             targetHero.TakeDamage(damage);
@@ -1081,6 +1102,10 @@ public class BaseHero : MonoBehaviour
                     // 무기가 자체적으로 데미지 처리
                     return;
                 }
+                else
+                {
+                    // Failed to create weapon
+                }
             }
             
             // 무기가 없으면 즉시 데미지 (폴백)
@@ -1090,7 +1115,6 @@ public class BaseHero : MonoBehaviour
             if (isCritical)
             {
                 damage *= heroData.criticalMultiplier;
-                Debug.Log($"[{HeroName}] Critical range hit!");
             }
             
             targetHero.TakeDamage(damage);
@@ -1355,6 +1379,8 @@ public class BaseHero : MonoBehaviour
     public int State => state;
     public HeroData Data => heroData;
     public int Level => level;
+    public float TargetHeight => heroData != null ? heroData.targetHeight : 100f;
+    public float TargetWidth => heroData != null ? heroData.targetWidth : 50f;
     
     /// <summary>
     /// 정렬된 순서에 따라 렌더링 순서 설정

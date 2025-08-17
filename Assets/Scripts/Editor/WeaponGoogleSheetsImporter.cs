@@ -248,7 +248,27 @@ public class WeaponGoogleSheetsImporter : EditorWindow
             case "accel":
             case "가속도":
                 if (float.TryParse(value, out float accel))
+                {
                     data.acceleration = accel;
+                    // acceleration을 baseGravity로도 사용 (구글시트 호환)
+                    // acceleration이 0이면 직선, 0보다 크면 포물선
+                    data.baseGravity = accel;
+                }
+                break;
+                
+            case "basegravity":
+            case "gravity":
+            case "중력":
+                if (float.TryParse(value, out float gravity))
+                    data.baseGravity = gravity;
+                break;
+                
+            case "minflighttime":
+            case "minflightframes":
+            case "mint":
+            case "최소비행시간":
+                if (float.TryParse(value, out float minT))
+                    data.minFlightTime = minT;
                 break;
                 
             case "rotationspeed":
@@ -354,6 +374,12 @@ public class WeaponGoogleSheetsImporter : EditorWindow
             
         if (data.hitEffectDuration == 0)
             data.hitEffectDuration = 1f;
+            
+        // 새로 추가된 필드의 기본값
+        if (data.minFlightTime == 0)
+            data.minFlightTime = 10f;  // 기본 최소 비행 시간 10 프레임
+            
+        // baseGravity는 0이 기본값일 수 있음 (직선 운동)
             
         // 텍스처 이름이 없으면 weaponClass를 기본값으로
         if (string.IsNullOrEmpty(data.textureName))

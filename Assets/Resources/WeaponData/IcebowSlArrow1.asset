@@ -19,8 +19,10 @@ MonoBehaviour:
   startFrame: 0
   endFrame: 0
   animationSpeed: 1
-  initialSpeed: 2
-  acceleration: 1
+  initialSpeed: 22
+  acceleration: 0
+  baseGravity: 0.5
+  minFlightTime: 10
   rotationSpeed: 0
   rotateToDirection: 1
   lifetime: 300

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 736538580191210793, guid: b57d74b70864647c48fec5f0b963112b, type: 3}
       propertyPath: m_Name
-      value: ElfArchher1
+      value: ElfArcher1
       objectReference: {fileID: 0}
     - target: {fileID: 3853899544791600197, guid: b57d74b70864647c48fec5f0b963112b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -87,6 +87,9 @@ MonoBehaviour:
   attackPower: 0
   defense: 0
   isPlayerTeam: 1
-  arrowPrefab: {fileID: 0}
+  showCrosshair: 0
+  crosshairColor: {r: 0, g: 1, b: 0, a: 1}
+  crosshairSize: 20
+  currentFrame: 0
+  arrowPrefab: {fileID: 3077203609741508166, guid: bcc53414371ff47a4b294138ca9b5084, type: 3}
   shootPoint: {fileID: 0}
-  arrowSpeed: 15

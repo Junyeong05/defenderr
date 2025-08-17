@@ -100,7 +100,11 @@ public class WeaponFactory : MonoBehaviour
     {
         if (string.IsNullOrEmpty(weaponClass))
         {
-            Debug.LogError("[WeaponFactory] Weapon class is null or empty!");
+            return null;
+        }
+        
+        if (weaponCatalog == null)
+        {
             return null;
         }
         
@@ -110,7 +114,6 @@ public class WeaponFactory : MonoBehaviour
             WeaponData data = GetWeaponData(weaponClass);
             if (data == null)
             {
-                Debug.LogError($"[WeaponFactory] No WeaponData found for {weaponClass}");
                 return null;
             }
             InitializePool(weaponClass, data);
@@ -197,7 +200,6 @@ public class WeaponFactory : MonoBehaviour
     {
         if (data == null)
         {
-            Debug.LogError($"[WeaponFactory] Invalid weapon data for {weaponClass}");
             return null;
         }
         
@@ -205,7 +207,6 @@ public class WeaponFactory : MonoBehaviour
         GameObject prefab = weaponCatalog.GetPrefab(weaponClass);
         if (prefab == null)
         {
-            Debug.LogError($"[WeaponFactory] No prefab found for {weaponClass}");
             return null;
         }
         
@@ -312,11 +313,11 @@ public class WeaponFactory : MonoBehaviour
     #region Debug
     public void PrintPoolStatus()
     {
-        Debug.Log("[WeaponFactory] Pool Status:");
+        // Pool status debug info removed
         foreach (var kvp in weaponPools)
         {
             int active = activeWeaponCounts.ContainsKey(kvp.Key) ? activeWeaponCounts[kvp.Key] : 0;
-            Debug.Log($"  {kvp.Key}: {kvp.Value.Count} in pool, {active} active");
+            // Status: {kvp.Key}: {kvp.Value.Count} in pool, {active} active
         }
     }
     #endregion

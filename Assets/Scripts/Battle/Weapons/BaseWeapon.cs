@@ -19,6 +19,15 @@ public class BaseWeapon : MonoBehaviour
     protected float shootAngle;
     protected Vector2 targetOffset;
     
+    // Rotation offset for sprite orientation
+    protected float rotationOffset = 0f; // 0 = right-facing sprite
+    
+    // Projectile physics (TypeScript style)
+    protected float T; // Total frames to reach target
+    protected float t; // Current frame
+    protected float vx, vy; // Velocity components
+    protected float g; // Gravity
+    
     // Animation
     protected SpriteRenderer spriteRenderer;
     protected Sprite[] sprites;
@@ -79,6 +88,14 @@ public class BaseWeapon : MonoBehaviour
         
         // 최대 생존 프레임 설정 (60fps 기준)
         maxLifetimeFrames = Mathf.RoundToInt(weaponData.lifetime * 60f);
+        
+        // 화살류 무기의 경우 회전 오프셋 설정
+        // 텍스처가 오른쪽을 바라보는 경우 기본값 0
+        // 필요 시 다른 각도로 조정 (예: 위쪽 = -90, 왼쪽 = 180, 아래 = 90)
+        if (className.Contains("Arrow"))
+        {
+            rotationOffset = 0f; // 오른쪽 방향 텍스처
+        }
     }
     
     protected virtual void LoadSprites()
@@ -235,42 +252,86 @@ public class BaseWeapon : MonoBehaviour
     {
         if (target == null) return;
         
-        // 타겟 오프셋 (약간의 랜덤성)
-        targetOffset.x = UnityEngine.Random.Range(-20f, 20f);
-        targetOffset.y = UnityEngine.Random.Range(-20f, 20f);
+        // 영웅의 타격 영역 크기 기반 타격 지점 계산 (픽셀 좌표 사용)
+        float targetHeight = target.TargetHeight;
+        float targetWidth = target.TargetWidth;
         
-        // 타겟 방향 계산
-        Vector2 targetPos = (Vector2)target.transform.position + targetOffset;
-        Vector2 direction = (targetPos - (Vector2)transform.position).normalized;
+        // 발끝(0,0)으로부터 높이의 절반 지점을 중심으로
+        // 높이: targetHeight/2 지점을 중심으로 -0.3*targetHeight ~ +0.3*targetHeight
+        float centerY = targetHeight * 0.5f;
+        float rangeY = targetHeight * 0.3f;
+        targetOffset.y = centerY + UnityEngine.Random.Range(-rangeY, rangeY);
         
-        // 발사 각도
-        shootAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // 너비: -0.3*targetWidth ~ +0.3*targetWidth
+        float rangeX = targetWidth * 0.3f;
+        targetOffset.x = UnityEngine.Random.Range(-rangeX, rangeX);
         
-        // 회전 설정
+        // Calculate distance and height to target
+        float h = target.transform.position.y + targetOffset.y - transform.position.y;
+        float d = target.transform.position.x + targetOffset.x - transform.position.x;
+        
+        // Ensure minimum distance
+        if (Mathf.Abs(d) < 20f) d = d >= 0 ? 20f : -20f;
+        
+        // Calculate flight time based on distance
+        T = Mathf.Min(30f, Mathf.Max(weaponData.minFlightTime, Mathf.Abs(d) / weaponData.initialSpeed));
+        
+        // Calculate gravity based on flight time
+        float ratio = 0.047f * (T - 1f);
+        g = weaponData.baseGravity * (0.8f + 0.2f * UnityEngine.Random.value) * ratio;
+        
+        // Calculate initial velocities
+        vx = d / T;
+        vy = h / T - g * (T - 1f) * 0.5f;
+        
+        // Reset frame counter
+        t = 0;
+        
+        // Set initial rotation
         if (weaponData.rotateToDirection)
         {
-            transform.rotation = Quaternion.Euler(0, 0, shootAngle);
+            float angle = Mathf.Atan2(vy, vx) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle + rotationOffset);
         }
-        
-        // 속도 설정
-        velocity = direction * weaponData.initialSpeed;
     }
     
     protected virtual void UpdateProjectile()
     {
-        // 이동
-        transform.position += (Vector3)velocity * Time.fixedDeltaTime * 60f; // 60fps 기준으로 조정
+        // TypeScript style projectile physics
         
-        // 가속도 적용
-        if (weaponData.acceleration != 0)
+        // Adjust trajectory to track moving target
+        if (t < T && target != null && target.IsAlive)
         {
-            velocity *= (1f + weaponData.acceleration * Time.fixedDeltaTime);
+            float d = target.transform.position.x + targetOffset.x - transform.position.x;
+            vx = d / (T - t);
         }
         
-        // 회전
-        if (weaponData.rotationSpeed != 0)
+        t++;
+        
+        // Update position
+        Vector3 oldPos = transform.position;
+        transform.position += new Vector3(vx, vy, 0);
+        vy += g; // Apply gravity
+        
+        // Update rotation to follow trajectory
+        if (weaponData.rotateToDirection)
         {
-            transform.Rotate(0, 0, weaponData.rotationSpeed * Time.fixedDeltaTime * 60f);
+            float angle = Mathf.Atan2(vy, vx) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle + rotationOffset);
+        }
+        
+        // Check if reached target time
+        if (t >= T)
+        {
+            // Force hit at target frame
+            if (target != null && target.IsAlive)
+            {
+                OnHitTarget(target);
+            }
+            else
+            {
+                Remove();
+            }
         }
     }
     #endregion
@@ -306,16 +367,9 @@ public class BaseWeapon : MonoBehaviour
     #region Collision
     protected virtual void CheckCollision()
     {
-        if (hasHit && weaponData.destroyOnHit) return;
-        if (target == null || !target.IsAlive) return;
-        
-        // 타겟과의 거리 체크
-        float distance = Vector2.Distance(transform.position, target.transform.position);
-        
-        if (distance <= weaponData.hitRadius)
-        {
-            OnHitTarget(target);
-        }
+        // TypeScript style: Only check collision with designated target at T frame
+        // Collision is handled in UpdateProjectile when t >= T
+        // This method is kept empty for compatibility
     }
     
     protected virtual void OnHitTarget(BaseHero hitTarget)
