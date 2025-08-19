@@ -95,13 +95,43 @@ public class BaseHero : MonoBehaviour
     protected float hitReactionAngle = 23f; // 3도 회전
     protected Quaternion originalRotation;
     
-    // Knockback variables
-    protected float knockbackDistance = 0f; // 2픽셀 넉백
+    // Knockback variables  
+    protected Vector2 knockbackDirection = Vector2.zero; // 넉백 방향
+    protected float knockbackSpeed = 0f; // 프레임당 이동 속도
+    protected float knockbackDistance = 0f; // 기존 근접 공격용 즉시 넉백 거리
+    protected float knockbackResist = 0f; // 넉백 저항력 (0.0 ~ 1.0, 0.5 = 50% 감소)
+    
+    // Crowd Control (CC) variables
+    protected int stunCount = 0;
+    protected int freezeCount = 0;
+    protected int sleepCount = 0;
+    protected int knockbackCount = 0;
+    protected int silenceCount = 0;
+    protected int rootCount = 0;
+    protected int tauntCount = 0;
+    protected int blindCount = 0;
+    protected int disarmCount = 0;
+    protected int slowCount = 0;
+    
+    // CC immunity counters (프레임 기반)
+    protected int immuneToStunCount = 0;
+    protected int immuneToFreezeCount = 0;
+    protected int immuneToKnockbackCount = 0;
+    protected int immuneToSleepCount = 0;
+    protected int immuneToSilenceCount = 0;
+    protected int immuneToRootCount = 0;
+    protected int immuneToTauntCount = 0;
+    protected int immuneToBlindCount = 0;
+    protected int immuneToDisarmCount = 0;
+    protected int immuneToSlowCount = 0;
     
     private HeroFactory factory;
     protected string className;
     protected string sheetName = "atlases/Battle";
     private static Dictionary<string, TexturePackerFrameInfo> frameInfoCache = new Dictionary<string, TexturePackerFrameInfo>();
+    
+    // 이펙트 관리 (중복 방지)
+    private Dictionary<EffectType, SimpleEffect> activeEffects = new Dictionary<EffectType, SimpleEffect>();
     #endregion
 
     #region Unity Lifecycle
@@ -272,6 +302,12 @@ public class BaseHero : MonoBehaviour
         // 위치 초기화
         targetPosition = Vector2.zero;
         defaultTargetPosition = Vector2.zero;
+        
+        // CC 상태 초기화
+        ClearAllCC();
+        
+        // 활성 이펙트 정리
+        ClearAllEffects();
     }
     #endregion
     
@@ -433,8 +469,18 @@ public class BaseHero : MonoBehaviour
     #region State Methods (AS3.0 Style)
     protected virtual void DoWait()
     {
-        // 타겟이 없거나 죽었으면 즉시 새 타겟 찾기
-        if (target == null || target.GetComponent<BaseHero>()?.IsAlive != true)
+        // 도발 중이면 타겟 변경 불가 (도발한 대상만 공격)
+        if (tauntCount > 0)
+        {
+            // 도발한 대상이 죽었으면 도발 해제
+            if (target == null || target.GetComponent<BaseHero>()?.IsAlive != true)
+            {
+                tauntCount = 0;
+            }
+        }
+        
+        // 타겟이 없거나 죽었으면 즉시 새 타겟 찾기 (도발 중이 아닐 때만)
+        if (tauntCount <= 0 && (target == null || target.GetComponent<BaseHero>()?.IsAlive != true))
         {
             target = FindNearestEnemy();
             
@@ -499,20 +545,33 @@ public class BaseHero : MonoBehaviour
     {
         if (!isAlive) return;
         
-        // 타겟이 사거리 밖에 있으면 타겟 초기화
-        if (target != null)
+        // 도발 중이면 타겟 변경 불가
+        if (tauntCount > 0)
         {
-            float distance = Vector2.Distance(transform.position, target.position);
-            if (distance > heroData.attackRange * 2f) // 여유를 둬서 체크
+            // 도발한 대상이 죽었으면 도발 해제
+            if (target == null || target.GetComponent<BaseHero>()?.IsAlive != true)
             {
+                tauntCount = 0;
                 target = null;
             }
         }
-        
-        // 타겟이 없거나 죽었으면 새로 찾기
-        if (target == null || target.GetComponent<BaseHero>()?.IsAlive != true)
+        else
         {
-            target = FindNearestEnemy();
+            // 타겟이 사거리 밖에 있으면 타겟 초기화
+            if (target != null)
+            {
+                float distance = Vector2.Distance(transform.position, target.position);
+                if (distance > heroData.attackRange * 2f) // 여유를 둬서 체크
+                {
+                    target = null;
+                }
+            }
+            
+            // 타겟이 없거나 죽었으면 새로 찾기
+            if (target == null || target.GetComponent<BaseHero>()?.IsAlive != true)
+            {
+                target = FindNearestEnemy();
+            }
         }
         
         // ★★★ 핵심 수정: 타겟이 있으면 먼저 공격 범위 체크! ★★★
@@ -568,7 +627,15 @@ public class BaseHero : MonoBehaviour
         
         // ★ 이동 실행 (공격 범위 밖에 있을 때만 실행됨)
         Vector2 moveDirection = (targetPosition - (Vector2)transform.position).normalized;
-        transform.position += (Vector3)(moveDirection * heroData.moveSpeed);
+        float currentSpeed = heroData.moveSpeed;
+        
+        // 둔화 효과 적용 (50% 속도 감소)
+        if (slowCount > 0)
+        {
+            currentSpeed *= 0.5f;
+        }
+        
+        transform.position += (Vector3)(moveDirection * currentSpeed);
         
         // 방향 업데이트
         if (target != null)
@@ -669,35 +736,35 @@ public class BaseHero : MonoBehaviour
         }
     }
     
-    public virtual GameObject AddEffect(GameObject effectPrefab, float duration = 0)
-    {
-        if (effectPrefab == null) return null;
+    // public virtual GameObject AddEffect(GameObject effectPrefab, float duration = 0)
+    // {
+    //     if (effectPrefab == null) return null;
         
-        GameObject effect = Instantiate(effectPrefab, transform);
-        effect.transform.localPosition = Vector3.zero;
+    //     GameObject effect = Instantiate(effectPrefab, transform);
+    //     effect.transform.localPosition = Vector3.zero;
         
-        if (duration > 0)
-        {
-            Destroy(effect, duration);
-        }
+    //     if (duration > 0)
+    //     {
+    //         Destroy(effect, duration);
+    //     }
         
-        return effect;
-    }
+    //     return effect;
+    // }
     
-    public virtual GameObject AddEffectAtPosition(GameObject effectPrefab, Vector3 worldPosition, float duration = 0)
-    {
-        if (effectPrefab == null) return null;
+    // public virtual GameObject AddEffectAtPosition(GameObject effectPrefab, Vector3 worldPosition, float duration = 0)
+    // {
+    //     if (effectPrefab == null) return null;
         
-        GameObject effect = Instantiate(effectPrefab, transform);
-        effect.transform.position = worldPosition;
+    //     GameObject effect = Instantiate(effectPrefab, transform);
+    //     effect.transform.position = worldPosition;
         
-        if (duration > 0)
-        {
-            Destroy(effect, duration);
-        }
+    //     if (duration > 0)
+    //     {
+    //         Destroy(effect, duration);
+    //     }
         
-        return effect;
-    }
+    //     return effect;
+    // }
     #endregion
 
     #region Frame Update
@@ -716,34 +783,52 @@ public class BaseHero : MonoBehaviour
             SetState(STATE_DIE, false);
         }
         
-        // 프레임 전처리
+        // 프레임 전처리 (CC 처리 포함)
         PreFrameUpdate();
         
-        // 상태에 따른 처리
-        switch (state)
+        // CC 상태 체크 - 기절, 빙결, 수면 중이면 행동 불가
+        bool isStunned = stunCount > 0 || freezeCount > 0 || sleepCount > 0;
+        
+        if (!isStunned)
         {
-            case STATE_WAIT:
-                DoWait();
-                break;
-                
-            case STATE_MOVE:
-                DoMove();
-                break;
-                
-            case STATE_ATTACK:
-                DoAttack();
-                break;
-                
-            case STATE_SKILL:
-                DoSkill();
-                break;
-                
-            case STATE_DIE:
-                DoDie();
-                break;
+            // 상태에 따른 처리
+            switch (state)
+            {
+                case STATE_WAIT:
+                    DoWait();
+                    break;
+                    
+                case STATE_MOVE:
+                    // 넉백이나 속박 중이면 이동 불가
+                    if (knockbackCount <= 0 && rootCount <= 0)
+                    {
+                        DoMove();
+                    }
+                    break;
+                    
+                case STATE_ATTACK:
+                    // 무장해제 중이면 일반 공격 불가
+                    if (disarmCount <= 0)
+                    {
+                        DoAttack();
+                    }
+                    break;
+                    
+                case STATE_SKILL:
+                    // 침묵 중이면 스킬 사용 불가
+                    if (silenceCount <= 0)
+                    {
+                        DoSkill();
+                    }
+                    break;
+                    
+                case STATE_DIE:
+                    DoDie();
+                    break;
+            }
         }
         
-        // 프레임 업데이트
+        // 프레임 업데이트 (애니메이션)
         UpdateFrame();
         
         // 체력 체크
@@ -768,9 +853,15 @@ public class BaseHero : MonoBehaviour
             UpdateHitReaction();
         }
         
+        // CC 처리 - CC가 활성화되어 있으면 true를 반환
+        if (UpdateCrowdControl())
+        {
+            // CC 상태에서는 대부분의 행동이 제한됨
+            return;
+        }
+        
         // TODO: DOT 데미지 처리
         // TODO: DOT 힐 처리
-        // TODO: CC 처리
     }
     
     // 타격 반응 애니메이션 업데이트
@@ -797,10 +888,64 @@ public class BaseHero : MonoBehaviour
             spriteTransform.localRotation = originalRotation * Quaternion.Euler(0, 0, currentAngle);
         }
     }
+    
+    // Crowd Control 업데이트 - CC가 활성화되어 있으면 true 반환
+    protected virtual bool UpdateCrowdControl()
+    {
+        // 모든 CC 카운터 무조건 감소 (분기 없이 직접 감소 - 성능 최적화)
+        stunCount--;
+        freezeCount--;
+        sleepCount--;
+        knockbackCount--;
+        silenceCount--;
+        rootCount--;
+        tauntCount--;
+        blindCount--;
+        disarmCount--;
+        slowCount--;
+        
+        // 모든 면역 카운터도 무조건 감소
+        immuneToStunCount--;
+        immuneToFreezeCount--;
+        immuneToKnockbackCount--;
+        immuneToSleepCount--;
+        immuneToSilenceCount--;
+        immuneToRootCount--;
+        immuneToTauntCount--;
+        immuneToBlindCount--;
+        immuneToDisarmCount--;
+        immuneToSlowCount--;
+        
+        // 살아있지 않으면 처리 안함
+        if (!isAlive) return false;
+        
+        // 넉백 처리 - 매 프레임 점진적으로 밀림
+        if (knockbackCount > 0)
+        {
+            transform.position += (Vector3)(knockbackDirection * knockbackSpeed);
+        }
+        
+        // 행동 불가 상태 체크 (기절, 빙결, 수면)
+        bool isStunned = (stunCount > 0 || freezeCount > 0 || sleepCount > 0);
+        
+        // CC 상태일 때 WAIT 애니메이션 유지
+        if (isStunned && state != STATE_WAIT && state != STATE_DIE)
+        {
+            SetState(STATE_WAIT);
+        }
+        
+        return isStunned;
+    }
 
     protected virtual void UpdateFrame()
     {
         if (spriteList == null || spriteList.Length == 0) 
+        {
+            return;
+        }
+        
+        // 빙결 상태면 애니메이션 정지 (프레임 진행 안함)
+        if (freezeCount > 0)
         {
             return;
         }
@@ -1056,6 +1201,14 @@ public class BaseHero : MonoBehaviour
         BaseHero targetHero = target.GetComponent<BaseHero>();
         if (targetHero != null)
         {
+            // 실명 상태면 50% 확률로 빗나감
+            if (blindCount > 0 && UnityEngine.Random.Range(0f, 1f) < 0.5f)
+            {
+                // 빗나감 이펙트 (옵션)
+                // ShowMissEffect(targetHero);
+                return;
+            }
+            
             // 크리티컬 판정
             bool isCritical = UnityEngine.Random.Range(0f, 100f) < heroData.criticalChance;
             float damage = attackPower;
@@ -1098,16 +1251,80 @@ public class BaseHero : MonoBehaviour
         }
     }
     
-    // 넉백 적용
+    // CC 이펙트 표시 (중복 방지)
+    protected void ShowCCEffect(EffectType effectType, int duration, float x, float y)
+    {
+        SimpleEffect ccEffect = null;
+        
+        // 기존 이펙트가 있는지 확인
+        if (activeEffects.TryGetValue(effectType, out ccEffect))
+        {
+            // 기존 이펙트가 있고 활성화되어 있으면 재사용
+            if (ccEffect != null && ccEffect.gameObject.activeInHierarchy)
+            {
+                // 기존 이펙트의 duration만 갱신하고 재생
+                ccEffect.Play(duration);
+                return;
+            }
+            else
+            {
+                // 비활성화되어 있거나 null이면 딕셔너리에서 제거
+                activeEffects.Remove(effectType);
+            }
+        }
+        
+        // 새로운 이펙트 생성
+        ccEffect = EffectFactory.PlayEffect(effectType);
+        if (ccEffect != null)
+        {
+            // 자신에게 이펙트 표시
+            ccEffect.SetParent(transform);
+            ccEffect.x = x;
+            ccEffect.y = y;
+            ccEffect.Play(duration);
+            
+            // 딕셔너리에 저장
+            activeEffects[effectType] = ccEffect;
+        }
+    }
+    
+    // 모든 활성 이펙트 제거
+    protected void ClearAllEffects()
+    {
+        foreach (var kvp in activeEffects)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject.activeInHierarchy)
+            {
+                kvp.Value.Remove();
+            }
+        }
+        activeEffects.Clear();
+    }
+    
+    // 특정 이펙트 제거
+    protected void RemoveEffect(EffectType effectType)
+    {
+        SimpleEffect effect;
+        if (activeEffects.TryGetValue(effectType, out effect))
+        {
+            if (effect != null && effect.gameObject.activeInHierarchy)
+            {
+                effect.Remove();
+            }
+            activeEffects.Remove(effectType);
+        }
+    }
+    
+    // 즉시 넉백 적용 (근접 공격용)
     protected virtual void ApplyKnockback(BaseHero targetHero)
     {
         if (targetHero == null) return;
         
         // 공격자에서 타겟으로의 방향 계산
-        Vector2 knockbackDirection = (targetHero.transform.position - transform.position).normalized;
+        Vector2 knockbackDir = (targetHero.transform.position - transform.position).normalized;
         
-        // 타겟을 뒤로 밀기
-        targetHero.transform.position += (Vector3)(knockbackDirection * knockbackDistance);
+        // 즉시 넉백 적용 (기존 방식)
+        targetHero.KnockbackInstant(knockbackDir, knockbackDistance);
     }
     
     protected virtual void DoRangeAttack()
@@ -1117,6 +1334,13 @@ public class BaseHero : MonoBehaviour
         BaseHero targetHero = target.GetComponent<BaseHero>();
         if (targetHero != null)
         {
+            // 실명 상태면 50% 확률로 빗나감
+            if (blindCount > 0 && UnityEngine.Random.Range(0f, 1f) < 0.5f)
+            {
+                // 빗나감 - 화살은 발사하지 않음
+                return;
+            }
+            
             // 무기 발사 (heroData에 weaponClass가 있다면 사용)
             if (!string.IsNullOrEmpty(heroData.weaponClass) && WeaponFactory.Instance != null)
             {
@@ -1179,6 +1403,20 @@ public class BaseHero : MonoBehaviour
     #endregion
 
     #region Initialization
+    // 영웅 재사용 시 자식 이펙트 정리
+    protected virtual void CleanupChildEffects()
+    {
+        // 모든 자식 오브젝트 중 SimpleEffect 컴포넌트를 가진 것들 제거
+        SimpleEffect[] childEffects = GetComponentsInChildren<SimpleEffect>();
+        foreach (SimpleEffect effect in childEffects)
+        {
+            if (effect != null && effect.gameObject != gameObject)
+            {
+                effect.Remove();
+            }
+        }
+    }
+    
     protected virtual void InitializeStats()
     {
         maxHealth = heroData.GetMaxHealth(level);
@@ -1220,13 +1458,11 @@ public class BaseHero : MonoBehaviour
         float actualDamage = Mathf.Max(0, damage - defense);
         currentHealth -= actualDamage;
         
-        // 타격 이펙트 표시 (새로운 방식)
-        // SimpleEffect hitEffect = EffectFactory.PlayEffect(EffectType.HIT_NORMAL);
-        // if (hitEffect != null)
-        // {
-        //     hitEffect.transform.position = transform.position;
-        //     hitEffect.Play();
-        // }
+        // 수면 상태에서 깨어남
+        if (sleepCount > 0)
+        {
+            sleepCount = 0;
+        }
         
         // 타격 반응 시작 (죽지 않았을 때만)
         if (currentHealth > 0 && !isHitReacting)
@@ -1274,6 +1510,190 @@ public class BaseHero : MonoBehaviour
             target = null;
         }
     }
+    
+    #region Crowd Control Methods
+    // 기절 - 모든 행동 불가
+    public virtual void Stun(int frames)
+    {
+        if (immuneToStunCount > 0) return;        
+        if (stunCount > frames) return;
+        
+        stunCount = frames;  // 실제로 stunCount를 설정해야 함!
+        if( state != STATE_DIE ) SetState(STATE_WAIT);  // CC 상태에서는 WAIT 애니메이션
+        ShowCCEffect(EffectType.STUN, frames, 0, TargetHeight * 1f);
+    }
+    
+    // 빙결 - 모든 행동 불가, 애니메이션 정지
+    public virtual void Freeze(int frames)
+    {
+        if (immuneToFreezeCount > 0) return;        
+        if (freezeCount > frames) return;
+        
+        freezeCount = frames;  // 실제로 freezeCount를 설정
+        if( state != STATE_DIE ) SetState(STATE_WAIT);  // CC 상태에서는 WAIT 애니메이션
+        ShowCCEffect(EffectType.FREEZE, frames, 0, TargetHeight * 1.1f);
+    }
+    
+    // 수면 - 모든 행동 불가, 데미지 받으면 깨어남
+    public virtual void Sleep(int frames)
+    {
+        if (immuneToSleepCount > 0) return;        
+        if (sleepCount > frames) return;
+        
+        sleepCount = frames;  // 실제로 sleepCount를 설정
+        if( state != STATE_DIE ) SetState(STATE_WAIT);  // CC 상태에서는 WAIT 애니메이션
+        ShowCCEffect(EffectType.SLEEP, frames, 0, TargetHeight * 1.1f);
+    }
+    
+    // 넉백 - 점진적으로 밀림 (프레임에 걸쳐서)
+    public virtual void Knockback(int frames, Vector2 direction, float totalDistance)
+    {
+        if (immuneToKnockbackCount > 0) return;
+        if (!isAlive) return;
+        if (knockbackCount > frames) return; // 이미 더 강한 넉백 중이면 무시
+        
+        // 넉백 저항력 적용
+        float actualFrames = frames * (1f - knockbackResist);
+        float actualDistance = totalDistance * (1f - knockbackResist);
+        
+        if (actualFrames <= 0) return; // 완전 저항
+        
+        knockbackCount = Mathf.RoundToInt(actualFrames);
+        knockbackDirection = direction.normalized;
+        // 프레임당 이동 속도 = 총 거리 / 프레임 수
+        knockbackSpeed = actualDistance / knockbackCount;
+    }
+    
+    // 즉시 넉백 (근접 공격용 - 기존 방식)
+    public virtual void KnockbackInstant(Vector2 direction, float distance)
+    {
+        if (immuneToKnockbackCount > 0) return;
+        if (!isAlive) return;
+        
+        // 넉백 저항력 적용
+        float actualDistance = distance * (1f - knockbackResist);
+        transform.position += (Vector3)(direction.normalized * actualDistance);
+    }
+    
+    // 침묵 - 스킬 사용 불가
+    public virtual void Silence(int frames)
+    {
+        if (immuneToSilenceCount <= 0 && isAlive)
+        {
+            silenceCount = Mathf.Max(silenceCount, frames);
+        }
+    }
+    
+    // 속박 - 이동 불가
+    public virtual void Root(int frames)
+    {
+        if (immuneToRootCount <= 0 && isAlive)
+        {
+            rootCount = Mathf.Max(rootCount, frames);
+        }
+    }
+    
+    // 도발 - 특정 대상만 공격하도록 강제
+    public virtual void Taunt(int frames, BaseHero taunter)
+    {
+        if (immuneToTauntCount <= 0 && isAlive)
+        {
+            tauntCount = Mathf.Max(tauntCount, frames);
+            // 도발한 대상을 타겟으로 설정
+            if (taunter != null && taunter.IsAlive)
+            {
+                SetTarget(taunter);
+            }
+        }
+    }
+    
+    // 실명 - 명중률 감소
+    public virtual void Blind(int frames)
+    {
+        if (immuneToBlindCount <= 0 && isAlive)
+        {
+            blindCount = Mathf.Max(blindCount, frames);
+        }
+    }
+    
+    // 무장해제 - 일반 공격 불가
+    public virtual void Disarm(int frames)
+    {
+        if (immuneToDisarmCount <= 0 && isAlive)
+        {
+            disarmCount = Mathf.Max(disarmCount, frames);
+        }
+    }
+    
+    // 둔화 - 이동속도 감소
+    public virtual void Slow(int frames)
+    {
+        if (immuneToSlowCount <= 0 && isAlive)
+        {
+            slowCount = Mathf.Max(slowCount, frames);
+        }
+    }
+    
+    // CC 상태 확인 메서드들
+    public bool IsStunned => stunCount > 0;
+    public bool IsFrozen => freezeCount > 0;
+    public bool IsAsleep => sleepCount > 0;
+    public bool IsKnockedBack => knockbackCount > 0;
+    public bool IsSilenced => silenceCount > 0;
+    public bool IsRooted => rootCount > 0;
+    public bool IsTaunted => tauntCount > 0;
+    public bool IsBlinded => blindCount > 0;
+    public bool IsDisarmed => disarmCount > 0;
+    public bool IsSlowed => slowCount > 0;
+    
+    // 모든 CC 해제
+    public virtual void ClearAllCC()
+    {
+        stunCount = 0;
+        freezeCount = 0;
+        sleepCount = 0;
+        knockbackCount = 0;
+        silenceCount = 0;
+        rootCount = 0;
+        tauntCount = 0;
+        blindCount = 0;
+        disarmCount = 0;
+        slowCount = 0;
+        animationSpeed = 1f; // 애니메이션 속도 복구
+    }
+    
+    // CC 면역 부여 메서드들
+    public virtual void SetStunImmunity(int frames) { immuneToStunCount = frames; }
+    public virtual void SetFreezeImmunity(int frames) { immuneToFreezeCount = frames; }
+    public virtual void SetKnockbackImmunity(int frames) { immuneToKnockbackCount = frames; }
+    public virtual void SetSleepImmunity(int frames) { immuneToSleepCount = frames; }
+    public virtual void SetSilenceImmunity(int frames) { immuneToSilenceCount = frames; }
+    public virtual void SetRootImmunity(int frames) { immuneToRootCount = frames; }
+    public virtual void SetTauntImmunity(int frames) { immuneToTauntCount = frames; }
+    public virtual void SetBlindImmunity(int frames) { immuneToBlindCount = frames; }
+    public virtual void SetDisarmImmunity(int frames) { immuneToDisarmCount = frames; }
+    public virtual void SetSlowImmunity(int frames) { immuneToSlowCount = frames; }
+    
+    // 모든 CC에 대한 면역 부여
+    public virtual void SetAllCCImmunity(int frames)
+    {
+        immuneToStunCount = frames;
+        immuneToFreezeCount = frames;
+        immuneToKnockbackCount = frames;
+        immuneToSleepCount = frames;
+        immuneToSilenceCount = frames;
+        immuneToRootCount = frames;
+        immuneToTauntCount = frames;
+        immuneToBlindCount = frames;
+        immuneToDisarmCount = frames;
+        immuneToSlowCount = frames;
+    }
+    
+    // 면역 상태 확인
+    public bool HasStunImmunity => immuneToStunCount > 0;
+    public bool HasFreezeImmunity => immuneToFreezeCount > 0;
+    public bool HasKnockbackImmunity => immuneToKnockbackCount > 0;
+    #endregion
 
     #endregion
 
@@ -1388,6 +1808,9 @@ public class BaseHero : MonoBehaviour
     {
         // 모든 Invoke 취소
         CancelInvoke();
+        
+        // 영웅 재사용 시 자식 이펙트 정리
+        CleanupChildEffects();
         
         currentHealth = maxHealth;
         isAlive = true;

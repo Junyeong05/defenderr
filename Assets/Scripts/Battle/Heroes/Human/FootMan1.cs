@@ -101,8 +101,7 @@ public class FootMan1 : BaseHero
             // 기절 이펙트 추가 예시 (이펙트 프리팹이 있다면)
             if (target != null && shieldEffect != null) // shieldEffect를 임시로 사용
             {
-                // 타겟 위치에 기절 이펙트 생성
-                AddEffectAtPosition(shieldEffect, target.position, 2f);
+                // 타겟 위치에 기절 이펙트 생성                
             }
         }
     }

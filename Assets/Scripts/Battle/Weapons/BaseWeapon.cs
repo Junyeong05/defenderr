@@ -375,7 +375,7 @@ public class BaseWeapon : MonoBehaviour
         // This method is kept empty for compatibility
     }
     
-    protected virtual void OnHitTarget(BaseHero hitTarget)
+    protected void OnHitTarget(BaseHero hitTarget)
     {
         if (hitTarget == null || !hitTarget.IsAlive) return;
         
@@ -389,6 +389,8 @@ public class BaseWeapon : MonoBehaviour
         // }
         ShowHitEffect(hitTarget, EffectType.PHYSICAL_HIT);
         
+        OnHitTargetSub(hitTarget);
+
         // 관통 처리
         if (remainingPenetration > 0)
         {
@@ -400,6 +402,10 @@ public class BaseWeapon : MonoBehaviour
             hasHit = true;
             Remove();
         }
+    }
+
+    protected virtual void OnHitTargetSub(BaseHero targetHero)
+    {
     }
     
     protected void ShowHitEffect(BaseHero targetHero, EffectType effectType)

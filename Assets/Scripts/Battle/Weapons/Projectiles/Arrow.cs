@@ -8,18 +8,18 @@ public class Arrow : BaseWeapon
     // weaponData.rotateToDirection으로 회전 제어
     
     // 필요한 경우에만 추가 기능 구현
-    protected override void OnHitTarget(BaseHero hitTarget)
-    {
-        base.OnHitTarget(hitTarget);
+    // protected override void OnHitTarget(BaseHero hitTarget)
+    // {
+    //     base.OnHitTarget(hitTarget);
         
-        // 화살이 타겟에 박히는 효과 (옵션)
-        if (!weaponData.destroyOnHit)
-        {
-            // 타겟에 고정
-            transform.SetParent(hitTarget.transform);
+    //     // 화살이 타겟에 박히는 효과 (옵션)
+    //     if (!weaponData.destroyOnHit)
+    //     {
+    //         // 타겟에 고정
+    //         transform.SetParent(hitTarget.transform);
             
-            // 일정 시간 후 제거
-            Invoke("Remove", 2f);
-        }
-    }
+    //         // 일정 시간 후 제거
+    //         Invoke("Remove", 2f);
+    //     }
+    // }
 }

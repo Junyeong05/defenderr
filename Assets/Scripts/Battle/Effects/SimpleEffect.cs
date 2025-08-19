@@ -83,12 +83,13 @@ public class SimpleEffect : MonoBehaviour
             return;
         }
         
-        Debug.Log($"[SimpleEffect] Playing {textureName} with {sprites.Length} frames at pos ({transform.position.x}, {transform.position.y})");
+        Debug.Log($"[SimpleEffect] Playing {textureName} with {sprites.Length} frames for {(duration > 0 ? duration : maxFrames)} frames");
         
-        // duration이 제공되면 덮어쓰기
+        // duration이 제공되면 해당 기간만큼 재생 (애니메이션은 계속 반복)
         if (duration > 0)
         {
             maxFrames = duration;
+            // loop 변수는 이제 사용하지 않음 - maxFrames로만 제어
         }
         
         // 초기화
@@ -117,24 +118,32 @@ public class SimpleEffect : MonoBehaviour
     {
         if (sprites == null || sprites.Length == 0) return;
         
-        // 프레임 카운트
-        frameCount++;
-        if (!loop && frameCount >= maxFrames)
+        // loop = true일 때만 프레임 카운트 (duration 기반)
+        if (loop)
         {
-            Remove();
-            return;
+            frameCount++;
+            // maxFrames에 도달하면 종료 (duration 기반)
+            if (frameCount >= maxFrames)
+            {
+                Remove();
+                return;
+            }
         }
         
         // 애니메이션 업데이트
         currentFrame += animationSpeed;
+        
+        // 애니메이션이 끝에 도달했을 때
         if (currentFrame >= sprites.Length)
         {
             if (loop)
             {
+                // loop = true: 처음부터 다시 반복
                 currentFrame = 0f;
             }
             else
             {
+                // loop = false: 애니메이션 종료
                 Remove();
                 return;
             }

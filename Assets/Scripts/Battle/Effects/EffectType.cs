@@ -17,6 +17,7 @@ public enum EffectType
     BURN,
     POISON,
     SLOW,
+    SLEEP,
     
     // 타격 효과
     HIT_NORMAL,

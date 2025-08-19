@@ -29,8 +29,8 @@ public class BattleController : MonoBehaviour
     #region Fields
     [Header("Battle Configuration")]
     [SerializeField] private HeroCatalog heroCatalog;
-    [SerializeField] private int playerUnitCount = 5;
-    [SerializeField] private int enemyUnitCount = 5;
+    [SerializeField] private int playerUnitCount = 1;
+    [SerializeField] private int enemyUnitCount = 1;
     
     [Header("Battle State")]
     [SerializeField] private bool isBattleActive = false;
@@ -189,7 +189,7 @@ public class BattleController : MonoBehaviour
         
         playerUnits.Clear();
 
-        HeroData elfArcherData = heroCatalog.GetData("FootMan1");
+        HeroData elfArcherData = heroCatalog.GetData("ElfArcher1");
         
         // 디버그 로그 추가
         if (elfArcherData != null)
@@ -199,7 +199,7 @@ public class BattleController : MonoBehaviour
         
         for (int i = 0; i < playerUnitCount; i++)
         {
-            BaseHero unit = HeroFactory.Instance.GetHero("FootMan1", elfArcherData, 1);
+            BaseHero unit = HeroFactory.Instance.GetHero("ElfArcher1", elfArcherData, 1);
             if (unit != null)
             {
                 // 위치 설정 (하단 배치)

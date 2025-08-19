@@ -15,11 +15,12 @@ public static class EffectFactory
         { EffectType.SHIELD, new EffectConfig("Shield", 0.4f, true, 120, 1.3f) },
         
         // 상태이상 효과
-        { EffectType.STUN, new EffectConfig("Stun", 0.4f, true, 90, 1f) },
+        { EffectType.STUN, new EffectConfig("Stun", 0.4f, true, 90, 1.2f) },
         { EffectType.FREEZE, new EffectConfig("Freeze", 0.3f, false, 60, 1.2f) },
         { EffectType.BURN, new EffectConfig("Burn", 0.5f, true, 120, 0.8f) },
         { EffectType.POISON, new EffectConfig("Poison", 0.3f, true, 150, 0.9f) },
         { EffectType.SLOW, new EffectConfig("Slow", 0.3f, true, 90, 1f) },
+        { EffectType.SLEEP, new EffectConfig("Sleep", 0.3f, true, 90, 1f) },
         
         // 타격 효과
         { EffectType.PHYSICAL_HIT, new EffectConfig("PhysicallHitEffect", 0.8f, false, 20, 2.9f) },

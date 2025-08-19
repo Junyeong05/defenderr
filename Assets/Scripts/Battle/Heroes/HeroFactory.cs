@@ -103,6 +103,7 @@ public class HeroFactory : MonoBehaviour
         if (heroPools[heroType].Count > 0)
         {
             hero = heroPools[heroType].Dequeue();
+            hero.ResetHero(); // 영웅 재사용 시 초기화 (자식 이펙트 정리 포함)
             hero.gameObject.SetActive(true);
             hero.transform.SetParent(null); // 풀 컨테이너에서 빼내기
         }
