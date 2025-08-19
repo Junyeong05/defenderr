@@ -124,6 +124,9 @@ public class BaseWeapon : MonoBehaviour
         this.owner = owner;
         this.target = target;
         
+        // 이미 WeaponLayer에 있으므로 parent 변경 불필요
+        // Unity는 비활성화된 오브젝트도 parent 유지
+        
         // 데미지 계산
         if (owner != null)
         {
@@ -133,8 +136,8 @@ public class BaseWeapon : MonoBehaviour
         // 상태 초기화
         ResetWeapon();
         
-        // 위치 설정
-        if (owner != null)
+        // 위치 설정 - BaseHero에서 이미 설정하지 않았으면 owner 위치 사용
+        if (transform.position == Vector3.zero && owner != null)
         {
             transform.position = owner.transform.position;
         }
@@ -335,7 +338,7 @@ public class BaseWeapon : MonoBehaviour
         }
     }
     #endregion
-    
+  
     #region Beam Type
     protected virtual void InitBeam()
     {
@@ -380,10 +383,11 @@ public class BaseWeapon : MonoBehaviour
         hitTarget.TakeDamage(damage);
         
         // 타격 이펙트 표시
-        if (weaponData.showHitEffect)
-        {
-            ShowHitEffect(hitTarget.transform.position);
-        }
+        // if (weaponData.showHitEffect)
+        // {
+        //     ShowHitEffect(hitTarget.transform.position);
+        // }
+        ShowHitEffect(hitTarget, EffectType.PHYSICAL_HIT);
         
         // 관통 처리
         if (remainingPenetration > 0)
@@ -398,23 +402,44 @@ public class BaseWeapon : MonoBehaviour
         }
     }
     
-    protected virtual void ShowHitEffect(Vector3 position)
+    protected void ShowHitEffect(BaseHero targetHero, EffectType effectType)
     {
-        // 카탈로그에서 이펙트 프리팹 가져오기
-        if (!string.IsNullOrEmpty(weaponData.hitEffectName))
+        SimpleEffect hitEffect = EffectFactory.PlayEffect(effectType);
+        if (hitEffect != null)
         {
-            // WeaponFactory를 통해 이펙트 프리팹 가져오기
-            if (factory != null)
-            {
-                GameObject effectPrefab = factory.GetHitEffectPrefab(weaponClass);
-                if (effectPrefab != null)
-                {
-                    GameObject effect = Instantiate(effectPrefab, position, Quaternion.identity);
-                    Destroy(effect, weaponData.hitEffectDuration);
-                }
-            }
+            // 무기(화살)의 월드 좌표를 타겟 영웅의 로컬 좌표로 변환
+            Vector3 worldPos = this.transform.position;
+            Vector3 localPos = targetHero.transform.InverseTransformPoint(worldPos);
+            
+            // 타겟 영웅의 자식으로 설정
+            hitEffect.SetParent(targetHero.transform);
+            
+            // 변환된 로컬 좌표로 설정 (화살이 맞은 정확한 위치에 이펙트 표시)
+            hitEffect.x = localPos.x;
+            hitEffect.y = localPos.y;
+            hitEffect.Play();
         }
     }
+
+    // protected virtual void ShowHitEffect(Vector3 position)
+    // {
+    //     // 카탈로그에서 이펙트 프리팹 가져오기
+    //     if (!string.IsNullOrEmpty(weaponData.hitEffectName))
+    //     {
+    //         // WeaponFactory를 통해 이펙트 프리팹 가져오기
+    //         if (factory != null)
+    //         {
+    //             GameObject effectPrefab = factory.GetHitEffectPrefab(weaponClass);
+    //             if (effectPrefab != null)
+    //             {
+    //                 GameObject effect = Instantiate(effectPrefab, position, Quaternion.identity);
+    //                 // EffectLayer에 추가
+    //                 effect.transform.SetParent(EffectLayer.Instance.transform);
+    //                 Destroy(effect, weaponData.hitEffectDuration);
+    //             }
+    //         }
+    //     }
+    // }
     #endregion
     
     #region Cleanup
@@ -441,11 +466,14 @@ public class BaseWeapon : MonoBehaviour
         target = null;
         damage = 0;
         
+        // WeaponLayer에 그대로 둠 (PixiJS의 removeChild 대신 비활성화)
+        // Unity는 SetActive(false)로 화면에서 사라짐
+        
         // 위치 초기화
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.identity;
         
-        // 비활성화
+        // 비활성화 (화면에서 사라짐)
         gameObject.SetActive(false);
     }
     #endregion

@@ -373,6 +373,18 @@ public class SimpleGoogleSheetsImporter : EditorWindow
                 if (float.TryParse(value, out float targetWidth))
                     data.targetWidth = targetWidth;
                 break;
+            case "weaponx":
+            case "weapon_x":
+            case "무기x":
+                if (float.TryParse(value, out float weaponX))
+                    data.weaponX = weaponX;
+                break;
+            case "weapony":
+            case "weapon_y":
+            case "무기y":
+                if (float.TryParse(value, out float weaponY))
+                    data.weaponY = weaponY;
+                break;
         }
     }
     

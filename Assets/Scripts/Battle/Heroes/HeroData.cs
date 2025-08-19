@@ -74,6 +74,13 @@ public class HeroData : ScriptableObject
     [Tooltip("무기 클래스 (원거리 공격시 사용할 무기)")]
     public string weaponClass = "";  // Arrow, Bullet, Lightning 등
     
+    [Header("Weapon Spawn Position")]
+    [Tooltip("무기 발사 위치 X 오프셋 (영웅 중심 기준, 픽셀)")]
+    public float weaponX = 0f;
+    
+    [Tooltip("무기 발사 위치 Y 오프셋 (영웅 중심 기준, 픽셀)")]
+    public float weaponY = 0f;
+    
     [Header("Attack Frame Triggers")]
     [Tooltip("공격이 발생하는 프레임 번호들 (AS3.0 스타일)")]
     public int[] attackTriggerFrames = new int[] { 32, 38 };

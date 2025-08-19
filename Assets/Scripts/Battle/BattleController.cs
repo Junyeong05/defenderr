@@ -67,23 +67,10 @@ public class BattleController : MonoBehaviour
 
     private void Start()
     {
-        // HeroFactory에 카탈로그 설정
-        if (heroCatalog != null)
-        {
-            HeroFactory.Instance.SetCatalog(heroCatalog);
-        }
+        // GameMain에서 모든 Factory 초기화를 처리하므로 여기서는 하지 않음
+        // Factory 설정은 GameMain.InitializeFactories()에서 처리
         
-        // WeaponFactory에 카탈로그 설정
-        WeaponCatalog weaponCatalog = Resources.Load<WeaponCatalog>("WeaponData/WeaponCatalog");
-        if (weaponCatalog != null)
-        {
-            WeaponFactory.Instance.SetCatalog(weaponCatalog);
-            Debug.Log("[BattleController] WeaponCatalog loaded and set to WeaponFactory");
-        }
-        else
-        {
-            Debug.LogError("[BattleController] Failed to load WeaponCatalog from Resources/WeaponData/WeaponCatalog");
-        }
+        // 필요한 경우 BattleController 고유의 초기화 코드만 추가
         
         // BattleController를 FrameController에 한 번만 등록
         FrameController.Add(OnFrame, this);
@@ -202,7 +189,7 @@ public class BattleController : MonoBehaviour
         
         playerUnits.Clear();
 
-        HeroData elfArcherData = heroCatalog.GetData("ElfArcher1");
+        HeroData elfArcherData = heroCatalog.GetData("FootMan1");
         
         // 디버그 로그 추가
         if (elfArcherData != null)
@@ -212,14 +199,14 @@ public class BattleController : MonoBehaviour
         
         for (int i = 0; i < playerUnitCount; i++)
         {
-            BaseHero unit = HeroFactory.Instance.GetHero("ElfArcher1", elfArcherData, 1);
+            BaseHero unit = HeroFactory.Instance.GetHero("FootMan1", elfArcherData, 1);
             if (unit != null)
             {
                 // 위치 설정 (하단 배치)
                 float xPos = Random.Range(-300f, 300f);
                 float yPos = Random.Range(-300f, -500f);
                 unit.transform.position = new Vector3(xPos, yPos, 0);
-                unit.SetSize(1.1f);
+                unit.SetSize(1.25f);
                 
                 // 기본 타겟 위치 설정 (위쪽으로 이동)
                 unit.SetDefaultTargetPosition(new Vector2(xPos, 400));
@@ -265,6 +252,7 @@ public class BattleController : MonoBehaviour
                 float xPos = Random.Range(-300f, 300f);
                 float yPos = Random.Range(300f, 500f);
                 unit.transform.position = new Vector3(xPos, yPos, 0);
+                unit.SetSize(1.25f);
                 
                 // 기본 타겟 위치 설정 (아래쪽으로 이동)
                 unit.SetDefaultTargetPosition(new Vector2(xPos, -400));

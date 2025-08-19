@@ -391,15 +391,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 216114333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d884a8e5f3c6d49abb6bfb10ebff586b, type: 3}
+  m_Script: {fileID: 11500000, guid: cc67a64d636964bf3b2f45dbf8e61e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleController: {fileID: 0}
-  heroCatalog: {fileID: 11400000, guid: 4e9b4c57c457a43c7877301c92981240, type: 2}
-  showDebugLine: 1
-  lineColor: {r: 1, g: 0, b: 0, a: 1}
-  lineWidth: 1
-  battleSpeed: 0.7
+  showDebugInfo: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

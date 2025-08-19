@@ -42,6 +42,8 @@ MonoBehaviour:
   dodgeChance: 0
   isRanged: 0
   weaponClass: 
+  weaponX: 28
+  weaponY: 15
   attackTriggerFrames: 3c00000040000000
   targetHeight: 41
   targetWidth: 27

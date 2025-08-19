@@ -80,7 +80,7 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>512</int>
+            <int>1024</int>
             <key>height</key>
             <int>512</int>
         </QSize>
@@ -434,6 +434,827 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../battle/BattleEffect/BlockText.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,4,20,9</rect>
+                <key>scale9Paddings</key>
+                <rect>10,4,20,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0006.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0007.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0008.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0009.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0010.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0011.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0012.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0013.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0014.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0015.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0016.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0017.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0018.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0019.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0020.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0021.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0022.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0023.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0024.png</key>
+            <key type="filename">../battle/BattleEffect/BloodyEffect0025.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.545455</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,6,11,11</rect>
+                <key>scale9Paddings</key>
+                <rect>6,6,11,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/BuffAttackSpeedUp.png</key>
+            <key type="filename">../battle/BattleEffect/BuffCriticalUp.png</key>
+            <key type="filename">../battle/BattleEffect/BuffDamageUp.png</key>
+            <key type="filename">../battle/BattleEffect/BuffDefenseUp.png</key>
+            <key type="filename">../battle/BattleEffect/BuffImmuneBloody.png</key>
+            <key type="filename">../battle/BattleEffect/BuffImmuneFire.png</key>
+            <key type="filename">../battle/BattleEffect/BuffImmuneFreeze.png</key>
+            <key type="filename">../battle/BattleEffect/BuffImmuneStun.png</key>
+            <key type="filename">../battle/BattleEffect/BuffInvincible.png</key>
+            <key type="filename">../battle/BattleEffect/BuffMoveSpeedUp.png</key>
+            <key type="filename">../battle/BattleEffect/BuffOverpower.png</key>
+            <key type="filename">../battle/BattleEffect/BuffPenetrate.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiHeal.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffDamageDown.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffDefenseDown.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,10,10</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,10,10</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/BuffAuraRed0001.png</key>
+            <key type="filename">../battle/BattleEffect/BuffAuraRed0002.png</key>
+            <key type="filename">../battle/BattleEffect/BuffAuraRed0003.png</key>
+            <key type="filename">../battle/BattleEffect/BuffAuraRed0004.png</key>
+            <key type="filename">../battle/BattleEffect/BuffAuraRed0005.png</key>
+            <key type="filename">../battle/BattleEffect/BuffAuraRed0006.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.489362,0.911765</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,9,23,17</rect>
+                <key>scale9Paddings</key>
+                <rect>12,9,23,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0006.png</key>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0007.png</key>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0008.png</key>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0009.png</key>
+            <key type="filename">../battle/BattleEffect/ClearDebuffEffect0010.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.481752,0.553957</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>34,35,69,69</rect>
+                <key>scale9Paddings</key>
+                <rect>34,35,69,69</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/CriticalText.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.478261,0.529412</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,4,23,9</rect>
+                <key>scale9Paddings</key>
+                <rect>12,4,23,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/CurseEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/CurseEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/CurseEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/CurseEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/CurseEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/CurseEffect0006.png</key>
+            <key type="filename">../battle/BattleEffect/CurseEffect0007.png</key>
+            <key type="filename">../battle/BattleEffect/CurseEffect0008.png</key>
+            <key type="filename">../battle/BattleEffect/CurseEffect0009.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.474576,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,6,29,11</rect>
+                <key>scale9Paddings</key>
+                <rect>15,6,29,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0001.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0002.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0003.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0004.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0005.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0006.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0007.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0008.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0009.png</key>
+            <key type="filename">../battle/BattleEffect/DebuffAntiEnergy0010.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.47619,0.526316</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,10,63,19</rect>
+                <key>scale9Paddings</key>
+                <rect>32,10,63,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0006.png</key>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0007.png</key>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0008.png</key>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0009.png</key>
+            <key type="filename">../battle/BattleEffect/ElectricEffect0010.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.517241,0.533333</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,8,15,15</rect>
+                <key>scale9Paddings</key>
+                <rect>7,8,15,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/EvadeText.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.588235</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,4,21,9</rect>
+                <key>scale9Paddings</key>
+                <rect>11,4,21,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/FireEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/FireEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/FireEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/FireEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/FireEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/FireEffect0006.png</key>
+            <key type="filename">../battle/BattleEffect/FireEffect0007.png</key>
+            <key type="filename">../battle/BattleEffect/FireEffect0008.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.931818</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,11,14,22</rect>
+                <key>scale9Paddings</key>
+                <rect>7,11,14,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/FreezeEffectL.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.521739,0.950617</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>23,20,46,41</rect>
+                <key>scale9Paddings</key>
+                <rect>23,20,46,41</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/FreezeEffectM.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.546875,0.927273</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,14,32,27</rect>
+                <key>scale9Paddings</key>
+                <rect>16,14,32,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/FreezeEffectS0001.png</key>
+            <key type="filename">../battle/BattleEffect/FreezeEffectS0002.png</key>
+            <key type="filename">../battle/BattleEffect/FreezeEffectS0003.png</key>
+            <key type="filename">../battle/BattleEffect/FreezeEffectS0004.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.534884,0.860465</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,11,21,21</rect>
+                <key>scale9Paddings</key>
+                <rect>11,11,21,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/Frost0001.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0002.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0003.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0004.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0005.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0006.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0007.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0008.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0009.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0010.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0011.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0012.png</key>
+            <key type="filename">../battle/BattleEffect/Frost0013.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.571429</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,9,18,17</rect>
+                <key>scale9Paddings</key>
+                <rect>9,9,18,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0001.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0002.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0003.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0004.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0005.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0006.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0007.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0008.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0009.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0010.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0011.png</key>
+            <key type="filename">../battle/BattleEffect/FrostShieldBuff0012.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.49,0.546392</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,24,50,49</rect>
+                <key>scale9Paddings</key>
+                <rect>25,24,50,49</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/Gage_Battle_Blue_h2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,1,15,1</rect>
+                <key>scale9Paddings</key>
+                <rect>8,1,15,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/Gage_Battle_Floor_h11.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,3,16,5</rect>
+                <key>scale9Paddings</key>
+                <rect>8,3,16,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/Gage_Battle_Green_h5.png</key>
+            <key type="filename">../battle/BattleEffect/Gage_Battle_Red_h5.png</key>
+            <key type="filename">../battle/BattleEffect/Gage_Battle_Yellow_h5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,1,15,3</rect>
+                <key>scale9Paddings</key>
+                <rect>8,1,15,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/Gage_Expedition_Blue_h2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,1,19,1</rect>
+                <key>scale9Paddings</key>
+                <rect>10,1,19,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/Gage_Expedition_Floor_h13.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,3,24,7</rect>
+                <key>scale9Paddings</key>
+                <rect>12,3,24,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/Gage_Expedition_Green_h4.png</key>
+            <key type="filename">../battle/BattleEffect/Gage_Expedition_Yellow_h4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,1,19,2</rect>
+                <key>scale9Paddings</key>
+                <rect>10,1,19,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/HealEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0006.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0007.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0008.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0009.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0010.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0011.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0012.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0013.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0014.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0015.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0016.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0017.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0018.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0019.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0020.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0021.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0022.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0023.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0024.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0025.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0026.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0027.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0028.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0029.png</key>
+            <key type="filename">../battle/BattleEffect/HealEffect0030.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.525</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,10,16,20</rect>
+                <key>scale9Paddings</key>
+                <rect>8,10,16,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/MagicHitEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/MagicHitEffect0007.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.514286,0.516129</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,8,17,15</rect>
+                <key>scale9Paddings</key>
+                <rect>9,8,17,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/MagicHitEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/MagicHitEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/MagicHitEffect0006.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.517241,0.538462</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,7,15,13</rect>
+                <key>scale9Paddings</key>
+                <rect>7,7,15,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/MagicHitEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/PhysicallHitEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/PhysicallHitEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/PhysicallHitEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/PhysicallHitEffect0007.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.517241,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,7,15,13</rect>
+                <key>scale9Paddings</key>
+                <rect>7,7,15,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0001.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0002.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0003.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0004.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0005.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0006.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0007.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0008.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0009.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0010.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0011.png</key>
+            <key type="filename">../battle/BattleEffect/MagmaSlReflect0012.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,9,30,18</rect>
+                <key>scale9Paddings</key>
+                <rect>15,9,30,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/MissText.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.486486,0.529412</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,4,19,9</rect>
+                <key>scale9Paddings</key>
+                <rect>9,4,19,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/PhysicallHitEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/PhysicallHitEffect0006.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.482759,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,7,15,13</rect>
+                <key>scale9Paddings</key>
+                <rect>7,7,15,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0006.png</key>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0007.png</key>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0008.png</key>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0009.png</key>
+            <key type="filename">../battle/BattleEffect/PoisonEffect0010.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.485714,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,9,17,18</rect>
+                <key>scale9Paddings</key>
+                <rect>9,9,17,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0006.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0007.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0008.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0009.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0010.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0011.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0012.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0013.png</key>
+            <key type="filename">../battle/BattleEffect/SkillStartEffect0014.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.510204,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,21,49,42</rect>
+                <key>scale9Paddings</key>
+                <rect>25,21,49,42</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/SleepEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0006.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0007.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0008.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0009.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0010.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0011.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0012.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0013.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0014.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0015.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0016.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0017.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0018.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0019.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0020.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0021.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0022.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0023.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0024.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0025.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0026.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0027.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0028.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0029.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0030.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0031.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0032.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0033.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0034.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0035.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0036.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0037.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0038.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0039.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0040.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0041.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0042.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0043.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0044.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0045.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0046.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0047.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0048.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0049.png</key>
+            <key type="filename">../battle/BattleEffect/SleepEffect0050.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.482759,0.576923</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,7,15,13</rect>
+                <key>scale9Paddings</key>
+                <rect>7,7,15,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/StunEffect0001.png</key>
+            <key type="filename">../battle/BattleEffect/StunEffect0002.png</key>
+            <key type="filename">../battle/BattleEffect/StunEffect0003.png</key>
+            <key type="filename">../battle/BattleEffect/StunEffect0004.png</key>
+            <key type="filename">../battle/BattleEffect/StunEffect0005.png</key>
+            <key type="filename">../battle/BattleEffect/StunEffect0006.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.482759,0.666667</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,4,15,7</rect>
+                <key>scale9Paddings</key>
+                <rect>7,4,15,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/UnitBarBg.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,2,7,4</rect>
+                <key>scale9Paddings</key>
+                <rect>4,2,7,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/UnitBar_blue.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_green.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_red.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_yellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,1,5,2</rect>
+                <key>scale9Paddings</key>
+                <rect>3,1,5,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/UnitBar_blue_center.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_green_center.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_red_center.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_yellow_center.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,2,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,2,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/UnitBar_blue_left.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_blue_right.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_green_left.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_green_right.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_red_left.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_red_right.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_yellow_left.png</key>
+            <key type="filename">../battle/BattleEffect/UnitBar_yellow_right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,1,2</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,1,2</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../battle/BattleEffect/tombstone.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,18,35,36</rect>
+                <key>scale9Paddings</key>
+                <rect>18,18,35,36</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../battle/effect/IcebowSlExplode10001.png</key>
             <key type="filename">../battle/effect/IcebowSlExplode10002.png</key>
             <key type="filename">../battle/effect/IcebowSlExplode10003.png</key>
@@ -509,6 +1330,7 @@
                     <filename>../../../../../Projects/defenders/misc/textures/battle/elfArcher</filename>
                     <filename>../battle/weapon</filename>
                     <filename>../battle/effect</filename>
+                    <filename>../battle/BattleEffect</filename>
                 </array>
             </struct>
         </map>

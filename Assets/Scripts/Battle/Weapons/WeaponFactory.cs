@@ -27,7 +27,6 @@ public class WeaponFactory : MonoBehaviour
     #region Fields
     [Header("Configuration")]
     [SerializeField] private WeaponCatalog weaponCatalog;
-    [SerializeField] private Transform poolContainer;
     [SerializeField] private int maxPoolSize = 100;  // 각 무기 타입별 최대 풀 크기
     
     // 오브젝트 풀
@@ -53,13 +52,7 @@ public class WeaponFactory : MonoBehaviour
     
     private void Start()
     {
-        // 풀 컨테이너 생성
-        if (poolContainer == null)
-        {
-            GameObject container = new GameObject("WeaponPool");
-            container.transform.SetParent(transform);
-            poolContainer = container.transform;
-        }
+        // Unity는 비활성화로 충분 - poolContainer 불필요
     }
     #endregion
     
@@ -165,7 +158,7 @@ public class WeaponFactory : MonoBehaviour
         
         string weaponClass = weapon.WeaponClass;
         
-        // 풀로 반환
+        // 풀로 반환 (WeaponLayer에 그대로 두고 비활성화만)
         weapon.ReturnToPool();
         
         // 최대 풀 크기 체크
@@ -210,9 +203,12 @@ public class WeaponFactory : MonoBehaviour
             return null;
         }
         
-        // 프리팹에서 인스턴스 생성
-        GameObject weaponObj = Instantiate(prefab, poolContainer);
+        // 프리팹에서 인스턴스 생성 (WeaponLayer에 생성)
+        GameObject weaponObj = Instantiate(prefab);
         BaseWeapon weapon = weaponObj.GetComponent<BaseWeapon>();
+        
+        // WeaponLayer에 바로 추가 (비활성 상태로)
+        weaponObj.transform.SetParent(WeaponLayer.Instance.transform);
         
         if (weapon == null)
         {

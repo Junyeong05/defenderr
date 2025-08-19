@@ -165,6 +165,8 @@ public class BaseHero : MonoBehaviour
         level = heroLevel;
         hasData = true;
         
+        // UnitLayer에 추가 (PixiJS의 addChild처럼)
+        transform.SetParent(UnitLayer.Instance.transform);
         
         if (heroData != null)
         {
@@ -215,6 +217,9 @@ public class BaseHero : MonoBehaviour
     {
         ResetState();
         hasData = false;
+        
+        // 레이어에서 제거 (PixiJS의 removeChild처럼)
+        transform.SetParent(null);
         
         // BattleController에서 관리
     }
@@ -1016,6 +1021,8 @@ public class BaseHero : MonoBehaviour
     protected virtual void OnKillEnemy(BaseHero enemy)
     {
         // 서브클래스에서 경험치 획득 등 구현
+        // 예: 레벨업 이펙트
+        // EffectFactory.PlayEffect(EffectType.LEVEL_UP, transform.position);
     }
 
     protected virtual void AttackMain()
@@ -1058,7 +1065,10 @@ public class BaseHero : MonoBehaviour
                 damage *= heroData.criticalMultiplier;
             }
             
-            targetHero.TakeDamage(damage);
+            // 타격 이펙트 표시
+            ShowHitEffect(targetHero, EffectType.PHYSICAL_HIT);
+            
+            targetHero.TakeDamage(damage);            
             
             // 넉백 적용 (타겟이 살아있을 때만)
             if (targetHero.IsAlive)
@@ -1070,6 +1080,21 @@ public class BaseHero : MonoBehaviour
             {
                 OnKillEnemy(targetHero);
             }
+        }
+    }
+
+    protected void ShowHitEffect(BaseHero targetHero, EffectType effectType)
+    {
+        SimpleEffect hitEffect = EffectFactory.PlayEffect(effectType);
+        if (hitEffect != null)
+        {           
+            // 타겟 영웅의 자식으로 설정
+            hitEffect.SetParent(targetHero.transform);
+            
+            // 변환된 로컬 좌표로 설정 (화살이 맞은 위치에 이펙트 표시)
+            hitEffect.x = 0;
+            hitEffect.y = targetHero.TargetHeight * .5f;
+            hitEffect.Play();
         }
     }
     
@@ -1099,6 +1124,20 @@ public class BaseHero : MonoBehaviour
                 BaseWeapon weapon = WeaponFactory.Instance.GetWeapon(heroData.weaponClass, this, targetHero, 1f);
                 if (weapon != null)
                 {
+                    // 무기 발사 위치 설정 (weaponX, weaponY 오프셋 적용)
+                    Vector3 weaponPos = transform.position;
+                    
+                    // flip 상태에 따라 X 오프셋 반전
+                    float xOffset = heroData.weaponX;
+                    if (spriteRenderer != null && spriteRenderer.flipX)
+                    {
+                        xOffset = -xOffset;
+                    }
+                    
+                    weaponPos.x += xOffset;
+                    weaponPos.y += heroData.weaponY;
+                    weapon.transform.position = weaponPos;
+                    
                     // 무기가 자체적으로 데미지 처리
                     return;
                 }
@@ -1180,6 +1219,14 @@ public class BaseHero : MonoBehaviour
         
         float actualDamage = Mathf.Max(0, damage - defense);
         currentHealth -= actualDamage;
+        
+        // 타격 이펙트 표시 (새로운 방식)
+        // SimpleEffect hitEffect = EffectFactory.PlayEffect(EffectType.HIT_NORMAL);
+        // if (hitEffect != null)
+        // {
+        //     hitEffect.transform.position = transform.position;
+        //     hitEffect.Play();
+        // }
         
         // 타격 반응 시작 (죽지 않았을 때만)
         if (currentHealth > 0 && !isHitReacting)

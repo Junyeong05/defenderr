@@ -42,6 +42,8 @@ MonoBehaviour:
   dodgeChance: 0
   isRanged: 1
   weaponClass: IcebowSlArrow1
+  weaponX: 22
+  weaponY: 20
   attackTriggerFrames: 3e000000
   targetHeight: 39
   targetWidth: 23
