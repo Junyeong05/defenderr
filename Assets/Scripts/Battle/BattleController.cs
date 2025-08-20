@@ -29,8 +29,8 @@ public class BattleController : MonoBehaviour
     #region Fields
     [Header("Battle Configuration")]
     [SerializeField] private HeroCatalog heroCatalog;
-    [SerializeField] private int playerUnitCount = 1;
-    [SerializeField] private int enemyUnitCount = 1;
+    [SerializeField] private int playerUnitCount = 5;
+    [SerializeField] private int enemyUnitCount = 5;
     
     [Header("Battle State")]
     [SerializeField] private bool isBattleActive = false;

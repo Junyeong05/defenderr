@@ -6,6 +6,6 @@ public class IcebowSlArrow1 : Arrow
 
     protected override void OnHitTargetSub(BaseHero targetHero)
     {        
-        targetHero.Stun(120);
+        targetHero.Stun(30);
     }
 }

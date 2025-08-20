@@ -67,6 +67,55 @@ public class HeroData : ScriptableObject
     [Range(0f, 100f)]
     public float dodgeChance = 0f;
     
+    [Tooltip("데미지 감소율 (0-100)")]
+    [Range(0f, 100f)]
+    public float damageReduction = 0f;
+    
+    [Tooltip("방어 관통력")]
+    public float penetrate = 0f;
+    
+    [Header("Resistance Properties")]
+    [Space(10)]
+    [Tooltip("넉백 저항 (0-100)")]
+    [Range(0f, 100f)]
+    public float knockbackResist = 0f;
+    
+    [Tooltip("빙결 저항 (0-100)")]
+    [Range(0f, 100f)]
+    public float freezeResist = 0f;
+    
+    [Tooltip("기절 저항 (0-100)")]
+    [Range(0f, 100f)]
+    public float stunResist = 0f;
+    
+    [Tooltip("감전 저항 (0-100)")]
+    [Range(0f, 100f)]
+    public float shockResist = 0f;
+    
+    [Header("Element & Special Properties")]
+    [Space(10)]
+    [Tooltip("속성 (0: 없음, 1: 철, 2: 화, 3: 수, 4: 목)")]
+    [Range(0, 4)]
+    public int property = 0;
+    
+    [Tooltip("치명타 시 방어 무시 확률 (%)")]
+    [Range(0f, 100f)]
+    public float ignoreDefensePercentageOnCritically = 0f;
+    
+    [Header("Immunity Properties")]
+    [Space(10)]
+    [Tooltip("기절 면역")]
+    public bool stunImmune = false;
+    
+    [Tooltip("빙결 면역")]
+    public bool freezeImmune = false;
+    
+    [Tooltip("넉백 면역")]
+    public bool knockBackImmune = false;
+    
+    [Tooltip("감전 면역")]
+    public bool shockImmune = false;
+    
     [Header("Attack Type")]
     [Tooltip("근거리/원거리 구분")]
     public bool isRanged = false;

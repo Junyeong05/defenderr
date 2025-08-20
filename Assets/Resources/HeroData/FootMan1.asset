@@ -38,8 +38,18 @@ MonoBehaviour:
   attackPerLevel: 2
   defensePerLevel: 1
   criticalChance: 15
-  criticalMultiplier: 2
-  dodgeChance: 0
+  criticalMultiplier: 0
+  dodgeChance: 5
+  damageReduction: 5
+  penetrate: 0
+  knockbackResist: 10
+  freezeResist: 0
+  stunResist: 10
+  shockResist: 10
+  stunImmune: 0
+  freezeImmune: 0
+  knockBackImmune: 0
+  shockImmune: 0
   isRanged: 0
   weaponClass: 
   weaponX: 28

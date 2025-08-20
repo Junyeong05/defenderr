@@ -45,6 +45,10 @@ public class BaseHero : MonoBehaviour
     protected Vector2 footOffset = Vector2.zero;
     protected GameObject healthBar;
     
+    // Shield System
+    protected float shield = 0f;  // 영구 보호막
+    protected float shieldWithDuration = 0f;  // 지속시간이 있는 보호막
+    protected int shieldDurationFrames = 0;  // 보호막 남은 프레임
     
     protected Sprite[] spriteList;
     
@@ -71,6 +75,11 @@ public class BaseHero : MonoBehaviour
     // Attack optimization
     protected Dictionary<int, bool> attackFrameDict = new Dictionary<int, bool>();
     protected int lastAttackFrame = -1;
+    
+    // Skill optimization  
+    protected Dictionary<int, bool> skillFrameDict = new Dictionary<int, bool>();
+    protected int lastSkillFrame = -1;
+    protected bool hasSkilled = false;
     protected int attackIntervalFrames = 60;  // 1초 (60 FPS)
     protected int framesSinceLastAttack = 0;
     
@@ -132,6 +141,77 @@ public class BaseHero : MonoBehaviour
     
     // 이펙트 관리 (중복 방지)
     private Dictionary<EffectType, SimpleEffect> activeEffects = new Dictionary<EffectType, SimpleEffect>();
+    
+    // Active Buff System
+    protected float orgAtkDmg;
+    protected float orgDefense;
+    protected float orgMaxHealth;
+    protected float orgAtkDuration;
+    protected float orgMoveSpd;
+    protected float orgCritChance;
+    protected float orgCritMultiplier;
+    protected float orgDodgeChance;
+    protected float orgDamageReduction;
+    protected float orgPenetrate;
+    protected float orgFinalDamageMultiplier = 1f;
+    
+    protected ActiveBuffManager activeDamageBuff;
+    protected ActiveBuffManager activeDefenseBuff;
+    protected ActiveBuffManager activeMaxHealthBuff;
+    protected ActiveBuffManager activeAttackSpeedBuff;
+    protected ActiveBuffManager activeMoveSpeedBuff;
+    protected ActiveBuffManager activeCritChanceBuff;
+    protected ActiveBuffManager activeCritMultiplierBuff;
+    protected ActiveBuffManager activeDodgeChanceBuff;
+    protected ActiveBuffManager activeDamageReductionBuff;
+    protected ActiveBuffManager activePenetrateBuff;
+    protected ActiveBuffManager activeFinalDamageBuff;
+    
+    // Buff System calculated stats
+    protected float critChance;
+    protected float critMultiplier;
+    protected float damageReduction;
+    protected float penetrate;
+    protected float finalDamageMultiplier = 1f;
+    protected float dodgeChance;
+    
+    // 누락된 필드들 추가
+    protected int property = 0;  // 속성 (0: 없음, 1: 철, 2: 화, 3: 수, 4: 목)
+    protected float ignoreDefensePercentageOnCritically = 0f;  // 치명타 시 방어 무시 확률
+    protected int skillInterruptionCnt = 0;  // 스킬 차단 횟수 (신록의 장막 등)
+    #endregion
+    
+    #region Public Properties
+    // DamageManager와 외부 클래스에서 접근 가능한 프로퍼티들
+    public float CurrentHealth => currentHealth;
+    public float MaxHealth => maxHealth;
+    public float AttackPower => attackPower;
+    public float Defense => defense;
+    public int AttackIntervalFrames => attackIntervalFrames;
+    
+    // 버프 시스템 스탯
+    public float CritChance => critChance;
+    public float CritMultiplier => critMultiplier;
+    public float DamageReduction => damageReduction;
+    public float Penetrate => penetrate;
+    public float FinalDamageMultiplier => finalDamageMultiplier;
+    public float DodgeChance => dodgeChance;
+    
+    // 속성 시스템
+    public int Property => property;
+    public float IgnoreDefensePercentageOnCritically => ignoreDefensePercentageOnCritically;
+    public int SkillInterruptionCnt => skillInterruptionCnt;
+    
+    // 애니메이션 관련
+    public float AnimationSpeed 
+    { 
+        get => animationSpeed; 
+        set => animationSpeed = value; 
+    }
+    public int CurrentFrame => currentFrame;
+    public int State => state;
+    public float FrameCounter => frameCounter;
+    public int AnimEndFrame => animEndFrame;
     #endregion
 
     #region Unity Lifecycle
@@ -174,6 +254,9 @@ public class BaseHero : MonoBehaviour
         
         // Hero specific initialization (서브클래스에서 구현)
         OnInitialize();
+        
+        // Buff System 초기화
+        InitializeBuffSystem();
         
         isInitialized = true;
 
@@ -667,15 +750,58 @@ public class BaseHero : MonoBehaviour
             hasAttackStarted = true;
             // 타겟 방향 보기
             UpdateFacing(target.position.x - transform.position.x);
+            OnAttackStart();
         }
         
-        // 공격 애니메이션이 끝나면 자동으로 대기 상태로 전환됨 (OnAnimationComplete에서 처리)
+        // 공격 프레임 체크 및 실행 (개선: lastAttackFrame만으로 중복 방지)
+        if (attackFrameDict.ContainsKey(currentFrame) && currentFrame != lastAttackFrame)
+        {
+            AttackMain();
+            lastAttackFrame = currentFrame;
+            
+            // 프레임 속도에 관계없이 각 공격 프레임마다 실행 보장
+            // hasAttacked 제거로 여러 공격 프레임 지원
+        }
+        
+        // 공격 애니메이션 종료 체크
+        if (currentFrame >= animEndFrame)
+        {
+            // 대기 상태로 전환
+            GotoWaitState();
+            hasAttacked = false;
+            hasAttackStarted = false;
+            lastAttackFrame = -1;
+        }
     }
     
     protected virtual void DoSkill()
     {
-        // 스킬 애니메이션 처리는 UpdateFrame에서 수행
-        // 서브클래스에서 구체적인 스킬 로직 구현
+        // 스킬 시작 처리
+        if (!hasAttackStarted)
+        {
+            hasAttackStarted = true;
+            OnSkillStart();
+        }
+        
+        // 스킬 프레임 체크 및 실행 (개선: lastSkillFrame만으로 중복 방지)
+        if (skillFrameDict.ContainsKey(currentFrame) && currentFrame != lastSkillFrame)
+        {
+            SkillMain();
+            lastSkillFrame = currentFrame;
+            
+            // 프레임 속도에 관계없이 각 스킬 프레임마다 실행 보장
+            // hasSkilled 제거로 여러 스킬 프레임 지원
+        }
+        
+        // 스킬 애니메이션 종료 체크
+        if (currentFrame >= animEndFrame)
+        {
+            // 대기 상태로 전환
+            GotoWaitState();
+            hasSkilled = false;
+            hasAttackStarted = false;
+            lastSkillFrame = -1;
+        }
     }
     
     protected virtual void DoDie()
@@ -783,56 +909,73 @@ public class BaseHero : MonoBehaviour
             SetState(STATE_DIE, false);
         }
         
-        // 프레임 전처리 (CC 처리 포함)
-        PreFrameUpdate();
+        // 개별 영웅 가속 처리 (frameCounter 기반 반복 실행)
+        // animationSpeed가 1보다 클 때 Execute 로직을 여러 번 실행
+        frameCounter += animationSpeed;
         
-        // CC 상태 체크 - 기절, 빙결, 수면 중이면 행동 불가
-        bool isStunned = stunCount > 0 || freezeCount > 0 || sleepCount > 0;
-        
-        if (!isStunned)
+        while (frameCounter >= 1f)
         {
-            // 상태에 따른 처리
-            switch (state)
+            frameCounter -= 1f;
+            
+            // === 프레임당 실행되어야 할 모든 로직 ===
+            
+            // 프레임 전처리 (CC 처리 포함)
+            PreFrameUpdate();
+            
+            // Active Buff System 업데이트 (매 프레임)
+            UpdateActiveBuffs();
+            
+            // Shield 지속시간 업데이트
+            UpdateShieldDuration();
+            
+            // CC 상태 체크 - 기절, 빙결, 수면 중이면 행동 불가
+            bool isStunned = stunCount > 0 || freezeCount > 0 || sleepCount > 0;
+            
+            if (!isStunned)
             {
-                case STATE_WAIT:
-                    DoWait();
-                    break;
-                    
-                case STATE_MOVE:
-                    // 넉백이나 속박 중이면 이동 불가
-                    if (knockbackCount <= 0 && rootCount <= 0)
-                    {
-                        DoMove();
-                    }
-                    break;
-                    
-                case STATE_ATTACK:
-                    // 무장해제 중이면 일반 공격 불가
-                    if (disarmCount <= 0)
-                    {
-                        DoAttack();
-                    }
-                    break;
-                    
-                case STATE_SKILL:
-                    // 침묵 중이면 스킬 사용 불가
-                    if (silenceCount <= 0)
-                    {
-                        DoSkill();
-                    }
-                    break;
-                    
-                case STATE_DIE:
-                    DoDie();
-                    break;
+                // 상태에 따른 처리
+                switch (state)
+                {
+                    case STATE_WAIT:
+                        DoWait();
+                        break;
+                        
+                    case STATE_MOVE:
+                        // 넉백이나 속박 중이면 이동 불가
+                        if (knockbackCount <= 0 && rootCount <= 0)
+                        {
+                            DoMove();
+                        }
+                        break;
+                        
+                    case STATE_ATTACK:
+                        // 무장해제 중이면 일반 공격 불가
+                        if (disarmCount <= 0)
+                        {
+                            DoAttack();
+                        }
+                        break;
+                        
+                    case STATE_SKILL:
+                        // 침묵 중이면 스킬 사용 불가
+                        if (silenceCount <= 0)
+                        {
+                            DoSkill();
+                        }
+                        break;
+                        
+                    case STATE_DIE:
+                        DoDie();
+                        break;
+                }
             }
+            
+            // 프레임 업데이트 (애니메이션 진행)
+            UpdateFrameSingle();
+            
+            // 체력 체크
+            CheckHealth();
         }
-        
-        // 프레임 업데이트 (애니메이션)
-        UpdateFrame();
-        
-        // 체력 체크
-        CheckHealth();
     }
     
     protected virtual void OnGameStart()
@@ -937,7 +1080,16 @@ public class BaseHero : MonoBehaviour
         return isStunned;
     }
 
+    // 기존 UpdateFrame() - 더 이상 사용하지 않음 (레거시 호환성을 위해 남겨둠)
     protected virtual void UpdateFrame()
+    {
+        // Execute()에서 frameCounter 처리로 이동
+        // 이 메서드는 더 이상 직접 호출되지 않음
+        UpdateFrameSingle();
+    }
+    
+    // 단일 프레임 업데이트 (Execute의 while 루프 내에서 호출)
+    protected virtual void UpdateFrameSingle()
     {
         if (spriteList == null || spriteList.Length == 0) 
         {
@@ -950,44 +1102,24 @@ public class BaseHero : MonoBehaviour
             return;
         }
         
-        // 프레임 카운터 증가
-        frameCounter += animationSpeed;
+        // 다음 프레임으로 (frameCounter는 Execute()에서 처리)
+        currentFrame++;
         
-        
-        // 1프레임 이상 지났으면 프레임 진행 (animationSpeed가 1보다 클 수 있음)
-        while (frameCounter >= 1f)
+        // 애니메이션 범위 체크
+        if (currentFrame > animEndFrame)
         {
-            frameCounter -= 1f;
-            
-            // 다음 프레임으로
-            currentFrame++;
-            
-            // 공격 상태일 때 특정 프레임에서 공격 실행 (AS3.0 스타일 - Dictionary 최적화)
-            // 중복 공격 방지: hasAttacked 플래그와 lastAttackFrame 체크
-            if (state == STATE_ATTACK && !hasAttacked && attackFrameDict.ContainsKey(currentFrame) && currentFrame != lastAttackFrame)
+            if (isLooping)
             {
-                AttackMain();
-                hasAttacked = true;
-                lastAttackFrame = currentFrame;
+                currentFrame = animStartFrame;
             }
-            
-            // 애니메이션 범위 체크
-            if (currentFrame > animEndFrame)
+            else
             {
-                if (isLooping)
-                {
-                    currentFrame = animStartFrame;
-                }
-                else
-                {
-                    currentFrame = animEndFrame;
-                    OnAnimationComplete();
-                    break; // 애니메이션이 끝났으므로 while 루프 종료
-                }
+                currentFrame = animEndFrame;
+                OnAnimationComplete();
             }
         }
         
-        // 스프라이트 업데이트 (while 루프 밖에서 한 번만)
+        // 스프라이트 업데이트
         UpdateSprite();
     }
 
@@ -1006,7 +1138,7 @@ public class BaseHero : MonoBehaviour
         if (spriteList == null || spriteList.Length == 0) return;
         
         currentFrame = Mathf.Clamp(frame, 0, spriteList.Length - 1);
-        frameCounter = 0f;
+        // frameCounter는 Execute()에서 관리하므로 여기서 초기화하지 않음
         UpdateSprite();
     }
 
@@ -1022,7 +1154,7 @@ public class BaseHero : MonoBehaviour
         
         state = newState;
         isLooping = loop;
-        frameCounter = 0f;
+        // frameCounter는 Execute()에서 관리하므로 여기서 초기화하지 않음
         
         
         // 상태가 변경되면 마지막 공격 프레임 리셋
@@ -1170,6 +1302,16 @@ public class BaseHero : MonoBehaviour
         // EffectFactory.PlayEffect(EffectType.LEVEL_UP, transform.position);
     }
 
+    protected virtual void OnAttackStart()
+    {
+        // 공격 시작 시 호출 (서브클래스에서 override)
+    }
+    
+    protected virtual void OnSkillStart()
+    {
+        // 스킬 시작 시 호출 (서브클래스에서 override)
+    }
+    
     protected virtual void AttackMain()
     {
         if (target == null || !isAlive) return;
@@ -1194,6 +1336,13 @@ public class BaseHero : MonoBehaviour
         }
     }
     
+    protected virtual void SkillMain()
+    {
+        // 스킬 실행 (서브클래스에서 override)
+        // 기본적으로는 일반 공격과 동일하게 처리
+        AttackMain();
+    }
+    
     protected virtual void DoMeleeAttack()
     {
         if (target == null) return;
@@ -1209,19 +1358,11 @@ public class BaseHero : MonoBehaviour
                 return;
             }
             
-            // 크리티컬 판정
-            bool isCritical = UnityEngine.Random.Range(0f, 100f) < heroData.criticalChance;
-            float damage = attackPower;
-            
-            if (isCritical)
-            {
-                damage *= heroData.criticalMultiplier;
-            }
-            
             // 타격 이펙트 표시
             ShowHitEffect(targetHero, EffectType.PHYSICAL_HIT);
             
-            targetHero.TakeDamage(damage);            
+            // DamageManager를 통한 데미지 계산 및 적용
+            DoDamage(targetHero, attackPower);
             
             // 넉백 적용 (타겟이 살아있을 때만)
             if (targetHero.IsAlive)
@@ -1372,15 +1513,8 @@ public class BaseHero : MonoBehaviour
             }
             
             // 무기가 없으면 즉시 데미지 (폴백)
-            bool isCritical = UnityEngine.Random.Range(0f, 100f) < heroData.criticalChance;
-            float damage = attackPower;
-            
-            if (isCritical)
-            {
-                damage *= heroData.criticalMultiplier;
-            }
-            
-            targetHero.TakeDamage(damage);
+            // DamageManager를 통한 데미지 계산 및 적용
+            DoDamage(targetHero, attackPower);
             
             // 적을 죽였는지 확인
             if (!targetHero.IsAlive)
@@ -1426,6 +1560,17 @@ public class BaseHero : MonoBehaviour
         
         // 공격 인터벌 설정
         attackIntervalFrames = heroData.attackInterval;
+        
+        // 저항력 설정
+        knockbackResist = heroData.knockbackResist / 100f;
+        
+        // 속성 및 특수 능력 설정
+        property = heroData.property;  // 속성 (1: 철, 2: 화, 3: 수, 4: 목)
+        ignoreDefensePercentageOnCritically = heroData.ignoreDefensePercentageOnCritically;  // 치명타 시 방어 무시 확률
+        skillInterruptionCnt = 0;  // 스킬 차단 카운트는 0으로 초기화 (버프로 증가)
+        
+        // 원본 스탯 저장 (버프 시스템용)
+        SaveOriginalStats();
     }
     
     protected virtual void InitializeAttackFrames()
@@ -1846,7 +1991,7 @@ public class BaseHero : MonoBehaviour
     public bool IsAlive => isAlive;
     public float HealthPercent => currentHealth / maxHealth;
     public Transform Target => target;
-    public int State => state;
+    // State 프로퍼티는 이미 위에 정의되어 있음 (line 212)
     public HeroData Data => heroData;
     public int Level => level;
     public float TargetHeight => heroData != null ? heroData.targetHeight : 100f;
@@ -1937,6 +2082,263 @@ public class BaseHero : MonoBehaviour
     {
         // static이 아니므로 각 영웅의 리스트는 개별적으로 관리됨
         // 필요시 모든 영웅을 순회하여 초기화
+    }
+    #endregion
+    
+    #region Buff System Methods
+    protected void InitializeBuffSystem()
+    {
+        // 버프 매니저 초기화
+        activeDamageBuff = new ActiveBuffManager(-1f, 10f, 0f);
+        activeDefenseBuff = new ActiveBuffManager(-1f, 10f, 0f);
+        activeMaxHealthBuff = new ActiveBuffManager(-1f, 10f, 0f);
+        activeAttackSpeedBuff = new ActiveBuffManager(-1f, 10f, 0f);
+        activeMoveSpeedBuff = new ActiveBuffManager(-1f, 10f, 0f);
+        activeCritChanceBuff = new ActiveBuffManager(-1f, 1f, 0f);
+        activeCritMultiplierBuff = new ActiveBuffManager(-10f, 10f, 0f);
+        activeDodgeChanceBuff = new ActiveBuffManager(-1f, 1f, 0f);
+        activeDamageReductionBuff = new ActiveBuffManager(-1f, 1f, 0f);
+        activePenetrateBuff = new ActiveBuffManager(0f, 2f, 0f);
+        activeFinalDamageBuff = new ActiveBuffManager(0f, 10f, 0f);
+    }
+    
+    protected void SaveOriginalStats()
+    {
+        // 현재 스탯을 원본으로 저장
+        orgAtkDmg = attackPower;
+        orgDefense = defense;
+        orgMaxHealth = maxHealth;
+        orgAtkDuration = attackIntervalFrames;
+        orgMoveSpd = heroData.moveSpeed;
+        orgCritChance = heroData.criticalChance / 100f;
+        orgCritMultiplier = heroData.criticalMultiplier;
+        orgDodgeChance = heroData.dodgeChance / 100f;
+        orgDamageReduction = heroData.damageReduction / 100f;
+        orgPenetrate = heroData.penetrate;
+        orgFinalDamageMultiplier = 1f;
+    }
+    
+    protected void UpdateActiveBuffs()
+    {
+        // 모든 버프 시간 진행 (1프레임)
+        activeDamageBuff.AdvanceTime();
+        activeDefenseBuff.AdvanceTime();
+        activeMaxHealthBuff.AdvanceTime();
+        activeAttackSpeedBuff.AdvanceTime();
+        activeMoveSpeedBuff.AdvanceTime();
+        activeCritChanceBuff.AdvanceTime();
+        activeCritMultiplierBuff.AdvanceTime();
+        activeDodgeChanceBuff.AdvanceTime();
+        activeDamageReductionBuff.AdvanceTime();
+        activePenetrateBuff.AdvanceTime();
+        activeFinalDamageBuff.AdvanceTime();
+        
+        // 최대 체력 변경 전 저장
+        float prevMaxHealth = maxHealth;
+        
+        // 버프 적용된 스탯 계산
+        attackPower = orgAtkDmg * (1f + activeDamageBuff.Value);
+        defense = orgDefense * (1f + activeDefenseBuff.Value);
+        maxHealth = orgMaxHealth * (1f + activeMaxHealthBuff.Value);
+        attackIntervalFrames = Mathf.RoundToInt(orgAtkDuration / (1f + activeAttackSpeedBuff.Value));
+        // moveSpeed = orgMoveSpd * (1f + activeMoveSpeedBuff.Value);
+        critChance = orgCritChance + activeCritChanceBuff.Value;
+        critMultiplier = orgCritMultiplier + activeCritMultiplierBuff.Value;
+        dodgeChance = orgDodgeChance + activeDodgeChanceBuff.Value;
+        damageReduction = orgDamageReduction + activeDamageReductionBuff.Value;
+        penetrate = orgPenetrate + activePenetrateBuff.Value;
+        finalDamageMultiplier = orgFinalDamageMultiplier + activeFinalDamageBuff.Value;
+        
+        // 최대 HP 변경 처리
+        if (maxHealth > prevMaxHealth)
+        {
+            // 최대 HP 증가 시 현재 HP도 증가
+            currentHealth += (maxHealth - prevMaxHealth);
+            if (healthBar != null)
+            {
+                // UI 업데이트
+            }
+        }
+        else if (maxHealth < prevMaxHealth)
+        {
+            // 최대 HP 감소 시 현재 HP가 최대 HP를 초과하지 않도록
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            if (healthBar != null)
+            {
+                // UI 업데이트
+            }
+        }
+    }
+    
+    // 버프 추가 메서드들
+    public void AddDamageBuff(int buffId, float value, int durationFrames, bool overrideBuff = false)
+    {
+        activeDamageBuff.AddBuff(buffId, value, durationFrames, overrideBuff);
+    }
+    
+    public void AddDefenseBuff(int buffId, float value, int durationFrames, bool overrideBuff = false)
+    {
+        activeDefenseBuff.AddBuff(buffId, value, durationFrames, overrideBuff);
+    }
+    
+    public void AddAttackSpeedBuff(int buffId, float value, int durationFrames, bool overrideBuff = false)
+    {
+        activeAttackSpeedBuff.AddBuff(buffId, value, durationFrames, overrideBuff);
+    }
+    
+    public void AddMoveSpeedBuff(int buffId, float value, int durationFrames, bool overrideBuff = false)
+    {
+        activeMoveSpeedBuff.AddBuff(buffId, value, durationFrames, overrideBuff);
+    }
+    
+    public void AddMaxHealthBuff(int buffId, float value, int durationFrames, bool overrideBuff = false)
+    {
+        activeMaxHealthBuff.AddBuff(buffId, value, durationFrames, overrideBuff);
+    }
+    
+    // 모든 버프 제거
+    public void RemoveAllBuffs()
+    {
+        activeDamageBuff.Reset();
+        activeDefenseBuff.Reset();
+        activeMaxHealthBuff.Reset();
+        activeAttackSpeedBuff.Reset();
+        activeMoveSpeedBuff.Reset();
+        activeCritChanceBuff.Reset();
+        activeCritMultiplierBuff.Reset();
+        activeDodgeChanceBuff.Reset();
+        activeDamageReductionBuff.Reset();
+        activePenetrateBuff.Reset();
+        activeFinalDamageBuff.Reset();
+        
+        // 스탯 재계산
+        UpdateActiveBuffs();
+    }
+    
+    // 모든 디버프만 제거
+    public void RemoveAllDebuffs()
+    {
+        activeDamageBuff.RemoveAllNegativeBuffs();
+        activeDefenseBuff.RemoveAllNegativeBuffs();
+        activeMaxHealthBuff.RemoveAllNegativeBuffs();
+        activeAttackSpeedBuff.RemoveAllNegativeBuffs();
+        activeMoveSpeedBuff.RemoveAllNegativeBuffs();
+        activeCritChanceBuff.RemoveAllNegativeBuffs();
+        activeCritMultiplierBuff.RemoveAllNegativeBuffs();
+        activeDodgeChanceBuff.RemoveAllNegativeBuffs();
+        activeDamageReductionBuff.RemoveAllNegativeBuffs();
+        activePenetrateBuff.RemoveAllNegativeBuffs();
+        activeFinalDamageBuff.RemoveAllNegativeBuffs();
+        
+        // 스탯 재계산
+        UpdateActiveBuffs();
+    }
+    #endregion
+    
+    #region Damage System Methods
+    /// <summary>
+    /// TypeScript의 doDamage 메서드를 Unity로 포팅
+    /// DamageManager를 사용하여 중앙화된 데미지 계산
+    /// </summary>
+    public virtual void DoDamage(BaseHero targetHero, float damage, DamageBuffVO buffVO = null)
+    {
+        if (targetHero == null || !targetHero.IsAlive) return;
+        
+        // DamageManager를 통한 데미지 계산
+        DamageVO damageVO = DamageManager.GetDamage(damage, this, targetHero, buffVO);
+        
+        // 보호막 업데이트
+        targetHero.SetShield(damageVO.shield);
+        targetHero.SetShieldWithDuration(damageVO.shieldWithDuration);
+        
+        // 실제 데미지 적용
+        if (damageVO.damage > 0)
+        {
+            targetHero.TakeDamage(damageVO.damage);
+            
+            // 크리티컬 데미지 이펙트 (필요시 구현)
+            if (damageVO.isCritical)
+            {
+                OnCriticalHit(targetHero, damageVO.damage);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 도트 데미지 적용 (방어력 무시)
+    /// </summary>
+    public virtual void DoDotDamage(BaseHero targetHero, float damage)
+    {
+        if (targetHero == null || !targetHero.IsAlive) return;
+        
+        DamageVO damageVO = DamageManager.GetDotDamage(damage, this, targetHero);
+        
+        // 보호막 업데이트
+        targetHero.SetShield(damageVO.shield);
+        targetHero.SetShieldWithDuration(damageVO.shieldWithDuration);
+        
+        // 실제 데미지 적용
+        if (damageVO.damage > 0)
+        {
+            targetHero.TakeDamage(damageVO.damage);
+        }
+    }
+    
+    /// <summary>
+    /// 크리티컬 히트 이벤트 (서브클래스에서 오버라이드 가능)
+    /// </summary>
+    protected virtual void OnCriticalHit(BaseHero target, float damage)
+    {
+        // 크리티컬 이펙트, 사운드 등 처리
+        Debug.Log($"Critical Hit! {damage} damage to {target.name}");
+    }
+    
+    // Shield 관련 메서드들
+    public float GetShield()
+    {
+        return shield;
+    }
+    
+    public void SetShield(float value)
+    {
+        shield = Mathf.Max(0, value);
+    }
+    
+    public void AddShield(float value)
+    {
+        shield = Mathf.Max(0, shield + value);
+    }
+    
+    public float GetShieldWithDuration()
+    {
+        return shieldWithDuration;
+    }
+    
+    public void SetShieldWithDuration(float value)
+    {
+        shieldWithDuration = Mathf.Max(0, value);
+    }
+    
+    public void AddShieldWithDuration(float value, int durationFrames)
+    {
+        shieldWithDuration = Mathf.Max(0, shieldWithDuration + value);
+        shieldDurationFrames = Mathf.Max(shieldDurationFrames, durationFrames);
+    }
+    
+    // Shield 시간 경과 처리
+    protected void UpdateShieldDuration()
+    {
+        if (shieldDurationFrames > 0)
+        {
+            shieldDurationFrames--;
+            if (shieldDurationFrames <= 0)
+            {
+                shieldWithDuration = 0;
+            }
+        }
     }
     #endregion
 }

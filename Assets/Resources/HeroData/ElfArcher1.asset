@@ -38,8 +38,18 @@ MonoBehaviour:
   attackPerLevel: 2
   defensePerLevel: 1
   criticalChance: 5
-  criticalMultiplier: 2
-  dodgeChance: 0
+  criticalMultiplier: 0
+  dodgeChance: 5
+  damageReduction: 0
+  penetrate: 5
+  knockbackResist: 0
+  freezeResist: 10
+  stunResist: 0
+  shockResist: 0
+  stunImmune: 0
+  freezeImmune: 0
+  knockBackImmune: 0
+  shockImmune: 0
   isRanged: 1
   weaponClass: IcebowSlArrow1
   weaponX: 22

@@ -331,6 +331,7 @@ public class SimpleGoogleSheetsImporter : EditorWindow
             case "방어력":
                 float.TryParse(value, out data.defense);
                 break;
+            case "movespeed":
             case "speed":
             case "이동속도":
                 float.TryParse(value, out data.moveSpeed);
@@ -339,9 +340,26 @@ public class SimpleGoogleSheetsImporter : EditorWindow
             case "사거리":
                 float.TryParse(value, out data.attackRange);
                 break;
+            case "critchance":
             case "crit":
             case "치명타확률":
                 float.TryParse(value, out data.criticalChance);
+                break;
+            case "critmultiplier":
+            case "크리티컬배수":
+                float.TryParse(value, out data.criticalMultiplier);
+                break;
+            case "dodge":
+            case "회피":
+                float.TryParse(value, out data.dodgeChance);
+                break;
+            case "damagereduction":
+            case "데미지감소":
+                float.TryParse(value, out data.damageReduction);
+                break;
+            case "penetrate":
+            case "방어관통":
+                float.TryParse(value, out data.penetrate);
                 break;
             case "isranged":
             case "원거리":
@@ -384,6 +402,40 @@ public class SimpleGoogleSheetsImporter : EditorWindow
             case "무기y":
                 if (float.TryParse(value, out float weaponY))
                     data.weaponY = weaponY;
+                break;
+            // Resistance properties
+            case "knockbackresist":
+            case "넉백저항":
+                float.TryParse(value, out data.knockbackResist);
+                break;
+            case "freezeresist":
+            case "빙결저항":
+                float.TryParse(value, out data.freezeResist);
+                break;
+            case "stunresist":
+            case "기절저항":
+                float.TryParse(value, out data.stunResist);
+                break;
+            case "shockresist":
+            case "감전저항":
+                float.TryParse(value, out data.shockResist);
+                break;
+            // Immunity properties
+            case "stunimmune":
+            case "기절면역":
+                data.stunImmune = value.ToLower() == "true" || value == "1";
+                break;
+            case "freezeimmune":
+            case "빙결면역":
+                data.freezeImmune = value.ToLower() == "true" || value == "1";
+                break;
+            case "knockbackimmune":
+            case "넉백면역":
+                data.knockBackImmune = value.ToLower() == "true" || value == "1";
+                break;
+            case "shockimmune":
+            case "감전면역":
+                data.shockImmune = value.ToLower() == "true" || value == "1";
                 break;
         }
     }
