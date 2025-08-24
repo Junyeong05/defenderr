@@ -94,6 +94,7 @@ public class BaseHero : MonoBehaviour
     protected BaseHero[] friendList = null;
     protected BaseHero[] enemyList = null;
     protected bool isDying = false;
+    protected bool isDeathAnimationComplete = false; // 죽는 애니메이션 완료 여부
 
     protected float orgSzie = 1.3f;
     
@@ -179,6 +180,10 @@ public class BaseHero : MonoBehaviour
     protected int property = 0;  // 속성 (0: 없음, 1: 철, 2: 화, 3: 수, 4: 목)
     protected float ignoreDefensePercentageOnCritically = 0f;  // 치명타 시 방어 무시 확률
     protected int skillInterruptionCnt = 0;  // 스킬 차단 횟수 (신록의 장막 등)
+    
+    // DOT 시스템
+    protected DotDamageManager dotDamager = new DotDamageManager();
+    protected DotHealManager dotHeal = new DotHealManager();
     #endregion
     
     #region Public Properties
@@ -201,6 +206,11 @@ public class BaseHero : MonoBehaviour
     public int Property => property;
     public float IgnoreDefensePercentageOnCritically => ignoreDefensePercentageOnCritically;
     public int SkillInterruptionCnt => skillInterruptionCnt;
+    
+    // 통계 시스템용 프로퍼티
+    public int KindNum => heroData != null ? heroData.kindNum : 0;
+    public string HeroClassName => heroData != null ? heroData.heroClass : className;
+    public bool IsAlly => gameObject.tag == "Hero";  // Hero 태그가 아군, Enemy 태그가 적군
     
     // 애니메이션 관련
     public float AnimationSpeed 
@@ -328,6 +338,12 @@ public class BaseHero : MonoBehaviour
     
     public virtual void ReturnToPool()
     {
+        // 타입 기반 통계에서 등록 해제 (풀 반환)
+        if (BattleStatisticsManager.Instance != null)
+        {
+            BattleStatisticsManager.Instance.UnregisterHero(this);
+        }
+        
         ResetState();
         hasData = false;
         
@@ -928,6 +944,10 @@ public class BaseHero : MonoBehaviour
             // Shield 지속시간 업데이트
             UpdateShieldDuration();
             
+            // DOT 시스템 업데이트
+            UpdateDotDamage();
+            UpdateDotHeal();
+            
             // CC 상태 체크 - 기절, 빙결, 수면 중이면 행동 불가
             bool isStunned = stunCount > 0 || freezeCount > 0 || sleepCount > 0;
             
@@ -980,6 +1000,8 @@ public class BaseHero : MonoBehaviour
     
     protected virtual void OnGameStart()
     {
+        // BattleStatisticsManager 등록은 BattleController.SetTeams()에서 처리
+        // 여기서는 영웅별 초기화만 수행
     }
     
     protected virtual void PreFrameUpdate()
@@ -1263,10 +1285,14 @@ public class BaseHero : MonoBehaviour
     protected virtual void OnDie()
     {
         // 이미 죽음 처리 중이면 중복 호출 방지
-        if (!isAlive || isDying) return;
+        if (!isAlive) return;
         
         isAlive = false;
         isDying = true;
+        isDeathAnimationComplete = true; // 죽는 애니메이션 완료 표시
+        
+        // 타입 기반 통계 기록 - 죽음 (킬은 공격자 측에서 기록)
+        // RecordKill에서 자동으로 처리되므로 여기서는 생략
         
         // 아군들에게 죽음 알림 (AS3.0 style)
         if (friendList != null)
@@ -1961,6 +1987,8 @@ public class BaseHero : MonoBehaviour
         isAlive = true;
         isMoving = false;
         isAttacking = false;
+        isDying = false;
+        isDeathAnimationComplete = false;  // 죽음 애니메이션 완료 플래그 초기화
         health20Triggered = false;
         target = null;
         animationSpeed = 1f;
@@ -1989,6 +2017,7 @@ public class BaseHero : MonoBehaviour
     #region Properties
     public string HeroName => heroData != null ? heroData.heroName : className;
     public bool IsAlive => isAlive;
+    public bool IsReadyToRemove => isDying && isDeathAnimationComplete; // 제거 준비 완료
     public float HealthPercent => currentHealth / maxHealth;
     public Transform Target => target;
     // State 프로퍼티는 이미 위에 정의되어 있음 (line 212)
@@ -2243,6 +2272,50 @@ public class BaseHero : MonoBehaviour
     /// TypeScript의 doDamage 메서드를 Unity로 포팅
     /// DamageManager를 사용하여 중앙화된 데미지 계산
     /// </summary>
+    /// <summary>
+    /// DamageVO를 직접 받아서 데미지를 입히는 메서드 (투사체용)
+    /// </summary>
+    public virtual void DoDamage(BaseHero targetHero, DamageVO damageVO)
+    {
+        if (targetHero == null || !targetHero.IsAlive || damageVO == null) return;
+        
+        // 보호막 처리
+        targetHero.SetShield(damageVO.shield);
+        targetHero.SetShieldWithDuration(damageVO.shieldWithDuration);
+        
+        // 실제 데미지 적용
+        if (damageVO.damage > 0)
+        {
+            float prevHealth = targetHero.CurrentHealth;
+            targetHero.TakeDamage(damageVO.damage);
+            
+            // 타입 기반 통계 기록
+            if (BattleStatisticsManager.Instance != null)
+            {
+                BattleStatisticsManager.Instance.RecordDamage(
+                    this, 
+                    targetHero, 
+                    damageVO.damage, 
+                    false,  // isDot = false
+                    damageVO.isCritical,
+                    -1      // skillId = -1 for normal attack
+                );
+                
+                // 타겟이 죽었다면 킬 기록
+                if (prevHealth > 0 && targetHero.CurrentHealth <= 0)
+                {
+                    BattleStatisticsManager.Instance.RecordKill(this, targetHero);
+                }
+            }
+            
+            // 크리티컬 데미지 이펙트
+            if (damageVO.isCritical)
+            {
+                OnCriticalHit(targetHero, damageVO.damage);
+            }
+        }
+    }
+    
     public virtual void DoDamage(BaseHero targetHero, float damage, DamageBuffVO buffVO = null)
     {
         if (targetHero == null || !targetHero.IsAlive) return;
@@ -2257,7 +2330,27 @@ public class BaseHero : MonoBehaviour
         // 실제 데미지 적용
         if (damageVO.damage > 0)
         {
+            float prevHealth = targetHero.CurrentHealth;
             targetHero.TakeDamage(damageVO.damage);
+            
+            // 타입 기반 통계 기록 (일반 공격)
+            if (BattleStatisticsManager.Instance != null)
+            {
+                BattleStatisticsManager.Instance.RecordDamage(
+                    this, 
+                    targetHero, 
+                    damageVO.damage, 
+                    false,  // isDot = false
+                    damageVO.isCritical,
+                    -1      // skillId = -1 for normal attack
+                );
+                
+                // 타겟이 죽었다면 킬 기록
+                if (prevHealth > 0 && targetHero.CurrentHealth <= 0)
+                {
+                    BattleStatisticsManager.Instance.RecordKill(this, targetHero);
+                }
+            }
             
             // 크리티컬 데미지 이펙트 (필요시 구현)
             if (damageVO.isCritical)
@@ -2339,6 +2432,181 @@ public class BaseHero : MonoBehaviour
                 shieldWithDuration = 0;
             }
         }
+    }
+    #endregion
+    
+    #region DOT System Methods
+    /// <summary>
+    /// 도트 데미지 추가
+    /// </summary>
+    public void AddDotDamage(float damage, int duration, int interval, BaseHero owner, int id)
+    {
+        dotDamager.AddDamage(damage, duration, interval, owner, id);
+    }
+    
+    /// <summary>
+    /// 도트 힐 추가
+    /// </summary>
+    public void AddDotHeal(float heal, int duration, int interval, BaseHero owner)
+    {
+        dotHeal.AddHeal(heal, duration, interval, owner);
+    }
+    
+    /// <summary>
+    /// 도트 데미지 업데이트 (매 프레임 호출)
+    /// </summary>
+    protected virtual void UpdateDotDamage()
+    {
+        var list = dotDamager.List;
+        for (int i = 0; i < list.Count; i++)
+        {
+            BaseDotDamageVO dvo = list[i];
+            if (dvo.duration < 0) continue;
+            
+            // interval 프레임마다 데미지 적용
+            if (dvo.duration % dvo.interval == 0)
+            {
+                // 도트 데미지 처리
+                DoDotDamageInternal(dvo);
+                
+                if (!isAlive) return;
+            }
+        }
+        
+        // 시간이 지난 도트 데미지 제거
+        dotDamager.AdvanceTime();
+    }
+    
+    /// <summary>
+    /// 도트 데미지 실제 적용
+    /// </summary>
+    protected virtual void DoDotDamageInternal(BaseDotDamageVO dvo)
+    {
+        if (!isAlive) return;
+        
+        // 무적 체크 (필요시 구현)
+        // if (IsInvincible()) return;
+        
+        // DamageManager를 통한 도트 데미지 계산
+        DamageVO vo = DamageManager.GetDotDamage(dvo.damage, dvo.owner, this);
+        
+        // 보호막 업데이트
+        SetShieldWithDuration(vo.shieldWithDuration);
+        SetShield(vo.shield);
+        
+        // 실제 데미지 적용
+        if (vo.damage > 0)
+        {
+            float prevHealth = currentHealth;
+            currentHealth -= vo.damage;
+            
+            // 타입 기반 통계 기록 (DOT 데미지)
+            if (BattleStatisticsManager.Instance != null && dvo.owner != null)
+            {
+                BattleStatisticsManager.Instance.RecordDamage(
+                    dvo.owner,
+                    this,
+                    vo.damage,
+                    true,   // isDot = true
+                    vo.isCritical,
+                    dvo.id  // DOT ID를 스킬 ID로 사용
+                );
+            }
+            
+            // 데미지 이펙트 표시 (옵션)
+            // DisplayHitEffect();
+            
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                
+                // 킬 기록
+                if (BattleStatisticsManager.Instance != null && dvo.owner != null && prevHealth > 0)
+                {
+                    BattleStatisticsManager.Instance.RecordKill(dvo.owner, this);
+                }
+                
+                GotoDieState();
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 도트 힐 업데이트 (매 프레임 호출)
+    /// </summary>
+    protected virtual void UpdateDotHeal()
+    {
+        if (!isAlive) return;
+        
+        var list = dotHeal.List;
+        for (int i = 0; i < list.Count; i++)
+        {
+            BaseDotHealVO hvo = list[i];
+            if (hvo.duration < 0) continue;
+            
+            // interval 프레임마다 힐 적용
+            if (hvo.duration % hvo.interval == 0)
+            {
+                // 소수점 버림 (오차 방지)
+                float dotHealAmount = Mathf.Floor(hvo.heal);
+                if (dotHealAmount == 0) dotHealAmount = 1;
+                
+                // 도트 힐 처리
+                Heal(dotHealAmount, hvo.owner, false);
+                
+                // 통계 추적 (향후 구현)
+                // if (hvo.owner != null)
+                // {
+                //     hvo.owner.RecordHealingDone(dotHealAmount, this, true); // true = DOT
+                // }
+            }
+        }
+        
+        // 시간이 지난 도트 힐 제거
+        dotHeal.AdvanceTime();
+    }
+    
+    /// <summary>
+    /// 힐 처리
+    /// </summary>
+    public virtual void Heal(float amount, BaseHero healer, bool isDirectHeal = true)
+    {
+        if (!isAlive) return;
+        
+        float prevHealth = currentHealth;
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+        float actualHealed = currentHealth - prevHealth;
+        
+        // 힐 이펙트 표시 (옵션)
+        // DisplayHealEffect();
+        
+        // 타입 기반 통계 기록
+        if (BattleStatisticsManager.Instance != null && healer != null && actualHealed > 0)
+        {
+            BattleStatisticsManager.Instance.RecordHealing(
+                healer,
+                this,
+                actualHealed,
+                !isDirectHeal  // isDot = !isDirectHeal
+            );
+        }
+    }
+    
+    /// <summary>
+    /// 특정 ID의 도트 데미지 제거
+    /// </summary>
+    public void RemoveDotDamage(int id)
+    {
+        dotDamager.RemoveDot(id);
+    }
+    
+    /// <summary>
+    /// 모든 DOT 효과 제거
+    /// </summary>
+    public void RemoveAllDots()
+    {
+        dotDamager.Reset();
+        dotHeal.Reset();
     }
     #endregion
 }

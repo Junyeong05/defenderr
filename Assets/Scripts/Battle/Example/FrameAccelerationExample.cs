@@ -7,7 +7,6 @@ using UnityEngine;
 public class FrameAccelerationExample : MonoBehaviour
 {
     private BaseHero testHero;
-    private int frameCount = 0;
     private int lastAttackFrame = -1;
     
     void Start()

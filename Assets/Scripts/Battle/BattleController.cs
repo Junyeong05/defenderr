@@ -30,7 +30,7 @@ public class BattleController : MonoBehaviour
     [Header("Battle Configuration")]
     [SerializeField] private HeroCatalog heroCatalog;
     [SerializeField] private int playerUnitCount = 5;
-    [SerializeField] private int enemyUnitCount = 5;
+    [SerializeField] private int enemyUnitCount = 7;
     
     [Header("Battle State")]
     [SerializeField] private bool isBattleActive = false;
@@ -95,28 +95,44 @@ public class BattleController : MonoBehaviour
         // 아군 유닛 업데이트
         for (int i = playerUnits.Count - 1; i >= 0; i--)
         {
-            if (playerUnits[i] != null && playerUnits[i].IsAlive)
+            if (playerUnits[i] != null)
             {
-                playerUnits[i].Execute();
-            }
-            else if (playerUnits[i] != null && !playerUnits[i].IsAlive)
-            {
-                // 죽은 유닛 처리
-                RemoveDeadUnit(playerUnits[i]);
+                if (playerUnits[i].IsAlive)
+                {
+                    playerUnits[i].Execute();
+                }
+                else if (playerUnits[i].IsReadyToRemove)
+                {
+                    // 죽는 애니메이션이 완료된 유닛만 제거
+                    RemoveDeadUnit(playerUnits[i]);
+                }
+                else
+                {
+                    // 죽었지만 아직 애니메이션 중인 경우 Execute 계속 호출
+                    playerUnits[i].Execute();
+                }
             }
         }
         
         // 적군 유닛 업데이트
         for (int i = enemyUnits.Count - 1; i >= 0; i--)
         {
-            if (enemyUnits[i] != null && enemyUnits[i].IsAlive)
+            if (enemyUnits[i] != null)
             {
-                enemyUnits[i].Execute();
-            }
-            else if (enemyUnits[i] != null && !enemyUnits[i].IsAlive)
-            {
-                // 죽은 유닛 처리
-                RemoveDeadUnit(enemyUnits[i]);
+                if (enemyUnits[i].IsAlive)
+                {
+                    enemyUnits[i].Execute();
+                }
+                else if (enemyUnits[i].IsReadyToRemove)
+                {
+                    // 죽는 애니메이션이 완료된 유닛만 제거
+                    RemoveDeadUnit(enemyUnits[i]);
+                }
+                else
+                {
+                    // 죽었지만 아직 애니메이션 중인 경우 Execute 계속 호출
+                    enemyUnits[i].Execute();
+                }
             }
         }
         
@@ -127,9 +143,9 @@ public class BattleController : MonoBehaviour
     // 모든 유닛을 Y 좌표로 정렬하여 깊이 일괄 업데이트
     private void UpdateAllUnitsDepth()
     {
-        // 살아있는 모든 유닛을 Y 좌표로 정렬 (Y가 큰 것부터 = 위쪽부터)
+        // 살아있거나 죽는 애니메이션 중인 모든 유닛을 Y 좌표로 정렬 (Y가 큰 것부터 = 위쪽부터)
         var sortedUnits = allUnits
-            .Where(unit => unit != null && unit.IsAlive)
+            .Where(unit => unit != null && (unit.IsAlive || !unit.IsReadyToRemove))
             .OrderByDescending(unit => unit.transform.position.y)
             .ToList();
         
@@ -285,6 +301,13 @@ public class BattleController : MonoBehaviour
             unit.SetState(BaseHero.STATE_WAIT);
         }
         
+        // BattleStatisticsManager 전투 시작
+        if (BattleStatisticsManager.Instance != null)
+        {
+            BattleStatisticsManager.Instance.StartBattle();
+            Debug.Log("[BattleController] BattleStatisticsManager battle tracking started");
+        }
+        
         // FrameController 시작
         FrameController.Play();
         
@@ -316,6 +339,12 @@ public class BattleController : MonoBehaviour
         isBattleActive = false;
         isPaused = false;
         FrameController.Stop();
+        
+        // BattleStatisticsManager 전투 종료 및 요약 출력
+        if (BattleStatisticsManager.Instance != null)
+        {
+            BattleStatisticsManager.Instance.EndBattle();
+        }
         
         // 모든 유닛 정리
         CleanupUnits();
@@ -373,6 +402,13 @@ public class BattleController : MonoBehaviour
         
         // 서로를 적으로 인식하도록 설정
         BaseHero.SetBattleLists(playerArray, enemyArray);
+        
+        // BattleStatisticsManager에 팀 설정
+        if (BattleStatisticsManager.Instance != null)
+        {
+            BattleStatisticsManager.Instance.SetTeams(playerUnits, enemyUnits);
+            Debug.Log($"[BattleController] Teams set in BattleStatisticsManager - Players: {playerUnits.Count}, Enemies: {enemyUnits.Count}");
+        }
     }
 
     // 유닛 정리

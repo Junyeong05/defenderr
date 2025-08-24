@@ -379,14 +379,37 @@ public class BaseWeapon : MonoBehaviour
     {
         if (hitTarget == null || !hitTarget.IsAlive) return;
         
-        // 데미지 적용
-        hitTarget.TakeDamage(damage);
+        // 데미지 적용 - owner 정보 포함
+        if (owner != null)
+        {
+            // BaseHero의 DoDamage 메서드 호출 (통계 기록 포함)
+            DamageVO damageVO = new DamageVO();
+            damageVO.damage = damage;
+            
+            // 크리티컬 확률 체크 (owner의 크리티컬 확률 사용)
+            float critChance = owner.Data != null ? owner.Data.criticalChance / 100f : 0.05f; // percentage to probability
+            damageVO.isCritical = UnityEngine.Random.Range(0f, 1f) < critChance;
+            
+            // 크리티컬 데미지 적용
+            if (damageVO.isCritical && owner.Data != null)
+            {
+                damageVO.damage *= owner.Data.criticalMultiplier;
+            }
+            
+            owner.DoDamage(hitTarget, damageVO);
+            
+            // 디버그 로그 (원거리 공격 확인용)
+            Debug.Log($"[BaseWeapon] Projectile hit! Owner: {owner.HeroName} → Target: {hitTarget.HeroName}, " +
+                     $"Damage: {damageVO.damage:F0}, Critical: {damageVO.isCritical}");
+        }
+        else
+        {
+            // owner가 없는 경우 기존 방식 사용
+            hitTarget.TakeDamage(damage);
+            Debug.LogWarning($"[BaseWeapon] Projectile hit without owner. Damage: {damage}");
+        }
         
         // 타격 이펙트 표시
-        // if (weaponData.showHitEffect)
-        // {
-        //     ShowHitEffect(hitTarget.transform.position);
-        // }
         ShowHitEffect(hitTarget, EffectType.PHYSICAL_HIT);
         
         OnHitTargetSub(hitTarget);

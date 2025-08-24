@@ -63,7 +63,33 @@ public class GameMain : MonoBehaviour
         HeroCatalog heroCatalog = Resources.Load<HeroCatalog>("HeroData/HeroCatalog");
         BattleController.Instance.InitializeBattle(heroCatalog);
         BattleController.Instance.SetBattleSpeed( 0.7f);
+        
+        // BattleStatisticsManager 초기화 (전투 시작은 BattleController에서 처리)
+        if (BattleStatisticsManager.Instance != null)
+        {
+            Debug.Log("[GameMain] BattleStatisticsManager initialized");
+        }
+        
+        // 통계 UI 추가 (필요한 경우)
+        InitializeStatisticsUI();
+        
         BattleController.Instance.StartBattle();
+    }
+    
+    void InitializeStatisticsUI()
+    {
+        // 통계 UI 게임 오브젝트 생성
+        GameObject statsUIObj = new GameObject("StatisticsUI");
+        
+        // BattleStatisticsUI 컴포넌트 추가
+        statsUIObj.AddComponent<BattleStatisticsUI>();
+        Debug.Log("[GameMain] BattleStatisticsUI initialized");
+        
+        // UI 레이어에 배치 (선택사항)
+        if (UILayer.Instance != null)
+        {
+            statsUIObj.transform.SetParent(UILayer.Instance.transform);
+        }
     }
     
     // Inspector에서 테스트용 버튼
