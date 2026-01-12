@@ -28,5 +28,6 @@
         "**/ProjectSettings": true,
         "**/Temp": true
     },
-    "dotnet.formatting.organizeImportsOnFormat": true
+    "dotnet.formatting.organizeImportsOnFormat": true,
+    "dotnet.defaultSolution": "MergeDefender.sln"
 }

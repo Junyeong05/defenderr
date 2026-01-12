@@ -83,6 +83,11 @@ MonoBehaviour:
   attackPower: 0
   defense: 0
   isPlayerTeam: 1
+  healthBarPrefab: {fileID: 6663159616185121032, guid: cbd2dc6d793a00749a72c5aaec0ea24a, type: 3}
+  showCrosshair: 0
+  crosshairColor: {r: 0, g: 1, b: 0, a: 1}
+  crosshairSize: 20
+  currentFrame: 0
   blockChance: 10
   blockDamageReduction: 0.5
   shieldEffect: {fileID: 0}

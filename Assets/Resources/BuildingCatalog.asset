@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59354c508f39a2c4f93b707fa8c8243d, type: 3}
+  m_Name: BuildingCatalog
+  m_EditorClassIdentifier: 
+  buildings:
+  - kindNum: 1
+    className: Archery
+    type: production
+    blocks: 0|0#0|1#1|1
+    blockNum: 6
+    interval: 3
+    maxCapacity: 2|4|6|8
+    buffValues: 0
+    desc: 
+  - kindNum: 2
+    className: Barracks
+    type: production
+    blocks: 0|0#1|0
+    blockNum: 2
+    interval: 2
+    maxCapacity: 2|4|6|8
+    buffValues: 0
+    desc: 
+  - kindNum: 3
+    className: CriticalBooster
+    type: buff
+    blocks: 0|0
+    blockNum: 1
+    interval: 0
+    maxCapacity: 0|0|0|0
+    buffValues: 2|4|8|16
+    desc: 
+  - kindNum: 4
+    className: DefenceBooster
+    type: buff
+    blocks: 0|0
+    blockNum: 1
+    interval: 0
+    maxCapacity: 0|0|0|0
+    buffValues: 4|8|12|16
+    desc: 
+  - kindNum: 5
+    className: ExpBooster
+    type: buff
+    blocks: 0|0
+    blockNum: 1
+    interval: 0
+    maxCapacity: 0|0|0|0
+    buffValues: 5|10|15|20
+    desc: 
+  - kindNum: 6
+    className: FireCanon
+    type: weapon
+    blocks: 0|0#1|0
+    blockNum: 2
+    interval: 2
+    maxCapacity: 0|0|0|0
+    buffValues: 0
+    desc: 
+  - kindNum: 7
+    className: FreezeBooster
+    type: buff
+    blocks: 0|0
+    blockNum: 1
+    interval: 0
+    maxCapacity: 0|0|0|0
+    buffValues: 5|10|15|20
+    desc: 
+  - kindNum: 8
+    className: GoldBooster
+    type: buff
+    blocks: 0|0
+    blockNum: 1
+    interval: 0
+    maxCapacity: 0|0|0|0
+    buffValues: 5|10|15|20
+    desc: 
+  - kindNum: 9
+    className: IceCanon
+    type: weapon
+    blocks: 0|0#0|1
+    blockNum: 4
+    interval: 2
+    maxCapacity: 0|0|0|0
+    buffValues: 0
+    desc: 
+  - kindNum: 10
+    className: Laser
+    type: weapon
+    blocks: 0|1#1|1#1|0
+    blockNum: 8
+    interval: 1
+    maxCapacity: 0|0|0|0
+    buffValues: 0
+    desc: 
+  - kindNum: 11
+    className: Lightning
+    type: weapon
+    blocks: 0|0#1|0
+    blockNum: 2
+    interval: 2
+    maxCapacity: 0|0|0|0
+    buffValues: 0
+    desc: 
+  - kindNum: 12
+    className: MagicAcademy
+    type: production
+    blocks: 0|0#1|0#2|0
+    blockNum: 3
+    interval: 3
+    maxCapacity: 2|4|6|8
+    buffValues: 0
+    desc: 
+  - kindNum: 13
+    className: RepairAgency
+    type: buff
+    blocks: 0|0
+    blockNum: 1
+    interval: 6
+    maxCapacity: 0|0|0|0
+    buffValues: 0.3|0.6|0.9|1.2
+    desc: 
+  - kindNum: 14
+    className: RepairCenter
+    type: buff
+    blocks: 0|0#0|1#1|0#1|1
+    blockNum: 5
+    interval: 6
+    maxCapacity: 0|0|0|0
+    buffValues: 2|4|6|8
+    desc: 
+  - kindNum: 15
+    className: SaleBooster
+    type: buff
+    blocks: 0|0
+    blockNum: 1
+    interval: 0
+    maxCapacity: 0|0|0|0
+    buffValues: 10|20|30|40
+    desc: 
+  - kindNum: 16
+    className: SwordManCamp
+    type: production
+    blocks: 0|0#0|1
+    blockNum: 4
+    interval: 2
+    maxCapacity: 2|4|6|8
+    buffValues: 0
+    desc: 
+  - kindNum: 17
+    className: TrainingBooster
+    type: buff
+    blocks: 0|0
+    blockNum: 1
+    interval: 0
+    maxCapacity: 0|0|0|0
+    buffValues: 5|10|15|20
+    desc: 

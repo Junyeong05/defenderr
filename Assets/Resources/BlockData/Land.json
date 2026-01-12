@@ -1,0 +1,56 @@
+[
+    {
+      "kindNum": 1,
+      "className": "Land1",
+      "blocks": "0|0",
+      "size": 1
+    },
+    {
+      "kindNum": 2,
+      "className": "Land2",
+      "blocks": "0|0#1|0",
+      "size": 2
+    },
+    {
+      "kindNum": 3,
+      "className": "Land3",
+      "blocks": "0|0#0|1",
+      "size": 2
+    },
+    {
+      "kindNum": 4,
+      "className": "Land4",
+      "blocks": "0|0#0|1#0|2",
+      "size": 3
+    },
+    {
+      "kindNum": 5,
+      "className": "Land5",
+      "blocks": "0|0#1|0#2|0",
+      "size": 3
+    },
+    {
+      "kindNum": 6,
+      "className": "Land6",
+      "blocks": "0|0#1|0#1|1",
+      "size": 3
+    },
+    {
+      "kindNum": 7,
+      "className": "Land7",
+      "blocks": "0|0#1|0#0|1",
+      "size": 3
+    },
+    {
+      "kindNum": 8,
+      "className": "Land8",
+      "blocks": "0|0#0|1#1|1",
+      "size": 3
+    },
+    {
+      "kindNum": 9,
+      "className": "Land9",
+      "blocks": "0|1#1|1#1|0",
+      "size": 3
+    }
+]

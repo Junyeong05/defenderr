@@ -5,12 +5,13 @@ public static class LayerConfig
 {
     // 각 레이어의 기본 Sorting Order
     public const int BACKGROUND = 0;
-    public const int GROUND_EFFECT = 100;
-    public const int UNIT = 200;
-    public const int WEAPON = 300;
-    public const int EFFECT = 400;
-    public const int UI = 500;
-    public const int POPUP = 600;
+    public const int EDITOR = 100;
+    public const int GROUND_EFFECT = 200;
+    public const int UNIT = 300;
+    public const int WEAPON = 400;
+    public const int EFFECT = 500;
+    public const int UI = 600;
+    public const int POPUP = 700;
     
     // 영웅에 Sorting Order 설정
     public static void SetUnitSortingOrder(GameObject unit, int offset = 0)

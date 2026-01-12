@@ -28,14 +28,19 @@ public class BaseHero : MonoBehaviour
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float attackPower;
     [SerializeField] protected float defense;
-    
+
     [Header("Team Settings")]
     [SerializeField] protected bool isPlayerTeam = true;  // true: 플레이어, false: 적
     
+    [Header( "HealthBar" ) ]
+    [SerializeField] GameObject healthBarPrefab;
+
+
     [Header("Debug Settings")]
     [SerializeField] protected bool showCrosshair = false;
     [SerializeField] protected Color crosshairColor = Color.green;
     [SerializeField] protected float crosshairSize = 20f;
+
     #endregion
 
     #region Private Fields
@@ -82,6 +87,10 @@ public class BaseHero : MonoBehaviour
     protected bool hasSkilled = false;
     protected int attackIntervalFrames = 60;  // 1초 (60 FPS)
     protected int framesSinceLastAttack = 0;
+
+    // HealthBar
+    protected int framesSinceLastAttacked = 300;
+    protected HealthBar healthBarScript;
     
     // Target & movement
     protected Vector2 targetPosition;
@@ -305,6 +314,10 @@ public class BaseHero : MonoBehaviour
             // 초기 애니메이션 설정 - 강제로 상태를 다른 값으로 변경 후 다시 설정하여 업데이트 보장
             state = -1; // 임시로 invalid state 설정
             SetState(STATE_WAIT);
+
+            // Sprite 정보 로드 후 HealthBar 
+            ShowHealthBar( healthBarPrefab );
+
             
             // BattleController에서 Execute() 호출하도록 변경
         }
@@ -824,6 +837,9 @@ public class BaseHero : MonoBehaviour
     {
         // 죽음 애니메이션이 끝나면 제거 (OnAnimationComplete -> OnDie에서 처리)
         // 추가 처리가 필요한 경우 서브클래스에서 override
+        HideHealthBar();
+        RemoveAllDots();
+        ClearAllEffects();
     }
     #endregion
 
@@ -860,7 +876,9 @@ public class BaseHero : MonoBehaviour
         if (healthBar == null && healthBarPrefab != null)
         {
             healthBar = Instantiate(healthBarPrefab, transform);
-            healthBar.transform.localPosition = new Vector3(0, 1.5f, 0); // 머리 위
+            healthBarScript = healthBar.GetComponent< HealthBar >();
+            healthBarScript.Draw( true );
+            healthBar.transform.localPosition = new Vector3( TargetWidth * -1f, TargetHeight * 1.2f , 0); // 머리 위
             // 체력바는 flipX 영향 받지 않음
         }
         
@@ -1126,6 +1144,8 @@ public class BaseHero : MonoBehaviour
         
         // 다음 프레임으로 (frameCounter는 Execute()에서 처리)
         currentFrame++;
+        framesSinceLastAttacked ++;
+
         
         // 애니메이션 범위 체크
         if (currentFrame > animEndFrame)
@@ -1140,7 +1160,14 @@ public class BaseHero : MonoBehaviour
                 OnAnimationComplete();
             }
         }
+
+        if( framesSinceLastAttacked > 60 ) {
+            HideHealthBar();
+        } else {
+            ShowHealthBar( healthBarPrefab );
+        }
         
+
         // 스프라이트 업데이트
         UpdateSprite();
     }
@@ -1646,6 +1673,10 @@ public class BaseHero : MonoBehaviour
             currentHealth = 0;
             GotoDieState();
         }
+        
+        healthBarScript.ChangeHp( currentHealth / maxHealth );
+        framesSinceLastAttacked = 0;
+
     }
     
     // 타격 반응 시작
@@ -1702,7 +1733,7 @@ public class BaseHero : MonoBehaviour
         
         freezeCount = frames;  // 실제로 freezeCount를 설정
         if( state != STATE_DIE ) SetState(STATE_WAIT);  // CC 상태에서는 WAIT 애니메이션
-        ShowCCEffect(EffectType.FREEZE, frames, 0, TargetHeight * 1.1f);
+        ShowCCEffect(EffectType.FREEZE, frames, 0, 0);
     }
     
     // 수면 - 모든 행동 불가, 데미지 받으면 깨어남
@@ -1753,6 +1784,10 @@ public class BaseHero : MonoBehaviour
         {
             silenceCount = Mathf.Max(silenceCount, frames);
         }
+
+        silenceCount = frames;  // 실제로 sleepCount를 설정
+        if( state != STATE_DIE ) SetState(STATE_WAIT);  // CC 상태에서는 WAIT 애니메이션
+        // ShowCCEffect(EffectType.POISON, frames, 0, TargetHeight * 1.1f);
     }
     
     // 속박 - 이동 불가
@@ -1762,6 +1797,10 @@ public class BaseHero : MonoBehaviour
         {
             rootCount = Mathf.Max(rootCount, frames);
         }
+
+        rootCount = frames;  // 실제로 sleepCount를 설정
+        if( state != STATE_DIE ) SetState(STATE_WAIT);  // CC 상태에서는 WAIT 애니메이션
+        // ShowCCEffect(EffectType.Root, frames, 0, 0 );
     }
     
     // 도발 - 특정 대상만 공격하도록 강제
@@ -2129,6 +2168,18 @@ public class BaseHero : MonoBehaviour
         activeDamageReductionBuff = new ActiveBuffManager(-1f, 1f, 0f);
         activePenetrateBuff = new ActiveBuffManager(0f, 2f, 0f);
         activeFinalDamageBuff = new ActiveBuffManager(0f, 10f, 0f);
+
+        buffManagerList.Add( activeDamageBuff );
+        buffManagerList.Add( activeDefenseBuff );
+        buffManagerList.Add( activeMaxHealthBuff );
+        buffManagerList.Add( activeAttackSpeedBuff );
+        buffManagerList.Add( activeMoveSpeedBuff );
+        buffManagerList.Add( activeCritChanceBuff );
+        buffManagerList.Add( activeCritMultiplierBuff );
+        buffManagerList.Add( activeDodgeChanceBuff );
+        buffManagerList.Add( activeDamageReductionBuff );
+        buffManagerList.Add( activePenetrateBuff );
+        buffManagerList.Add( activeFinalDamageBuff );
     }
     
     protected void SaveOriginalStats()
@@ -2499,6 +2550,7 @@ public class BaseHero : MonoBehaviour
         {
             float prevHealth = currentHealth;
             currentHealth -= vo.damage;
+            healthBarScript.ChangeHp( currentHealth / maxHealth );
             
             // 타입 기반 통계 기록 (DOT 데미지)
             if (BattleStatisticsManager.Instance != null && dvo.owner != null)
@@ -2528,9 +2580,11 @@ public class BaseHero : MonoBehaviour
                 
                 GotoDieState();
             }
+
+            framesSinceLastAttacked = 0;
         }
     }
-    
+
     /// <summary>
     /// 도트 힐 업데이트 (매 프레임 호출)
     /// </summary>
@@ -2565,6 +2619,36 @@ public class BaseHero : MonoBehaviour
         // 시간이 지난 도트 힐 제거
         dotHeal.AdvanceTime();
     }
+
+    protected List< ActiveBuffManager > buffManagerList = new List< ActiveBuffManager >();  
+    protected List< ActiveBuffManager > activebuffManagerList = new List< ActiveBuffManager >();
+
+    public virtual void Poison( float damage, int duration, int interval, BaseHero owner, int id ) {
+        ShowCCEffect( EffectType.POISON, duration, 0, TargetHeight * 1.1f );
+        AddDotDamage( damage, duration, interval, owner, id );
+
+    }
+
+
+    public virtual void DamageBuff1( int buffId, float value, int durationFrames, bool isOverride ) {
+        ShowCCEffect( EffectType.BUFF_DAMAGE_UP, durationFrames, 0, TargetHeight * 1.1f );
+        AddDamageBuff( buffId, value, durationFrames, isOverride );
+    }
+
+    protected virtual void ShowBuff( EffectType effectType, int duration, float x, float y ) {
+        
+    }
+
+    protected virtual void ArrangeActiveBuff() {
+        int activeBuffCount = 0;
+        for( int i = 0; i < buffManagerList.Count; i ++ ) {
+            ActiveBuffManager buffManager = buffManagerList[ i ];
+            
+            if( buffManager.GetActiveBuffCount() > 0 ) activeBuffCount += 1 ;
+        }
+
+    }
+    
     
     /// <summary>
     /// 힐 처리

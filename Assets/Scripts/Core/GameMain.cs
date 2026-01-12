@@ -15,6 +15,8 @@ public class GameMain : MonoBehaviour
         // 1. 프레임 설정
         Application.targetFrameRate = 60;
         
+        SetBookData();
+
         // 2. GameLayer 초기화
         InitializeGameLayer();
         InitializeBattleController();
@@ -104,5 +106,9 @@ public class GameMain : MonoBehaviour
         Debug.Log($"  - Children: {WeaponLayer.Instance?.transform.childCount}");
         Debug.Log($"EffectLayer active: {EffectLayer.Instance?.gameObject.activeSelf}");
         Debug.Log($"UILayer active: {UILayer.Instance?.gameObject.activeSelf}");
+    }
+
+    void SetBookData() {
+        BuildingManager.Init();
     }
 }

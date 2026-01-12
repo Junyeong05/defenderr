@@ -1,0 +1,320 @@
+[
+  [
+    {
+        "kindNum": 1,
+        "className": "Archery",
+        "type": "production",
+        "blockNum": 6,
+        "interval": 3,
+        "maxCapacity": [
+            2,
+            4,
+            6,
+            8
+        ],
+        "buffValues": [
+            0
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 2,
+        "className": "Barracks",
+        "type": "production",
+        "blockNum": 2,
+        "interval": 2,
+        "maxCapacity": [
+            2,
+            4,
+            6,
+            8
+        ],
+        "buffValues": [
+            0
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 3,
+        "className": "CriticalBooster",
+        "type": "buff",
+        "blockNum": 1,
+        "interval": 0,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            2,
+            4,
+            8,
+            16
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 4,
+        "className": "DefenceBooster",
+        "type": "buff",
+        "blockNum": 1,
+        "interval": 0,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            4,
+            8,
+            12,
+            16
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 5,
+        "className": "ExpBooster",
+        "type": "buff",
+        "blockNum": 1,
+        "interval": 0,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            5,
+            10,
+            15,
+            20
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 6,
+        "className": "FireCanon",
+        "type": "weapon",
+        "blockNum": 2,
+        "interval": 2,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            0
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 7,
+        "className": "FreezeBooster",
+        "type": "buff",
+        "blockNum": 1,
+        "interval": 0,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            5,
+            10,
+            15,
+            20
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 8,
+        "className": "GoldBooster",
+        "type": "buff",
+        "blockNum": 1,
+        "interval": 0,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            5,
+            10,
+            15,
+            20
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 9,
+        "className": "IceCanon",
+        "type": "weapon",
+        "blockNum": 4,
+        "interval": 2,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            0
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 10,
+        "className": "Laser",
+        "type": "weapon",
+        "blockNum": 8,
+        "interval": 1,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            0
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 11,
+        "className": "Lightning",
+        "type": "weapon",
+        "blockNum": 2,
+        "interval": 2,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            0
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 12,
+        "className": "MagicAcademy",
+        "type": "production",
+        "blockNum": 3,
+        "interval": 3,
+        "maxCapacity": [
+            2,
+            4,
+            6,
+            8
+        ],
+        "buffValues": [
+            0
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 13,
+        "className": "RepairAgency",
+        "type": "buff",
+        "blockNum": 1,
+        "interval": 6,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            3,
+            6,
+            9,
+            12
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 14,
+        "className": "RepairCenter",
+        "type": "buff",
+        "blockNum": 5,
+        "interval": 6,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            2,
+            4,
+            6,
+            8
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 15,
+        "className": "SaleBooster",
+        "type": "buff",
+        "blockNum": 1,
+        "interval": 0,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            10,
+            20,
+            30,
+            40
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 16,
+        "className": "SwordManCamp",
+        "type": "production",
+        "blockNum": 4,
+        "interval": 2,
+        "maxCapacity": [
+            2,
+            4,
+            6,
+            8
+        ],
+        "buffValues": [
+            0
+        ],
+        "desc": ""
+    },
+    {
+        "kindNum": 17,
+        "className": "TrainingBooster",
+        "type": "buff",
+        "blockNum": 1,
+        "interval": 0,
+        "maxCapacity": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "buffValues": [
+            5,
+            10,
+            15,
+            20
+        ],
+        "desc": ""
+    }
+  ]
+]

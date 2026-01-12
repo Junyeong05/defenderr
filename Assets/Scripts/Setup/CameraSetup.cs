@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraSetup : MonoBehaviour
 {
@@ -35,6 +36,13 @@ public class CameraSetup : MonoBehaviour
         
         cam.orthographicSize = orthographicSize;
         cam.transform.position = new Vector3(0f, 0f, -10f);
+
+        // Physics2DRaycaster 추가 (IPointerHandler 이벤트를 위해 필요)
+        Physics2DRaycaster raycaster = cam.GetComponent<Physics2DRaycaster>();
+        if (raycaster == null)
+        {
+            raycaster = cam.gameObject.AddComponent<Physics2DRaycaster>();
+        }
 
         #if DEBUG || UNITY_EDITOR
         if (enableDebugLogs)
